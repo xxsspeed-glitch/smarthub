@@ -79,10 +79,28 @@
 
     <!-- ═══ HEADER ══════════════════════════════════════════ -->
     <header>
-        <a href="#home" class="logo">
-            <img src="logo-black.PNG" alt="SmartHub" style="height:48px;width:auto;object-fit:contain;" class="logo-img-light" />
-            <img src="logo-white.PNG" alt="SmartHub" style="height:48px;width:auto;object-fit:contain;display:none;" class="logo-img-dark" />
+        <a href="#home" class="logo" style="gap:0">
+            <picture>
+                <img src="logo-black.PNG" alt="SmartHub" 
+                     style="height:52px;width:auto;object-fit:contain;display:block;" 
+                     class="logo-img-light"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                <span style="display:none;align-items:center;gap:8px;font-family:Inter,sans-serif;font-weight:900;font-size:1.4rem;color:#1a1a1a;">
+                    <svg viewBox="0 0 110 120" height="44" xmlns="http://www.w3.org/2000/svg"><path d="M14,108 Q4,108 4,98 L4,22 Q4,12 14,12 L88,54 Q98,60 88,66 Z" fill="none" stroke="#CC0000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    SmartHub
+                </span>
+            </picture>
+            <picture class="logo-dark-wrap" style="display:none;">
+                <img src="logo-white.PNG" alt="SmartHub" 
+                     style="height:52px;width:auto;object-fit:contain;display:block;" 
+                     class="logo-img-dark"
+                     onerror="this.style.display='none'" />
+            </picture>
         </a>
+        <style>
+        body.dark .logo-dark-wrap{display:block!important}
+        body.dark picture:first-child{display:none!important}
+        </style>
 
         <div class="header-right">
             <nav id="mainNav">
@@ -90,6 +108,7 @@
                 <a href="#about" data-kaz="Оқу бағдарламасы" data-ru="Учебная Программа" data-en="Curriculum">Оқу бағдарламасы</a>
                 <a href="#achievements" data-kaz="Жетістіктер" data-ru="Достижения" data-en="Achievements">Жетістіктер</a>
                 <a href="#reviews" data-kaz="Пікірлер" data-ru="Отзывы" data-en="Reviews">Пікірлер</a>
+                <a href="#branches" data-kaz="Филиалдар" data-ru="Филиалы" data-en="Branches">Филиалдар</a>
                 <a href="#contacts" data-kaz="Байланыс" data-ru="Контакты" data-en="Contacts">Байланыс</a>
             </nav>
 
@@ -188,7 +207,7 @@
                 <div>
                     <p class="mission-text" data-kaz="Болашақ технология жасаушыларды шабыттандыру және оқыту — робототехника және ұшқышсыз технологиялар саласындағы практикалық білім беру арқылы инженерлік ойлауды, инновацияны және көшбасшылық қасиеттерді дамыту." data-ru="Вдохновлять и обучать будущих создателей технологий, развивая инженерное мышление, инновационность и лидерские качества через практическое образование в сфере робототехники и беспилотных технологий." data-en="Inspire and educate future technology creators, developing engineering thinking, innovation and leadership through practical education in robotics and drone technologies.">Болашақ технология жасаушыларды шабыттандыру және оқыту — робототехника және ұшқышсыз технологиялар саласындағы практикалық білім беру арқылы инженерлік ойлауды, инновацияны және көшбасшылық қасиеттерді дамыту.</p>
                 </div>
-                <img src="photo_2026-05-22_03-18-38.jpg" alt="SmartHub команда" />
+                <img src="lesson1.jpg" alt="SmartHub команда" />
             </div>
 
             <h3 class="section-title" data-kaz="Біздің артықшылықтар" data-ru="Наши Преимущества" data-en="Our Advantages">Біздің артықшылықтар</h3>
@@ -228,10 +247,9 @@
             <!-- Фото с занятий -->
             <h3 class="section-title" style="margin-top:40px;" data-kaz="Сабақтардан сәттер" data-ru="Моменты с занятий" data-en="Class moments">Сабақтардан сәттер</h3>
             <div class="groups-photo-grid">
-                <img src="photo_2026-05-22_03-18-37.jpg" alt="Сабақ сәті 1" />
-                <img src="photo_2026-05-22_03-18-39.jpg" alt="Сабақ сәті 2" />
-                <img src="img_6434.png" alt="Сабақ сәті 3" />
-                <img src="img_6435.png" alt="Сабақ сәті 4" />
+                <img src="lesson1.jpg" alt="Сабақ сәті 1" />
+                <img src="lesson2.jpg" alt="Сабақ сәті 2" />
+                <img src="lesson3.jpg" alt="Сабақ сәті 3" />
             </div>
         </div>
     </section>
@@ -513,7 +531,7 @@
                     <div class="report-card report-card-large">
                         <div class="report-icon">🏫</div>
                         <h4 data-kaz="6 филиал" data-ru="6 филиалов" data-en="6 branches">6 филиал</h4>
-                        <p>Skillset, 84 мектеп, 17 мектеп, 97 мектеп, 66 мектеп, 101 мектеп</p>
+                        <p data-kaz="Skillset, 84 мектеп, 17 мектеп, 97 мектеп, 66 мектеп, 101 мектеп" data-ru="Skillset, школа 84, школа 17, школа 97, школа 66, школа 101" data-en="Skillset, school 84, school 17, school 97, school 66, school 101">Skillset, 84 мектеп, 17 мектеп, 97 мектеп, 66 мектеп, 101 мектеп</p>
                     </div>
                     <div class="report-card report-card-large">
                         <div class="report-icon">🎓</div>
@@ -527,30 +545,22 @@
                         <div class="report-icon">🥇</div>
                         <h4 data-kaz="Жүлделі орындар" data-ru="Призовые места" data-en="Prize places">Жүлделі орындар</h4>
                         <div class="report-list">
-                            <p>I место Robotek Grand Tournament Международный этап — «Доставщик»</p>
-                            <p>II место Fibonacci International Robotics Olympiad — «Autonomous Car Racing» (орта мектеп)</p>
-                            <p>II место Fibonacci International Robotics Olympiad — «Autonomous Car Racing» (бастауыш мектеп)</p>
-                            <p>II место Fibonacci International Robotics Olympiad — «Lego Line Following» (бастауыш мектеп)</p>
+                            <p data-kaz="I орын Robotek Grand Tournament Халықаралық кезең — «Жеткізуші»" data-ru="I место Robotek Grand Tournament Международный этап — «Доставщик»" data-en="1st place Robotek Grand Tournament International stage — Delivery">I орын Robotek Grand Tournament Халықаралық кезең — «Жеткізуші»</p>
+                            <p data-kaz="II орын Fibonacci International Robotics Olympiad — «Autonomous Car Racing» (орта мектеп)" data-ru="II место Fibonacci International Robotics Olympiad — «Autonomous Car Racing» (средняя школа)" data-en="2nd place Fibonacci International Robotics Olympiad — Autonomous Car Racing (middle school)">II орын Fibonacci International Robotics Olympiad — «Autonomous Car Racing» (орта мектеп)</p>
+                            <p data-kaz="II орын Fibonacci International Robotics Olympiad — «Autonomous Car Racing» (бастауыш мектеп)" data-ru="II место Fibonacci International Robotics Olympiad — «Autonomous Car Racing» (начальная школа)" data-en="2nd place Fibonacci International Robotics Olympiad — Autonomous Car Racing (elementary school)">II орын Fibonacci International Robotics Olympiad — «Autonomous Car Racing» (бастауыш мектеп)</p>
+                            <p data-kaz="II орын Fibonacci International Robotics Olympiad — «Lego Line Following» (бастауыш мектеп)" data-ru="II место Fibonacci International Robotics Olympiad — «Lego Line Following» (начальная школа)" data-en="2nd place Fibonacci International Robotics Olympiad — Lego Line Following (elementary school)">II орын Fibonacci International Robotics Olympiad — «Lego Line Following» (бастауыш мектеп)</p>
                         </div>
                     </div>
                     <div class="report-card">
                         <div class="report-icon">🌍</div>
                         <h4 data-kaz="Аймақтық және республикалық кезеңдер" data-ru="Региональный и республиканский этапы" data-en="Regional and national stages">Аймақтық және республикалық кезеңдер</h4>
                         <div class="report-list">
-                            <p>II место — World Robot Olympiad Robomission Elementary (аймақтық кезең)</p>
+                            <p data-kaz="II орын — World Robot Olympiad Robomission Elementary (аймақтық кезең)" data-ru="II место — World Robot Olympiad Robomission Elementary (региональный этап)" data-en="2nd place — World Robot Olympiad Robomission Elementary (regional stage)">II орын — World Robot Olympiad Robomission Elementary (аймақтық кезең)</p>
                             <p>Astana Tech Cup</p>
                             <p data-kaz="Республикалық кезең: 4 жүлделі орын" data-ru="Республиканский этап: 4 призовых места" data-en="National stage: 4 prize places">Республикалық кезең: 4 жүлделі орын</p>
                         </div>
                     </div>
-                    <div class="report-card">
-                        <div class="report-icon">⚡</div>
-                        <h4 data-kaz="Марапаттар және топ-орындар" data-ru="Награды и топ‑места" data-en="Awards and top places">Марапаттар және топ-орындар</h4>
-                        <div class="report-list">
-                            <p>Vex IQ Energy Award (бастауыш мектеп)</p>
-                            <p>III место Robotek Grand Tournament (республикалық кезең) — «Доставщик»</p>
-                            <p>JasSkills Drone Soccer — Топ 5</p>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -606,6 +616,48 @@
                 <div class="reviews-dots" aria-hidden="true"></div>
             </div>
         </div>
+    </section>
+
+    <!-- ═══ ФИЛИАЛДАР КАРТАСЫ ══════════════════════════════ -->
+    <section id="branches" class="gear-bg" style="background:#f8f5f0;">
+        <div class="section-inner">
+            <h2 class="section-title" style="text-align:center;" data-kaz="Астанадағы филиалдарымыз" data-ru="Наши филиалы в Астане" data-en="Our branches in Astana">Астанадағы филиалдарымыз</h2>
+            <p style="text-align:center;color:#888;margin-bottom:2rem;font-size:.95rem;" data-kaz="Картадан көру үшін филиалды басыңыз." data-ru="Нажмите на филиал, чтобы увидеть на карте." data-en="Click a branch to see it on the map.">Картадан көру үшін филиалды басыңыз.</p>
+            <div style="display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:start;">
+                <div id="branch-list" style="display:flex;flex-direction:column;gap:10px;">
+                    <button class="branch-btn active" onclick="selectBranch(this,'skillset')" data-name="Skillset" data-kaz="Skillset" data-ru="Skillset" data-en="Skillset">🏫 Skillset</button>
+                    <button class="branch-btn" onclick="selectBranch(this,'s84')" data-name="№84 мектеп" data-kaz="№84 мектеп" data-ru="Школа №84" data-en="School №84">🏫 <span data-kaz="№84 мектеп" data-ru="Школа №84" data-en="School №84">№84 мектеп</span></button>
+                    <button class="branch-btn" onclick="selectBranch(this,'s17')" data-name="№17 мектеп" data-kaz="№17 мектеп" data-ru="Школа №17" data-en="School №17">🏫 <span data-kaz="№17 мектеп" data-ru="Школа №17" data-en="School №17">№17 мектеп</span></button>
+                    <button class="branch-btn" onclick="selectBranch(this,'s97')" data-name="№97 мектеп" data-kaz="№97 мектеп" data-ru="Школа №97" data-en="School №97">🏫 <span data-kaz="№97 мектеп" data-ru="Школа №97" data-en="School №97">№97 мектеп</span></button>
+                    <button class="branch-btn" onclick="selectBranch(this,'s66')" data-name="№66 мектеп" data-kaz="№66 мектеп" data-ru="Школа №66" data-en="School №66">🏫 <span data-kaz="№66 мектеп" data-ru="Школа №66" data-en="School №66">№66 мектеп</span></button>
+                    <button class="branch-btn" onclick="selectBranch(this,'s101')" data-name="№101 мектеп" data-kaz="№101 мектеп" data-ru="Школа №101" data-en="School №101">🏫 <span data-kaz="№101 мектеп" data-ru="Школа №101" data-en="School №101">№101 мектеп</span></button>
+                </div>
+                <div style="border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1);">
+                    <iframe id="branch-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2505.0!2d71.4306!3d51.1801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585a87bc2ef43%3A0x8a0e5a1e1e1e1e1e!2sSkillset%20Astana!5e0!3m2!1sru!2skz!4v1718000000000!5m2!1sru!2skz" width="100%" height="400" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        <style>
+        .branch-btn{display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:12px;border:1.5px solid #e0dbd4;background:#fff;font-size:.95rem;font-weight:600;cursor:pointer;text-align:left;transition:.2s;color:#1a1a1a;font-family:inherit;}
+        .branch-btn:hover{border-color:#CC0000;color:#CC0000;}
+        .branch-btn.active{background:#CC0000;color:#fff;border-color:#CC0000;}
+        @media(max-width:700px){#branch-list{flex-direction:row;flex-wrap:wrap;} #branch-list .branch-btn{flex:1;min-width:120px;justify-content:center;font-size:.82rem;padding:10px 12px;} div[style*="grid-template-columns:280px"]{grid-template-columns:1fr;}}
+        </style>
+        <script>
+        const branchMaps = {
+            skillset: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.4306!3d51.1801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x42458587bc2ef43%3A0x8a0e5a1e1e1e1e1e!2sSkillset!5e0!3m2!1sru!2skz!4v1718000000001!5m2!1sru!2skz',
+            s84: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.3950!3d51.1650!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585b0a2b2b2b2%3A0xb2b2b2b2b2b2b2b2!2z0KHQoNCo0K0g4oSWODQ!5e0!3m2!1sru!2skz!4v1718000000002!5m2!1sru!2skz',
+            s17: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.4100!3d51.1500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585c0c3c3c3c3%3A0xc3c3c3c3c3c3c3c3!2z0KHQoNCo0K0g4oSWMTc!5e0!3m2!1sru!2skz!4v1718000000003!5m2!1sru!2skz',
+            s97: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.4500!3d51.1700!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585d0d4d4d4d4%3A0xd4d4d4d4d4d4d4d4!2z0KHQoNCo0K0g4oSWOTc!5e0!3m2!1sru!2skz!4v1718000000004!5m2!1sru!2skz',
+            s66: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.3800!3d51.1850!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585e0e5e5e5e5%3A0xe5e5e5e5e5e5e5e5!2z0KHQoNCo0K0g4oSWNjY!5e0!3m2!1sru!2skz!4v1718000000005!5m2!1sru!2skz',
+            s101: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.4200!3d51.1400!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585f0f6f6f6f6%3A0xf6f6f6f6f6f6f6f6!2z0KHQoNCo0K0g4oSWMTAx!5e0!3m2!1sru!2skz!4v1718000000006!5m2!1sru!2skz'
+        };
+        function selectBranch(btn, key) {
+            document.querySelectorAll('.branch-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('branch-map').src = branchMaps[key];
+        }
+        </script>
     </section>
 
     <!-- ═══ КОНТАКТЫ ══════════════════════════════════════════ -->
