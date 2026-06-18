@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="kaz">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartHub — Robotics & Drone Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        /* WhatsApp / Instagram кнопки */
+        .social-btns { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+        .btn-wa { display:inline-flex; align-items:center; gap:8px; background:#25D366; color:#fff; padding:11px 20px; border-radius:50px; font-weight:700; font-size:.95rem; text-decoration:none; transition:.2s; }
+        .btn-wa:hover { background:#1ebe5d; transform:translateY(-2px); }
+        .btn-ig { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#405DE6,#833AB4,#E1306C,#FD1D1D,#F77737); color:#fff; padding:11px 20px; border-radius:50px; font-weight:700; font-size:.95rem; text-decoration:none; transition:.2s; }
+        .btn-ig:hover { filter:brightness(1.1); transform:translateY(-2px); }
+        .btn-cabinet { display:inline-flex; align-items:center; gap:6px; background:var(--red); color:#fff; padding:9px 18px; border-radius:50px; font-weight:700; font-size:.9rem; text-decoration:none; white-space:nowrap; transition:.2s; }
+        .btn-cabinet:hover { background:#a80000; }
+        .btn-admin-nav { display:inline-flex; align-items:center; gap:6px; background:var(--blue); color:#fff; padding:9px 18px; border-radius:50px; font-weight:700; font-size:.9rem; text-decoration:none; white-space:nowrap; transition:.2s; margin-left:6px; }
+        .btn-admin-nav:hover { background:#111070; }
+        .header-nav-btns { display:flex; align-items:center; gap:6px; margin-left:12px; }
+        /* Страны с фото */
+        .country-photo-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; margin-top:24px; }
+        .country-photo-card { border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,.1); position:relative; background:var(--card,#f4f4f6); }
+        .country-photo-card img { width:100%; height:220px; object-fit:cover; display:block; }
+        .country-photo-info { padding:16px 18px; }
+        .country-photo-info h4 { font-size:1.05rem; font-weight:900; color:var(--red); margin-bottom:6px; }
+        .country-photo-info p { font-size:.9rem; color:var(--text-muted,#555); line-height:1.5; }
+        .country-badge { position:absolute; top:12px; right:12px; background:rgba(0,0,0,.55); color:#fff; padding:4px 12px; border-radius:50px; font-size:.8rem; font-weight:700; }
+        /* Миссия с фото */
+        .mission-with-photo { display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; margin:24px 0; }
+        .mission-with-photo img { width:100%; border-radius:16px; object-fit:cover; height:260px; }
+        @media(max-width:700px){ .mission-with-photo{grid-template-columns:1fr;} .header-nav-btns{display:none;} }
+        /* Группы фото */
+        .groups-photo-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-top:20px; }
+        .groups-photo-grid img { width:100%; height:180px; object-fit:cover; border-radius:12px; cursor:pointer; transition:.2s; }
+        .groups-photo-grid img:hover { transform:scale(1.03); }
+        /* Личный кабинет */
+        .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9000; align-items:center; justify-content:center; padding:16px; }
+        .modal-overlay.open { display:flex; }
+        .modal-box { background:#fff; border-radius:20px; padding:32px; max-width:480px; width:100%; max-height:90vh; overflow-y:auto; position:relative; }
+        .dark .modal-box { background:#1a1a2e; color:#eee; }
+        .modal-box h2 { font-size:1.4rem; font-weight:900; color:var(--red); margin-bottom:20px; }
+        .modal-close { position:absolute; top:16px; right:20px; background:none; border:none; font-size:1.6rem; cursor:pointer; color:#999; }
+        .modal-tabs { display:flex; gap:0; margin-bottom:20px; border-radius:10px; overflow:hidden; border:1px solid #ddd; }
+        .modal-tab { flex:1; padding:10px; border:none; background:#f5f5f5; font-weight:700; font-size:.95rem; cursor:pointer; transition:.2s; }
+        .modal-tab.active { background:var(--red); color:#fff; }
+        .modal-form input, .modal-form select { width:100%; padding:12px 14px; border:1px solid #ddd; border-radius:10px; font-size:.95rem; margin-bottom:12px; font-family:inherit; box-sizing:border-box; }
+        .modal-form button { width:100%; padding:13px; background:var(--red); color:#fff; border:none; border-radius:10px; font-weight:900; font-size:1rem; cursor:pointer; margin-top:4px; }
+        .modal-form button:hover { background:#a80000; }
+        /* Личный кабинет родителя */
+        .parent-cabinet { padding:20px 0; }
+        .parent-cabinet .cabinet-header { display:flex; align-items:center; gap:14px; margin-bottom:24px; padding-bottom:18px; border-bottom:2px solid #eee; }
+        .parent-cabinet .avatar { width:56px; height:56px; border-radius:50%; background:var(--red); color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.6rem; font-weight:900; }
+        .parent-cabinet .cabinet-name { font-weight:900; font-size:1.1rem; }
+        .parent-cabinet .cabinet-role { color:#999; font-size:.85rem; }
+        .cabinet-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+        .cab-tab { padding:8px 16px; border-radius:50px; border:1px solid #ddd; background:#f5f5f5; font-size:.88rem; font-weight:700; cursor:pointer; transition:.2s; }
+        .cab-tab.active { background:var(--red); color:#fff; border-color:var(--red); }
+        .cab-panel { display:none; }
+        .cab-panel.active { display:block; }
+        .info-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee; font-size:.93rem; }
+        .info-row span:first-child { color:#999; }
+        .info-row span:last-child { font-weight:700; }
+        .payment-badge { display:inline-block; padding:4px 14px; border-radius:50px; font-size:.82rem; font-weight:700; }
+        .payment-badge.paid { background:#e8f5e9; color:#2e7d32; }
+        .payment-badge.due { background:#ffeef0; color:#c62828; }
+        .event-item { padding:12px; background:#f8f8f8; border-radius:10px; margin-bottom:10px; }
+        .dark .event-item { background:#222; }
+        .event-item h5 { margin:0 0 4px; font-size:.95rem; }
+        .event-item p { margin:0; color:#888; font-size:.85rem; }
+        .schedule-item { display:flex; gap:14px; align-items:center; padding:10px 0; border-bottom:1px solid #eee; }
+        .schedule-day { font-weight:900; color:var(--red); min-width:90px; }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ HEADER ══════════════════════════════════════════ -->
+    <header>
+        <a href="#home" class="logo">
+            <div class="logo-text-group">
+                <span class="logo-brand">SmartHub</span>
+                <span class="logo-tagline">Robotics &amp; Drone Academy</span>
+            </div>
+            <svg class="logo-icon-svg" viewBox="0 0 110 120" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14,108 Q4,108 4,98 L4,22 Q4,12 14,12 L88,54 Q98,60 88,66 Z"
+            fill="none" stroke="#CC0000" stroke-width="12"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+        </a>
+
+        <div class="header-right">
+            <nav id="mainNav">
+                <a href="#home" class="nav-home active" data-kaz="Басты бет" data-ru="Главная" data-en="Home">Басты бет</a>
+                <a href="#about" data-kaz="Оқу бағдарламасы" data-ru="Учебная Программа" data-en="Curriculum">Оқу бағдарламасы</a>
+                <a href="#achievements" data-kaz="Жетістіктер" data-ru="Достижения" data-en="Achievements">Жетістіктер</a>
+                <a href="#reviews" data-kaz="Пікірлер" data-ru="Отзывы" data-en="Reviews">Пікірлер</a>
+                <a href="#contacts" data-kaz="Байланыс" data-ru="Контакты" data-en="Contacts">Байланыс</a>
+            </nav>
+
+            <div class="header-nav-btns">
+                <a href="#" class="btn-cabinet" onclick="openModal('parent'); return false;">👤 <span data-kaz="Кабинет" data-ru="Кабинет" data-en="Cabinet">Кабинет</span></a>
+                <a href="admin.html" class="btn-admin-nav">⚙️ Admin</a>
+            </div>
+
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Тёмная тема">
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="kaz">ҚАЗ</button>
+                <button class="lang-btn" data-lang="ru">РУС</button>
+                <button class="lang-btn" data-lang="en">ENG</button>
+            </div>
+
+            <div class="burger" aria-label="Меню" role="button" tabindex="0">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ HERO ═════════════════════════════════════════════ -->
+    <section id="home" class="gear-bg">
+        <div class="section-inner">
+            <h1>SmartHub</h1>
+            <p class="hero-sub" data-kaz="Қазақстандағы алғашқы робототехника және дрондар академиясы" data-ru="Первая академия робототехники и дронов в Казахстане" data-en="The first robotics and drone academy in Kazakhstan">Қазақстандағы алғашқы робототехника және дрондар академиясы</p>
+            <a href="#about" class="btn btn-white" data-kaz="Біз туралы" data-ru="О нас" data-en="About us">Біз туралы</a>
+        </div>
+    </section>
+
+    <!-- ═══ О НАС ════════════════════════════════════════════ -->
+    <section id="about" class="gear-bg">
+        <div class="section-inner">
+            <h2 class="section-title" data-kaz="Біз туралы" data-ru="О нас" data-en="About us">Біз туралы</h2>
+            <p class="about-sub" data-kaz="Қазақстандағы алғашқы робототехника және дрондар академиясы" data-ru="Первая академия робототехники и дронов в Казахстане" data-en="The first robotics and drone academy in Kazakhstan">Қазақстандағы алғашқы робототехника және дрондар академиясы</p>
+
+            <div class="about-billboards">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="billboard-chip">SmartHub</div>
+                            <div class="billboard-title" data-kaz="Роботика және дрондардың алғашқы академиясы" data-ru="Первая академия робототехники и дронов" data-en="First robotics and drone academy">Роботика және дрондардың алғашқы академиясы</div>
+                            <p class="billboard-caption" data-kaz="Бір жерде заманауи білім, технология және практика." data-ru="Современное образование, технологии и практика в одном месте." data-en="Modern education, technology and practice in one place.">Бір жерде заманауи білім, технология және практика.</p>
+                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите, чтобы увидеть подробности." data-en="Hover or tap to see details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3>SmartHub</h3>
+                            <p data-kaz="SmartHub — Қазақстандағы алғашқы робототехника және дрондар академиясы. Заманауи технологияларды, инженерлік білімді және болашақтың практикалық дағдыларын біріктіреді." data-ru="SmartHub — первая академия робототехники и дронов в Казахстане, которая объединяет современные технологии, инженерное образование и практические навыки будущего." data-en="SmartHub is the first robotics and drone academy in Kazakhstan, combining modern technologies, engineering education and practical skills of the future.">SmartHub — Қазақстандағы алғашқы робототехника және дрондар академиясы. Заманауи технологияларды, инженерлік білімді және болашақтың практикалық дағдыларын біріктіреді.</p>
+                            <p data-kaz="Біз озық технологиялық білімді барлығына қолжетімді ету мақсатымыз." data-ru="Мы стремимся сделать передовое технологическое образование доступным для каждого." data-en="We strive to make advanced technology education accessible to everyone.">Біз озық технологиялық білімді барлығына қолжетімді ету мақсатымыз.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="billboard-chip" data-kaz="Біздің мақсат" data-ru="Наша цель" data-en="Our goal">Біздің мақсат</div>
+                            <div class="billboard-title" data-kaz="Жаңа ұрпақты дайындау" data-ru="Подготовить новое поколение" data-en="Prepare a new generation">Жаңа ұрпақты дайындау</div>
+                            <p class="billboard-caption" data-kaz="Инженерлер, әзірлеушілер, дрон ұшқыштары және технологиялық кәсіпкерлер." data-ru="Инженеры, разработчики, пилоты дронов и технологические предприниматели." data-en="Engineers, developers, drone pilots and tech entrepreneurs.">Инженерлер, әзірлеушілер, дрон ұшқыштары және технологиялық кәсіпкерлер.</p>
+                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите, чтобы увидеть подробности." data-en="Hover or tap to see details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3 data-kaz="Біздің мақсат" data-ru="Наша цель" data-en="Our goal">Біздің мақсат</h3>
+                            <p data-kaz="Біздің мақсатымыз — жаңа буын инженерлерін, дамытушыларын, ұшқышсыз жүйелер операторларын және технологиялық кәсіпкерлерді дайындау. Балалар, жасөспірімдер және ересектер теория ғана емес, нақты жобаларды іске асырады, жарыстарға қатысады." data-ru="Наша цель — подготовить новое поколение инженеров, разработчиков, операторов беспилотных систем и технологических предпринимателей." data-en="Our goal is to train a new generation of engineers, developers, drone system operators and tech entrepreneurs.">Біздің мақсатымыз — жаңа буын инженерлерін, дамытушыларын, ұшқышсыз жүйелер операторларын және технологиялық кәсіпкерлерді дайындау.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Миссия с фото -->
+            <h3 class="section-title" data-kaz="Біздің миссия" data-ru="Наша Миссия" data-en="Our Mission">Біздің миссия</h3>
+            <div class="mission-with-photo">
+                <div>
+                    <p class="mission-text" data-kaz="Болашақ технология жасаушыларды шабыттандыру және оқыту — робототехника және ұшқышсыз технологиялар саласындағы практикалық білім беру арқылы инженерлік ойлауды, инновацияны және көшбасшылық қасиеттерді дамыту." data-ru="Вдохновлять и обучать будущих создателей технологий, развивая инженерное мышление, инновационность и лидерские качества через практическое образование в сфере робототехники и беспилотных технологий." data-en="Inspire and educate future technology creators, developing engineering thinking, innovation and leadership through practical education in robotics and drone technologies.">Болашақ технология жасаушыларды шабыттандыру және оқыту — робототехника және ұшқышсыз технологиялар саласындағы практикалық білім беру арқылы инженерлік ойлауды, инновацияны және көшбасшылық қасиеттерді дамыту.</p>
+                </div>
+                <img src="photo_2026-05-22_03-18-38.jpg" alt="SmartHub команда" />
+            </div>
+
+            <h3 class="section-title" data-kaz="Біздің артықшылықтар" data-ru="Наши Преимущества" data-en="Our Advantages">Біздің артықшылықтар</h3>
+            <div class="advantages-grid">
+                <div class="advantage-item">
+                    <div class="advantage-icon">🚀</div>
+                    <h4 data-kaz="Қазақстандағы алғашқы академия" data-ru="Первая академия в Казахстане" data-en="First academy in Kazakhstan">Қазақстандағы алғашқы академия</h4>
+                    <p data-kaz="Заманауи білім беру тәсілімен Қазақстандағы алғашқы робототехника және дрондар академиясы." data-ru="Первая академия робототехники и дронов в Казахстане с современным подходом к образованию." data-en="First robotics and drone academy in Kazakhstan with a modern educational approach.">Заманауи білім беру тәсілімен Қазақстандағы алғашқы робототехника және дрондар академиясы.</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">⚙️</div>
+                    <h4 data-kaz="Заманауи жабдық" data-ru="Современное оборудование" data-en="Modern equipment">Заманауи жабдық</h4>
+                    <p data-kaz="Нақты жабдықпен және инновациялық технологиялармен практикалық сабақтар." data-ru="Практические занятия с реальным оборудованием и инновационными технологиями." data-en="Practical classes with real equipment and innovative technologies.">Нақты жабдықпен және инновациялық технологиялармен практикалық сабақтар.</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">👨‍🏫</div>
+                    <h4 data-kaz="Тәжірибелі тренерлер" data-ru="Опытные наставники" data-en="Experienced coaches">Тәжірибелі тренерлер</h4>
+                    <p data-kaz="Көп жылдық тәжірибесі бар тәжірибелі тренерлердің жетекшілігімен оқыту." data-ru="Обучение под руководством опытных наставников с многолетним опытом." data-en="Training under the guidance of experienced coaches with many years of experience.">Көп жылдық тәжірибесі бар тәжірибелі тренерлердің жетекшілігімен оқыту.</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">🏆</div>
+                    <h4 data-kaz="Жарыстарға қатысу" data-ru="Участие в конкурсах" data-en="Competition participation">Жарыстарға қатысу</h4>
+                    <p data-kaz="Дүниежүзілік деңгейдегі байқауларға, олимпиадаларға және технологиялық жобаларға қатысу." data-ru="Участие в конкурсах, олимпиадах и технологических проектах на мировом уровне." data-en="Participation in competitions, olympiads and tech projects at world level.">Дүниежүзілік деңгейдегі байқауларға, олимпиадаларға және технологиялық жобаларға қатысу.</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">👥</div>
+                    <h4 data-kaz="Барлыққа арналған бағдарламалар" data-ru="Программы для всех" data-en="Programs for everyone">Барлыққа арналған бағдарламалар</h4>
+                    <p data-kaz="Балалардан ересектерге дейін әр жас пен дайындық деңгейіне арналған бағдарламалар." data-ru="Программы для разных возрастов и уровней подготовки — от детей до взрослых." data-en="Programs for different ages and preparation levels — from children to adults.">Балалардан ересектерге дейін әр жас пен дайындық деңгейіне арналған бағдарламалар.</p>
+                </div>
+                <div class="advantage-item">
+                    <div class="advantage-icon">💼</div>
+                    <h4 data-kaz="Болашақ мамандықтары" data-ru="Профессии будущего" data-en="Professions of the future">Болашақ мамандықтары</h4>
+                    <p data-kaz="Технология және инженерия саласындағы болашақ мамандықтарға дайындау." data-ru="Подготовка к профессиям будущего в сфере технологий и инженерии." data-en="Preparation for future professions in technology and engineering.">Технология және инженерия саласындағы болашақ мамандықтарға дайындау.</p>
+                </div>
+            </div>
+
+            <!-- Фото с занятий -->
+            <h3 class="section-title" style="margin-top:40px;" data-kaz="Сабақтардан сәттер" data-ru="Моменты с занятий" data-en="Class moments">Сабақтардан сәттер</h3>
+            <div class="groups-photo-grid">
+                <img src="photo_2026-05-22_03-18-37.jpg" alt="Сабақ сәті 1" />
+                <img src="photo_2026-05-22_03-18-39.jpg" alt="Сабақ сәті 2" />
+                <img src="img_6434.png" alt="Сабақ сәті 3" />
+                <img src="img_6435.png" alt="Сабақ сәті 4" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ СТРАНЫ ═══════════════════════════════════════════ -->
+    <section id="countries" class="gear-bg">
+        <div class="section-inner">
+            <h2 class="section-title" data-kaz="Біз қандай елдерде болдық?" data-ru="В каких странах мы были?" data-en="Which countries have we visited?">Біз қандай елдерде болдық?</h2>
+            <div class="flags-grid">
+                <div class="flag-card"><img class="flag-img" src="https://flagcdn.com/w80/pl.png" alt="Польша" /><span class="flag-name" data-kaz="Польша" data-ru="Польша" data-en="Poland">Польша</span></div>
+                <div class="flag-card"><img class="flag-img" src="https://flagcdn.com/w80/cz.png" alt="Чехия" /><span class="flag-name" data-kaz="Чехия" data-ru="Чехия" data-en="Czech Republic">Чехия</span></div>
+                <div class="flag-card"><img class="flag-img" src="https://flagcdn.com/w80/pa.png" alt="Панама" /><span class="flag-name" data-kaz="Панама" data-ru="Панама" data-en="Panama">Панама</span></div>
+                <div class="flag-card"><img class="flag-img" src="https://flagcdn.com/w80/ee.png" alt="Эстония" /><span class="flag-name" data-kaz="Эстония" data-ru="Эстония" data-en="Estonia">Эстония</span></div>
+                <div class="flag-card flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img class="flag-img" src="https://flagcdn.com/w80/tr.png" alt="Түркия" />
+                            <span class="flag-name" data-kaz="Түркия" data-ru="Турция" data-en="Turkey">Түркия</span>
+                            <span class="flag-medal">🏅</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 data-kaz="Дүниежүзілік чемпионат — Түркия" data-ru="Чемпионат мира — Турция" data-en="World Championship — Turkey">Дүниежүзілік чемпионат — Түркия</h4>
+                            <p data-kaz="Анталья қаласында өткен Fibonacci International Robot Olympiad-та 2 жүлделі орын. Оқушыларымыз 40 елден келген командаларды басып озды." data-ru="Два призовых места на Fibonacci International Robot Olympiad в Анталье. Наши студенты обошли команды из 40 стран." data-en="Two prize places at Fibonacci International Robot Olympiad in Antalya. Our students surpassed teams from 40 countries.">Анталья қаласында өткен Fibonacci International Robot Olympiad-та 2 жүлделі орын. Оқушыларымыз 40 елден келген командаларды басып озды.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flag-card"><img class="flag-img" src="https://flagcdn.com/w80/it.png" alt="Италия" /><span class="flag-name" data-kaz="Италия" data-ru="Италия" data-en="Italy">Италия</span></div>
+                <div class="flag-card"><img class="flag-img" src="https://flagcdn.com/w80/az.png" alt="Әзербайжан" /><span class="flag-name" data-kaz="Әзербайжан" data-ru="Азербайджан" data-en="Azerbaijan">Әзербайжан</span></div>
+                <div class="flag-card flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img class="flag-img" src="https://flagcdn.com/w80/nl.png" alt="Нидерланды" />
+                            <span class="flag-name" data-kaz="Нидерланды" data-ru="Нидерланды" data-en="Netherlands">Нидерланды</span>
+                            <span class="flag-medal">🏅</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 data-kaz="RoboCup — Нидерланды" data-ru="RoboCup — Нидерланды" data-en="RoboCup — Netherlands">RoboCup — Нидерланды</h4>
+                            <p data-kaz="Эйндховен қаласындағы RoboCup Junior-дің Rescue Maze санатының финалистері." data-ru="Финалисты RoboCup Junior в категории Rescue Maze, Эйндховен." data-en="Finalists of RoboCup Junior in Rescue Maze category, Eindhoven.">Эйндховен қаласындағы RoboCup Junior-дің Rescue Maze санатының финалистері.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flag-card flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img class="flag-img" src="https://flagcdn.com/w80/be.png" alt="Бельгия" />
+                            <span class="flag-name" data-kaz="Бельгия" data-ru="Бельгия" data-en="Belgium">Бельгия</span>
+                            <span class="flag-medal">🏅</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 data-kaz="EuroBot — Бельгия" data-ru="EuroBot — Бельгия" data-en="EuroBot — Belgium">EuroBot — Бельгия</h4>
+                            <p data-kaz="Еуропалық автономды робототехника чемпионатында қола медаль." data-ru="Бронза в европейском чемпионате по автономной робототехнике." data-en="Bronze at the European autonomous robotics championship.">Еуропалық автономды робототехника чемпионатында қола медаль.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flag-card flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img class="flag-img" src="https://flagcdn.com/w80/us.png" alt="АҚШ" />
+                            <span class="flag-name" data-kaz="АҚШ" data-ru="США" data-en="USA">АҚШ</span>
+                            <span class="flag-medal">🏅</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 data-kaz="Халықаралық кубок — АҚШ" data-ru="Международный кубок — США" data-en="International Cup — USA">Халықаралық кубок — АҚШ</h4>
+                            <p data-kaz="Хьюстон қаласындағы First LEGO League Championship жарысында Топ-3." data-ru="Топ-3 в соревнованиях First LEGO League Championship, Хьюстон." data-en="Top-3 at First LEGO League Championship, Houston.">Хьюстон қаласындағы First LEGO League Championship жарысында Топ-3.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flag-card flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img class="flag-img" src="https://flagcdn.com/w80/kr.png" alt="Оңтүстік Корея" />
+                            <span class="flag-name" data-kaz="Оңтүстік Корея" data-ru="Южная Корея" data-en="South Korea">Оңтүстік Корея</span>
+                            <span class="flag-medal">🏅</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 data-kaz="WRO — Оңтүстік Корея" data-ru="WRO — Южная Корея" data-en="WRO — South Korea">WRO — Оңтүстік Корея</h4>
+                            <p data-kaz="90 команда арасында Future Engineers санатындағы World Robot Olympiad-та күміс медаль." data-ru="Серебро на World Robot Olympiad в категории Future Engineers среди 90 команд." data-en="Silver at World Robot Olympiad in Future Engineers category among 90 teams.">90 команда арасында Future Engineers санатындағы World Robot Olympiad-та күміс медаль.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flag-card flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <img class="flag-img" src="https://flagcdn.com/w80/sg.png" alt="Сингапур" />
+                            <span class="flag-name" data-kaz="Сингапур" data-ru="Сингапур" data-en="Singapore">Сингапур</span>
+                            <span class="flag-medal">🏅</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <h4 data-kaz="Drone Racing — Сингапур" data-ru="Drone Racing — Сингапур" data-en="Drone Racing — Singapore">Drone Racing — Сингапур</h4>
+                            <p data-kaz="Asia Pacific халықаралық дрон жарысында Қазақстанның бірінші орны." data-ru="Первое место Казахстана на международных гонках дронов Asia Pacific." data-en="Kazakhstan's first place at Asia Pacific international drone races.">Asia Pacific халықаралық дрон жарысында Қазақстанның бірінші орны.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Фото поездок -->
+            <h3 class="section-title" style="margin-top:40px;" data-kaz="Іссапарлардан фотолар" data-ru="Фото из поездок" data-en="Trip photos">Іссапарлардан фотолар</h3>
+            <div class="country-photo-grid">
+                <div class="country-photo-card">
+                    <img src="trip1.png" alt="Түркияға іссапар" />
+                    <span class="country-badge">🇹🇷 Түркия</span>
+                    <div class="country-photo-info">
+                        <h4 data-kaz="Түркия, Анталья" data-ru="Турция, Анталья" data-en="Turkey, Antalya">Түркия, Анталья</h4>
+                        <p data-kaz="Fibonacci International Robot Olympiad. Қазақ туын да алып бардық — мақтанышпен!" data-ru="Fibonacci International Robot Olympiad. Казахстанский флаг гордо реял на соревнованиях!" data-en="Fibonacci International Robot Olympiad. The Kazakh flag flew proudly at the competition!">Fibonacci International Robot Olympiad. Қазақ туын да алып бардық — мақтанышпен!</p>
+                    </div>
+                </div>
+                <div class="country-photo-card">
+                    <img src="trip2.png" alt="Limra Hotel командасы" />
+                    <span class="country-badge">🏅 Жарыс</span>
+                    <div class="country-photo-info">
+                        <h4 data-kaz="Халықаралық жарыс" data-ru="Международные соревнования" data-en="International competition">Халықаралық жарыс</h4>
+                        <p data-kaz="Limra Hotel & Resorts — біздің командамыз жарыс алдында. 40 елден 200-ден астам қатысушы." data-ru="Limra Hotel & Resorts — наша команда перед соревнованиями. Более 200 участников из 40 стран." data-en="Limra Hotel & Resorts — our team before the competition. Over 200 participants from 40 countries.">Limra Hotel & Resorts — біздің командамыз жарыс алдында. 40 елден 200-ден астам қатысушы.</p>
+                    </div>
+                </div>
+                <div class="country-photo-card">
+                    <img src="trip3.png" alt="Командамыз әуежайда" />
+                    <span class="country-badge">✈️ Іссапар</span>
+                    <div class="country-photo-info">
+                        <h4 data-kaz="Оралу — мақтанышпен!" data-ru="Возвращение — с гордостью!" data-en="Return — with pride!">Оралу — мақтанышпен!</h4>
+                        <p data-kaz="SmartHub командасы халықаралық жарыстан оралды. Skillset және AZ Group серіктестерімен бірге." data-ru="Команда SmartHub вернулась с международных соревнований вместе с партнёрами Skillset и AZ Group." data-en="SmartHub team returned from international competitions with partners Skillset and AZ Group.">SmartHub командасы халықаралық жарыстан оралды. Skillset және AZ Group серіктестерімен бірге.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ УЧЕБНАЯ ПРОГРАММА ════════════════════════════════ -->
+    <section id="curriculum" class="gear-bg">
+        <div class="section-inner">
+            <h2 class="section-title" data-kaz="Оқу бағдарламасы" data-ru="Учебная Программа" data-en="Curriculum">Оқу бағдарламасы</h2>
+
+            <div class="curriculum-grid">
+                <!-- Робототехника -->
+                <div class="track-card">
+                    <h3 data-kaz="🤖 Роботика" data-ru="🤖 Робототехника" data-en="🤖 Robotics">🤖 Роботика</h3>
+                    <div class="level-grid">
+                        <div class="level-card flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <div class="level-icon">🟣</div>
+                                    <div class="level-name">Junior</div>
+                                    <div class="level-age" data-kaz="0–2 жыл" data-ru="0–2 года" data-en="0–2 years">0–2 жыл</div>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4>Junior</h4>
+                                    <p data-kaz="Жасы: 5 жастан 2-сыныпқа дейін. Балалар LEGO Education WeDo 2.0 конструкторлары арқылы роботика әлемімен танысады. Логика, қиял мен есеп шешу дағдылары дамиды." data-ru="Возраст: от 5 лет до 2 класса. Дети знакомятся с миром робототехники через конструкторы LEGO Education WeDo 2.0. Развиваются логика, воображение и навыки решения задач." data-en="Age: from 5 years to grade 2. Children explore the world of robotics through LEGO Education WeDo 2.0. Logic, imagination and problem-solving skills develop.">Жасы: 5 жастан 2-сыныпқа дейін. Балалар LEGO Education WeDo 2.0 конструкторлары арқылы роботика әлемімен танысады.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="level-card flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <div class="level-icon">🟢</div>
+                                    <div class="level-name">Middle</div>
+                                    <div class="level-age" data-kaz="3–4 жыл" data-ru="3–4 года" data-en="3–4 years">3–4 жыл</div>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4>Middle</h4>
+                                    <p data-kaz="Жасы: 3–4 сынып. LEGO Education SPIKE Prime платформасымен жұмыс. Күрделі механизмдер, программалау және автономды роботтар жасау." data-ru="Возраст: 3–4 классы. Работа с платформой LEGO Education SPIKE Prime. Сложные механизмы, программирование и создание автономных роботов." data-en="Age: grades 3–4. Working with LEGO Education SPIKE Prime platform. Complex mechanisms, programming and autonomous robots.">Жасы: 3–4 сынып. LEGO Education SPIKE Prime платформасымен жұмыс. Күрделі механизмдер, программалау және автономды роботтар жасау.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="level-card flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <div class="level-icon">🟡</div>
+                                    <div class="level-name">Master</div>
+                                    <div class="level-age" data-kaz="5–7 жыл" data-ru="5–7 лет" data-en="5–7 years">5–7 жыл</div>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4>Master</h4>
+                                    <p data-kaz="Жасы: 5–7 сынып. SPIKE Prime платформасында тереңдетілген оқыту. Күрделі жобалар, жарыстарға қатысу және нақты инженерлік есептерді шешу." data-ru="Возраст: 5–7 классы. Углублённое изучение с SPIKE Prime. Сложные проекты, участие в соревнованиях и решение реальных инженерных задач." data-en="Age: grades 5–7. Advanced study with SPIKE Prime. Complex projects, competitions and real engineering challenges.">Жасы: 5–7 сынып. SPIKE Prime платформасында тереңдетілген оқыту. Күрделі жобалар, жарыстарға қатысу.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="level-card flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <div class="level-icon">🔴</div>
+                                    <div class="level-name">Expert</div>
+                                    <div class="level-age" data-kaz="8+ жыл" data-ru="8 лет +" data-en="8+ years">8+ жыл</div>
+                                </div>
+                                <div class="flip-card-back">
+                                    <h4>Expert</h4>
+                                    <p data-kaz="Жасы: 8–10 сынып. Arduino микроконтроллерлерімен жұмыс, электроника, датчиктер және IoT технологиялары. Өз жобаларын жасайды." data-ru="Возраст: 8–10 классы. Работа с Arduino, электроника, датчики и IoT. Создают собственные проекты." data-en="Age: grades 8–10. Arduino, electronics, sensors and IoT. Creating own projects.">Жасы: 8–10 сынып. Arduino микроконтроллерлерімен жұмыс, электроника, датчиктер және IoT технологиялары.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Направления -->
+                <div class="directions-column">
+                <div class="track-card flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3 data-kaz="🚁 Дрондар" data-ru="🚁 Дроны" data-en="🚁 Drones">🚁 Дрондар</h3>
+                            <p class="track-desc-front" data-kaz="SmartHub-тегі дрон бағыты — практикалық жаттығулар, пилоттау және дрон-футбол жарыстарына қатысуға дайындық." data-ru="Направление дронов в SmartHub — практические тренировки, пилотирование и подготовка к участию в соревнованиях по дрон-футболу." data-en="The drone direction at SmartHub — practical training, piloting and preparation for drone football competitions.">SmartHub-тегі дрон бағыты — практикалық жаттығулар, пилоттау және дрон-футбол жарыстарына қатысуға дайындық.</p>
+                            <button class="flip-button" type="button" data-kaz="Толығырақ" data-ru="Подробнее" data-en="More">Толығырақ</button>
+                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите, чтобы увидеть подробности." data-en="Hover or tap to see details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3 data-kaz="«Дрондарды басқару» бағыты" data-ru="Направление «Управление дронами»" data-en="Drone Control Direction">«Дрондарды басқару» бағыты</h3>
+                            <p data-kaz="SmartHub-тегі дрон бағыты — оқушылар пилоттау дағдыларын меңгеретін және дрон-футбол жарыстарына қатысуға дайындалатын практикалық жаттығулар жүйесі." data-ru="Направление дронов в SmartHub — система практических тренировок, где ученики осваивают навыки пилотирования и готовятся к участию в соревнованиях по дрон-футболу." data-en="The drone direction at SmartHub is a system of practical training where students master piloting skills and prepare for drone football competitions.">SmartHub-тегі дрон бағыты — оқушылар пилоттау дағдыларын меңгеретін және дрон-футбол жарыстарына қатысуға дайындалатын практикалық жаттығулар жүйесі.</p>
+                            <p data-kaz="Оқыту іріктеу кезеңінен басталады, ол алғашқы үш айда жүреді. Осы уақытта балалар дрондардың құрылысымен танысады, қауіпсіздік ережелерін үйренеді және ұшатын аппараттарды басқарудың негізгі дағдыларын алады." data-ru="Обучение начинается с отборочного этапа, который длится первые три месяца. За это время дети знакомятся с устройством дронов, изучают правила безопасности и получают базовые навыки управления." data-en="Training begins with a selection stage lasting the first three months. Children learn about drone structure, safety rules and get basic piloting skills.">Оқыту іріктеу кезеңінен басталады — алғашқы үш ай. Осы уақытта балалар дрондардың құрылысымен танысады, қауіпсіздік ережелерін үйренеді.</p>
+                            <p data-kaz="Жаттығулар кезінде оқушылар:" data-ru="Во время тренировок ученики:" data-en="During training students:">Жаттығулар кезінде оқушылар:</p>
+                            <ul>
+                                <li data-kaz="дрондарды пилоттаудың негіздерін үйренеді;" data-ru="изучают основы пилотирования дронов;" data-en="learn the basics of drone piloting;">дрондарды пилоттаудың негіздерін үйренеді;</li>
+                                <li data-kaz="реакция жылдамдығы мен қозғалыс координациясын дамытады;" data-ru="развивают скорость реакции и координацию движений;" data-en="develop reaction speed and coordination;">реакция жылдамдығы мен қозғалыс координациясын дамытады;</li>
+                                <li data-kaz="зейін шоғырлануын жақсартады;" data-ru="улучшают концентрацию внимания;" data-en="improve concentration;">зейін шоғырлануын жақсартады;</li>
+                                <li data-kaz="командалық өзара әрекетті меңгереді;" data-ru="осваивают командное взаимодействие;" data-en="master team interaction;">командалық өзара әрекетті меңгереді;</li>
+                                <li data-kaz="дрон-футбол жарыстарына дайындалады." data-ru="готовятся к участию в соревнованиях по дрон-футболу." data-en="prepare for drone football competitions.">дрон-футбол жарыстарына дайындалады.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="track-card flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3 data-kaz="⚽ Дрон-футбол" data-ru="⚽ Дрон-футбол" data-en="⚽ Drone Football">⚽ Дрон-футбол</h3>
+                            <p class="track-desc-front" data-kaz="Стратегияны, реакция жылдамдығын және командалық жұмысты дамытатын заманауи технологиялық спорт." data-ru="Современный технологический спорт, развивающий стратегию, скорость реакции и командную работу." data-en="Modern tech sport developing strategy, reaction speed and teamwork.">Стратегияны, реакция жылдамдығын және командалық жұмысты дамытатын заманауи технологиялық спорт.</p>
+                            <button class="flip-button" type="button" data-kaz="Толығырақ" data-ru="Подробнее" data-en="More">Толығырақ</button>
+                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите, чтобы увидеть подробности." data-en="Hover or tap to see details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3 data-kaz="Дрон-футбол" data-ru="Дрон-футбол" data-en="Drone Football">Дрон-футбол</h3>
+                            <p data-kaz="Дрон-футбол — команда арнайы дрондарды басқаратын және ауа кеңістігінде ойын тапсырмаларын орындайтын заманауи технологиялық спорт түрі. Бұл формат технологияларды, спортты, стратегиялық ойлауды және командалық жұмысты біріктіреді." data-ru="Дрон-футбол — современный технологический вид спорта, в котором команды управляют специальными дронами и выполняют игровые задачи в воздушном пространстве." data-en="Drone football is a modern tech sport where teams control special drones and complete game tasks in the airspace.">Дрон-футбол — команда арнайы дрондарды басқаратын және ауа кеңістігінде ойын тапсырмаларын орындайтын заманауи технологиялық спорт түрі.</p>
+                            <p data-kaz="Оқушы алатын нәрсе:" data-ru="Что получает ученик:" data-en="What the student gets:">Оқушы алатын нәрсе:</p>
+                            <ul>
+                                <li data-kaz="дрон басқарудың сенімді дағдылары;" data-ru="уверенные навыки управления дроном;" data-en="confident drone control skills;">дрон басқарудың сенімді дағдылары;</li>
+                                <li data-kaz="зейін, реакция және кеңістіктік ойлаудың дамуы;" data-ru="развитие внимания, реакции и пространственного мышления;" data-en="development of attention, reaction and spatial thinking;">зейін, реакция және кеңістіктік ойлаудың дамуы;</li>
+                                <li data-kaz="командалық жұмыс тәжірибесі;" data-ru="опыт командной работы;" data-en="teamwork experience;">командалық жұмыс тәжірибесі;</li>
+                                <li data-kaz="спорт және технологиялық жарыстарға қатысу." data-ru="участие в спортивных и технологических соревнованиях." data-en="participation in sports and tech competitions.">спорт және технологиялық жарыстарға қатысу.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="track-card flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3 data-kaz="🏆 Спорттық РВТ" data-ru="🏆 Спортивная РВТ" data-en="🏆 Sports Robotics">🏆 Спорттық РВТ</h3>
+                            <p class="track-desc-front" data-kaz="RBT — бұл роботика жарыстарында өз күшін сынағысы келетін оқушыларға арналған бағыт." data-ru="RBT — это направление для учеников, которые хотят выйти за рамки обычных занятий и попробовать свои силы в соревнованиях по робототехнике." data-en="RBT is a direction for students who want to go beyond regular classes and try their hand at robotics competitions.">RBT — бұл роботика жарыстарында өз күшін сынағысы келетін оқушыларға арналған бағыт.</p>
+                            <button class="flip-button" type="button" data-kaz="Толығырақ" data-ru="Подробнее" data-en="More">Толығырақ</button>
+                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите, чтобы увидеть подробности." data-en="Hover or tap to see details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <h3 data-kaz="Спорттық роботика (RBT)" data-ru="Спортивная робототехника (RBT)" data-en="Sports Robotics (RBT)">Спорттық роботика (RBT)</h3>
+                            <p data-kaz="RBT — қалалық, республикалық және халықаралық турнирлерге командаларды дайындауға бағытталған жаттығулар. Қатысушылар роботтарды жинап программалауды ғана емес, шектеулі уақыт жағдайында тиімді инженерлік шешімдер табуды үйренеді." data-ru="RBT направлен на подготовку команд к городским, республиканским и международным турнирам. Участники учатся не только собирать роботов, но и находить инженерные решения." data-en="RBT is aimed at preparing teams for city, national and international tournaments. Participants learn not only to build robots but to find engineering solutions.">RBT — қалалық, республикалық және халықаралық турнирлерге командаларды дайындауға бағытталған жаттығулар.</p>
+                            <p data-kaz="Жаттығулар кезінде оқушылар:" data-ru="Во время тренировок ученики:" data-en="During training students:">Жаттығулар кезінде оқушылар:</p>
+                            <ul>
+                                <li data-kaz="роботтардың конструкцияларын жобалайды;" data-ru="проектируют и совершенствуют конструкции роботов;" data-en="design and improve robot structures;">роботтардың конструкцияларын жобалайды;</li>
+                                <li data-kaz="программалау дағдыларын дамытады;" data-ru="развивают навыки программирования и автоматизации;" data-en="develop programming and automation skills;">программалау дағдыларын дамытады;</li>
+                                <li data-kaz="жарыстарға дайындалады." data-ru="готовятся к выступлениям на соревнованиях." data-en="prepare for competitions.">жарыстарға дайындалады.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="pricing-box">
+                <div>
+                    <p data-kaz="Сынақ сабаққа жазылу" data-ru="Записаться на пробный урок" data-en="Sign up for a trial lesson">Сынақ сабаққа жазылу</p>
+                    <p class="price">5 000 тг / 42 000 тг <span data-kaz="айына" data-ru="в месяц" data-en="per month">айына</span></p>
+                    <p class="pricing-note" data-kaz="Келесі оқу жылына бағалар жоғарылайды — ағымдағы бағаны бекіту үшін қазір жазылыңыз." data-ru="Цены на следующий учебный год будут выше — оформите запись сейчас, чтобы зафиксировать текущую стоимость." data-en="Prices for the next school year will be higher — sign up now to lock in the current price.">Келесі оқу жылына бағалар жоғарылайды — ағымдағы бағаны бекіту үшін қазір жазылыңыз.</p>
+                </div>
+                <a href="#contacts" class="btn btn-red" data-kaz="Жазылу" data-ru="Записаться" data-en="Sign up">Жазылу</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ ДОСТИЖЕНИЯ ════════════════════════════════════════ -->
+    <section id="achievements" class="gear-bg">
+        <div class="section-inner">
+            <h2 class="section-title" data-kaz="Жетістіктер" data-ru="Достижения" data-en="Achievements">Жетістіктер</h2>
+
+            <div class="year-report">
+                <div class="report-header">
+                    <span class="report-tag" data-kaz="Жылдық қорытынды" data-ru="Итоги за год" data-en="Year results">Жылдық қорытынды</span>
+                    <h3 data-kaz="SmartHub сандар мен жеңістерде" data-ru="SmartHub в цифрах и победах" data-en="SmartHub in numbers and victories">SmartHub сандар мен жеңістерде</h3>
+                    <p data-kaz="Академиямыз үшін жарқын жыл: жаңа филиалдар, жүздеген оқушылар және халықаралық жарыстардағы күшті нәтижелер." data-ru="Яркий год для нашей академии: новые филиалы, сотни учеников и сильные результаты на международных соревнованиях." data-en="A bright year for our academy: new branches, hundreds of students and strong results at international competitions.">Академиямыз үшін жарқын жыл: жаңа филиалдар, жүздеген оқушылар және халықаралық жарыстардағы күшті нәтижелер.</p>
+                </div>
+
+                <div class="report-cards">
+                    <div class="report-card report-card-large">
+                        <div class="report-icon">🏫</div>
+                        <h4 data-kaz="6 филиал" data-ru="6 филиалов" data-en="6 branches">6 филиал</h4>
+                        <p>Skillset, 84 мектеп, 17 мектеп, 97 мектеп, 66 мектеп, 101 мектеп</p>
+                    </div>
+                    <div class="report-card report-card-large">
+                        <div class="report-icon">🎓</div>
+                        <h4 data-kaz="300 оқушы" data-ru="300 учеников" data-en="300 students">300 оқушы</h4>
+                        <p data-kaz="Академия бойынша балалар мен жасөспірімдерге арналған белсенді командалық мектеп." data-ru="Активная командная школа для детей и подростков по всей академии." data-en="Active team school for children and teens across the academy.">Академия бойынша балалар мен жасөспірімдерге арналған белсенді командалық мектеп.</p>
+                    </div>
+                </div>
+
+                <div class="report-grid">
+                    <div class="report-card">
+                        <div class="report-icon">🥇</div>
+                        <h4 data-kaz="Жүлделі орындар" data-ru="Призовые места" data-en="Prize places">Жүлделі орындар</h4>
+                        <div class="report-list">
+                            <p>I место Robotek Grand Tournament Международный этап — «Доставщик»</p>
+                            <p>II место Fibonacci International Robotics Olympiad — «Autonomous Car Racing» (орта мектеп)</p>
+                            <p>II место Fibonacci International Robotics Olympiad — «Autonomous Car Racing» (бастауыш мектеп)</p>
+                            <p>II место Fibonacci International Robotics Olympiad — «Lego Line Following» (бастауыш мектеп)</p>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-icon">🌍</div>
+                        <h4 data-kaz="Аймақтық және республикалық кезеңдер" data-ru="Региональный и республиканский этапы" data-en="Regional and national stages">Аймақтық және республикалық кезеңдер</h4>
+                        <div class="report-list">
+                            <p>II место — World Robot Olympiad Robomission Elementary (аймақтық кезең)</p>
+                            <p>Astana Tech Cup</p>
+                            <p data-kaz="Республикалық кезең: 4 жүлделі орын" data-ru="Республиканский этап: 4 призовых места" data-en="National stage: 4 prize places">Республикалық кезең: 4 жүлделі орын</p>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-icon">⚡</div>
+                        <h4 data-kaz="Марапаттар және топ-орындар" data-ru="Награды и топ‑места" data-en="Awards and top places">Марапаттар және топ-орындар</h4>
+                        <div class="report-list">
+                            <p>Vex IQ Energy Award (бастауыш мектеп)</p>
+                            <p>III место Robotek Grand Tournament (республикалық кезең) — «Доставщик»</p>
+                            <p>JasSkills Drone Soccer — Топ 5</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="achievement-gallery">
+                <h3 class="gallery-title" data-kaz="Жеңістеріміздің сәттері" data-ru="Моменты наших побед" data-en="Moments of our victories">Жеңістеріміздің сәттері</h3>
+                <div class="gallery-grid">
+                    <figure class="gallery-item">
+                        <img src="ach1.jpg" alt="FIRST Lego League — Champion's Award" loading="lazy" />
+                        <figcaption>FIRST Lego League — Champion's Award, Astana 2025</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="ach2.jpg" alt="EurAsia Championship" loading="lazy" />
+                        <figcaption>Fibonacci EurAsia — 2 место, Autonomous Car Racing</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="ach3.jpeg" alt="Fibonacci International Robot Olympiad" loading="lazy" />
+                        <figcaption>Fibonacci International Robot Olympiad — 2 места, Анталья</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="hero-bg.jpeg" alt="WRO 2026" loading="lazy" />
+                        <figcaption data-kaz="WRO аймақтық турнирі 2026" data-ru="Региональный турнир WRO 2026" data-en="WRO Regional Tournament 2026">WRO аймақтық турнирі 2026</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="ach6.jpg" alt="Robotek Grand Tournament Astana" loading="lazy" />
+                        <figcaption>Robotek Grand Tournament Astana — призёры</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="ach5.jpg" alt="Robotek Grand Tournament кубок" loading="lazy" />
+                        <figcaption>Robotek Grand Tournament — кубок</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ ОТЗЫВЫ ════════════════════════════════════════════ -->
+    <section id="reviews" class="gear-bg">
+        <div class="section-inner">
+            <h2 class="section-title" data-kaz="Пікірлер" data-ru="Отзывы" data-en="Reviews">Пікірлер</h2>
+            <div class="reviews-carousel">
+                <button class="rev-arrow rev-prev" type="button" aria-label="Предыдущие отзывы">‹</button>
+                <div class="reviews-viewport">
+                    <div class="reviews-track">
+                        <div class="review-card"><span class="quote-mark">"</span><div class="stars">★★★★★</div><p data-kaz="Ұлым 2 жылдан бері айналысады — жаңадан бастаушыдан республика чемпионына дейін өсті. Педагогтар өз ісіне шын берілген." data-ru="Мой сын занимается уже 2 года — вырос от новичка до чемпиона республики. Педагоги невероятно преданы своему делу." data-en="My son has been studying for 2 years — grew from a beginner to a national champion. Teachers are incredibly dedicated.">Ұлым 2 жылдан бері айналысады — жаңадан бастаушыдан республика чемпионына дейін өсті.</p><div class="reviewer">— Айгүл М., оқушының анасы</div></div>
+                        <div class="review-card"><span class="quote-mark">"</span><div class="stars">★★★★★</div><p data-kaz="Қызым Түркиядағы турнирге қатысты — ұмытылмас тәжірибе. SmartHub командасы оқудан жеңіске дейін балаларды қадағалайды." data-ru="Дочь участвовала в турнире в Турции — незабываемый опыт. Команда SmartHub сопровождает детей на каждом шагу." data-en="My daughter participated in a tournament in Turkey — unforgettable experience. SmartHub team accompanies children every step of the way.">Қызым Түркиядағы турнирге қатысты — ұмытылмас тәжірибе.</p><div class="reviewer">— Нұрлан Қ., оқушының әкесі</div></div>
+                        <div class="review-card"><span class="quote-mark">"</span><div class="stars">★★★★★</div><p data-kaz="Баланың болашағына ең жақсы инвестиция. SmartHub-тан кейін ұлым гранттпен техникалық университетке түсті." data-ru="Лучшая инвестиция в будущее ребёнка. После SmartHub сын поступил в технический университет с грантом." data-en="Best investment in a child's future. After SmartHub, my son entered a technical university with a grant.">Баланың болашағына ең жақсы инвестиция.</p><div class="reviewer">— Зарина Б., түлектің анасы</div></div>
+                        <div class="review-card"><span class="quote-mark">"</span><div class="stars">★★★★★</div><p data-kaz="Топтар кішкентай, ұстаз әр балаға назар аударады. Қызым аптасын бойы сабаққа асығады." data-ru="Очень нравится, что группы небольшие и преподаватель уделяет внимание каждому ребёнку." data-en="Love that groups are small and the teacher pays attention to each child.">Топтар кішкентай, ұстаз әр балаға назар аударады.</p><div class="reviewer">— Алия Т., оқушының анасы</div></div>
+                        <div class="review-card"><span class="quote-mark">"</span><div class="stars">★★★★★</div><p data-kaz="Бала өзіне сенімді болды, топта жұмыс істеуді үйренді. Бұл бағасыз. Үлкен рахмет!" data-ru="Ребёнок стал увереннее, научился работать в команде. Это бесценно. Спасибо большое!" data-en="The child became more confident, learned to work in a team. This is priceless. Thank you!">Бала өзіне сенімді болды, топта жұмыс істеуді үйренді. Бұл бағасыз.</p><div class="reviewer">— Мадина А., оқушының анасы</div></div>
+                        <div class="review-card"><span class="quote-mark">"</span><div class="stars">★★★★★</div><p data-kaz="Заманауи жабдық, анық бағдарлама және нақты жобалар — ойын ғана емес. Ұлымның прогрессі ай сайын байқалады." data-ru="Современное оборудование, понятная программа и реальные проекты, а не просто игры. Прогресс видно каждый месяц." data-en="Modern equipment, clear program and real projects, not just games. Progress is visible every month.">Заманауи жабдық, анық бағдарлама және нақты жобалар. Прогресс ай сайын байқалады.</p><div class="reviewer">— Тимур Қ., оқушының әкесі</div></div>
+                    </div>
+                </div>
+                <button class="rev-arrow rev-next" type="button" aria-label="Следующие отзывы">›</button>
+                <div class="reviews-dots" aria-hidden="true"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ КОНТАКТЫ ══════════════════════════════════════════ -->
+    <section id="contacts" class="gear-bg">
+        <div class="section-inner">
+            <h2 class="section-title" data-kaz="Байланыс" data-ru="Контакты" data-en="Contacts">Байланыс</h2>
+            <div class="contacts-layout">
+                <div class="locations">
+                    <h3 data-kaz="Біздің филиалдар" data-ru="Наши филиалы" data-en="Our branches">Біздің филиалдар</h3>
+                    <div class="location-item">
+                        <div class="location-icon">📍</div>
+                        <div>
+                            <h4>Алматы</h4>
+                            <p>ул. Абая 10, БЦ «Атлас», офис 305</p>
+                            <p>+7 (727) 000-00-01</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <div class="location-icon">📍</div>
+                        <div>
+                            <h4>Астана</h4>
+                            <p>пр. Республики 21, ТРЦ «Мега», 2 этаж</p>
+                            <p>+7 (717) 000-00-02</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <div class="location-icon">✉️</div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@smarthub.kz</p>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp и Instagram кнопки -->
+                    <div class="social-btns">
+                        <a href="https://wa.me/77001234567" target="_blank" class="btn-wa">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            WhatsApp
+                        </a>
+                        <a href="https://instagram.com/smarthub.kz" target="_blank" class="btn-ig">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                            Instagram
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-size:1.1rem;font-weight:900;color:var(--blue);margin-bottom:18px;" data-kaz="Сынақ сабаққа жазылу" data-ru="Записаться на пробный урок" data-en="Sign up for a trial lesson">Сынақ сабаққа жазылу</h3>
+                    <form id="contactForm" class="contact-form">
+                        <input type="text" name="name" placeholder="Атыңыз / Ваше имя" required />
+                        <input type="tel" name="phone" placeholder="Телефон нөмірі / Номер телефона" required />
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                            <input type="number" name="age" placeholder="Жасы / Возраст" required />
+                            <select name="direction" required style="padding:12px;border:1px solid #ddd;border-radius:8px;font-size:1rem;font-family:inherit;">
+                                <option value="" disabled selected data-kaz="Бағытты таңдаңыз" data-ru="Выберите направление" data-en="Choose direction">Бағытты таңдаңыз</option>
+                                <option value="дроны" data-kaz="Дрондар" data-ru="Дроны" data-en="Drones">Дрондар</option>
+                                <option value="робототехника" data-kaz="Роботика" data-ru="Робототехника" data-en="Robotics">Роботика</option>
+                                <option value="лагеря" data-kaz="Лагерьлер" data-ru="Лагеря" data-en="Camps">Лагерьлер</option>
+                            </select>
+                        </div>
+                        <textarea name="message" placeholder="Хабарламаңыз / Ваше сообщение (необязательно)"></textarea>
+                        <button type="submit" class="btn btn-red" data-kaz="Өтінім жіберу" data-ru="Отправить заявку" data-en="Send application">Өтінім жіберу</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+    <footer>
+        <p>© 2025 <span>SmartHub</span> — Robotics &amp; Drone Academy. Қазақстан.</p>
+        <div class="social-btns" style="justify-content:center;margin-top:12px;">
+            <a href="https://wa.me/77001234567" target="_blank" class="btn-wa" style="font-size:.85rem;padding:8px 16px;">WhatsApp</a>
+            <a href="https://instagram.com/smarthub.kz" target="_blank" class="btn-ig" style="font-size:.85rem;padding:8px 16px;">Instagram</a>
+        </div>
+    </footer>
+
+    <!-- ═══ МОДАЛ: ЛИЧНЫЙ КАБИНЕТ / ВХОД ════════════════════ -->
+    <div class="modal-overlay" id="modal-parent">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('parent')">×</button>
+            <div id="modal-auth-view">
+                <h2 data-kaz="Кабинетке кіру" data-ru="Вход в кабинет" data-en="Cabinet login">Кабинетке кіру</h2>
+                <div class="modal-tabs">
+                    <button class="modal-tab active" onclick="switchModalTab('login')">Вход</button>
+                    <button class="modal-tab" onclick="switchModalTab('register')">Регистрация</button>
+                </div>
+                <div id="tab-login" class="modal-form">
+                    <input type="email" placeholder="Email" id="login-email" />
+                    <input type="password" placeholder="Пароль" id="login-pass" />
+                    <button onclick="doLogin()">Войти</button>
+                </div>
+                <div id="tab-register" class="modal-form" style="display:none">
+                    <input type="text" placeholder="ФИО родителя" id="reg-name" />
+                    <input type="tel" placeholder="Телефон" id="reg-phone" />
+                    <input type="email" placeholder="Email" id="reg-email" />
+                    <input type="password" placeholder="Пароль" id="reg-pass" />
+                    <button onclick="doRegister()">Зарегистрироваться</button>
+                </div>
+            </div>
+            <div id="modal-cabinet-view" style="display:none">
+                <div class="parent-cabinet">
+                    <div class="cabinet-header">
+                        <div class="avatar" id="cab-avatar">А</div>
+                        <div>
+                            <div class="cabinet-name" id="cab-name">Айгүл Мамытова</div>
+                            <div class="cabinet-role" data-kaz="Ата-ана кабинеті" data-ru="Кабинет родителя" data-en="Parent cabinet">Ата-ана кабинеті</div>
+                        </div>
+                    </div>
+                    <div class="cabinet-tabs">
+                        <button class="cab-tab active" onclick="cabTab('child')" data-kaz="Бала" data-ru="Ребёнок" data-en="Child">Бала</button>
+                        <button class="cab-tab" onclick="cabTab('schedule')" data-kaz="Кесте" data-ru="Расписание" data-en="Schedule">Кесте</button>
+                        <button class="cab-tab" onclick="cabTab('payment')" data-kaz="Төлем" data-ru="Оплата" data-en="Payment">Төлем</button>
+                        <button class="cab-tab" onclick="cabTab('events')" data-kaz="Оқиғалар" data-ru="События" data-en="Events">Оқиғалар</button>
+                    </div>
+                    <!-- Ребёнок -->
+                    <div id="cab-child" class="cab-panel active">
+                        <div class="info-row"><span data-kaz="Аты-жөні" data-ru="ФИО" data-en="Full name">ФИО</span><span>Мамытов Арлан</span></div>
+                        <div class="info-row"><span data-kaz="Жасы" data-ru="Возраст" data-en="Age">Возраст</span><span>10 жас</span></div>
+                        <div class="info-row"><span data-kaz="Топ" data-ru="Группа" data-en="Group">Группа</span><span>Роботика — Master</span></div>
+                        <div class="info-row"><span data-kaz="Тренер" data-ru="Тренер" data-en="Coach">Тренер</span><span>Данияр Сейітов</span></div>
+                        <div class="info-row"><span data-kaz="Филиал" data-ru="Филиал" data-en="Branch">Филиал</span><span>Skillset — 84 мектеп</span></div>
+                        <div class="info-row"><span data-kaz="Қатысушылық" data-ru="Посещаемость" data-en="Attendance">Посещаемость</span><span style="color:#2e7d32;font-weight:900">87%</span></div>
+                    </div>
+                    <!-- Расписание -->
+                    <div id="cab-schedule" class="cab-panel">
+                        <div class="schedule-item"><div class="schedule-day">Дүйсенбі</div><div>17:00 – 18:30 · Роботика</div></div>
+                        <div class="schedule-item"><div class="schedule-day">Сәрсенбі</div><div>17:00 – 18:30 · Программалау</div></div>
+                        <div class="schedule-item"><div class="schedule-day">Жұма</div><div>16:00 – 17:30 · Жарысқа дайындық</div></div>
+                    </div>
+                    <!-- Оплата -->
+                    <div id="cab-payment" class="cab-panel">
+                        <div class="info-row">
+                            <span data-kaz="Маусым 2025 — күй" data-ru="Июнь 2025 — статус" data-en="June 2025 — status">Маусым 2025</span>
+                            <span><span class="payment-badge paid" data-kaz="Төленді" data-ru="Оплачено" data-en="Paid">Төленді</span></span>
+                        </div>
+                        <div class="info-row"><span>Мамыр 2025</span><span class="payment-badge paid">Төленді</span></div>
+                        <div class="info-row"><span>Сәуір 2025</span><span class="payment-badge paid">Төленді</span></div>
+                        <p style="margin-top:14px;padding:12px;background:#fff8e1;border-radius:10px;font-size:.9rem;color:#f57f17;">
+                            ⚠️ <strong data-kaz="Келесі төлем:" data-ru="Следующий платёж:" data-en="Next payment:">Келесі төлем:</strong> 1 шілде 2025 · 42 000 тг
+                        </p>
+                    </div>
+                    <!-- События -->
+                    <div id="cab-events" class="cab-panel">
+                        <div class="event-item">
+                            <h5>🏕️ <span data-kaz="Жазғы лагерь 2025" data-ru="Летний лагерь 2025" data-en="Summer camp 2025">Жазғы лагерь 2025</span></h5>
+                            <p data-kaz="10–20 шілде · Тіркелу ашық" data-ru="10–20 июля · Регистрация открыта" data-en="July 10–20 · Registration open">10–20 шілде · Тіркелу ашық</p>
+                        </div>
+                        <div class="event-item">
+                            <h5>🤖 <span data-kaz="Robotek Grand Tournament 2025" data-ru="Robotek Grand Tournament 2025" data-en="Robotek Grand Tournament 2025">Robotek Grand Tournament 2025</span></h5>
+                            <p data-kaz="Қыркүйек 2025 · Астана" data-ru="Сентябрь 2025 · Астана" data-en="September 2025 · Astana">Қыркүйек 2025 · Астана</p>
+                        </div>
+                        <div class="event-item">
+                            <h5>🌍 <span data-kaz="WRO Республикалық кезең" data-ru="WRO Республиканский этап" data-en="WRO National Stage">WRO Республикалық кезең</span></h5>
+                            <p data-kaz="Қазан 2025 · Алматы" data-ru="Октябрь 2025 · Алматы" data-en="October 2025 · Almaty">Қазан 2025 · Алматы</p>
+                        </div>
+                    </div>
+                    <button onclick="doLogout()" style="margin-top:16px;background:none;border:1px solid #ddd;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:.9rem;color:#999;" data-kaz="Шығу" data-ru="Выйти" data-en="Logout">Шығу</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=6"></script>
+    <script>
+    // ── Язык ──────────────────────────────────────────────────
+    const savedLang = localStorage.getItem('sh_lang') || 'kaz';
+    document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.lang === savedLang);
+    });
+    applyLang(savedLang);
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.dataset.lang;
+            localStorage.setItem('sh_lang', lang);
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+            applyLang(lang);
+        });
+    });
+
+    function applyLang(lang) {
+        document.querySelectorAll('[data-kaz]').forEach(el => {
+            const txt = el.dataset[lang];
+            if (txt) el.textContent = txt;
+        });
+    }
+
+    // ── Модальное окно родителя ───────────────────────────────
+    function openModal(name) {
+        document.getElementById('modal-' + name).classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal(name) {
+        document.getElementById('modal-' + name).classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    document.getElementById('modal-parent').addEventListener('click', function(e) {
+        if (e.target === this) closeModal('parent');
+    });
+
+    function switchModalTab(tab) {
+        document.querySelectorAll('.modal-tab').forEach((b, i) => b.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register')));
+        document.getElementById('tab-login').style.display = tab === 'login' ? 'block' : 'none';
+        document.getElementById('tab-register').style.display = tab === 'register' ? 'block' : 'none';
+    }
+
+    function doLogin() {
+        const email = document.getElementById('login-email').value.trim();
+        if (!email) { alert('Email енгізіңіз'); return; }
+        localStorage.setItem('sh_parent_logged', '1');
+        localStorage.setItem('sh_parent_name', email.split('@')[0]);
+        showCabinet(email.split('@')[0]);
+    }
+    function doRegister() {
+        const name = document.getElementById('reg-name').value.trim();
+        const email = document.getElementById('reg-email').value.trim();
+        if (!name || !email) { alert('Барлық өрістерді толтырыңыз'); return; }
+        localStorage.setItem('sh_parent_logged', '1');
+        localStorage.setItem('sh_parent_name', name);
+        showCabinet(name);
+    }
+    function showCabinet(name) {
+        document.getElementById('modal-auth-view').style.display = 'none';
+        document.getElementById('modal-cabinet-view').style.display = 'block';
+        document.getElementById('cab-name').textContent = name;
+        document.getElementById('cab-avatar').textContent = name[0].toUpperCase();
+    }
+    function doLogout() {
+        localStorage.removeItem('sh_parent_logged');
+        document.getElementById('modal-cabinet-view').style.display = 'none';
+        document.getElementById('modal-auth-view').style.display = 'block';
+    }
+    function cabTab(tab) {
+        document.querySelectorAll('.cab-tab').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.cab-panel').forEach(p => p.classList.remove('active'));
+        event.target.classList.add('active');
+        document.getElementById('cab-' + tab).classList.add('active');
+    }
+    // Автовход если уже залогинен
+    if (localStorage.getItem('sh_parent_logged')) {
+        showCabinet(localStorage.getItem('sh_parent_name') || 'Пайдаланушы');
+    }
+    </script>
+</body>
+</html>

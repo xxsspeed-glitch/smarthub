@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartHub — Админ панелі</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--red:#CC0000;--blue:#1A1A8C;--dark:#1a1a1a;--bg:#f4f4f6;--white:#fff;--shadow:0 2px 12px rgba(0,0,0,.10);--border:#e2e2e2;--green:#2e7d32;--orange:#e65100}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark);min-height:100vh}
+    #loginOverlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:999}
+    #loginOverlay.hidden{display:none}
+    .login-box{background:#fff;border-radius:16px;padding:40px 36px;width:340px;box-shadow:0 8px 40px rgba(0,0,0,.22);text-align:center}
+    .login-box h2{font-size:1.4rem;font-weight:900;color:var(--red);margin-bottom:8px}
+    .login-box p{font-size:.88rem;color:#777;margin-bottom:24px}
+    .login-box input{width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:8px;font-size:.95rem;font-family:inherit;margin-bottom:14px;transition:border-color .2s}
+    .login-box input:focus{outline:none;border-color:var(--red)}
+    .login-box button{width:100%;padding:12px;background:var(--red);color:#fff;border:none;border-radius:8px;font-weight:900;font-size:1rem;cursor:pointer}
+    .login-box button:hover{background:#a80000}
+    .login-error{color:var(--red);font-size:.85rem;margin-top:8px;display:none}
+    /* Layout */
+    .admin-layout{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+    .sidebar{background:var(--blue);color:#fff;padding:0;display:flex;flex-direction:column}
+    .sidebar-logo{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,.12);font-weight:900;font-size:1.1rem}
+    .sidebar-logo span{color:#f9c74f}
+    .sidebar-nav{flex:1;padding:12px 0}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:13px 20px;cursor:pointer;font-size:.93rem;font-weight:600;transition:.2s;border-left:3px solid transparent}
+    .nav-item:hover{background:rgba(255,255,255,.1)}
+    .nav-item.active{background:rgba(255,255,255,.15);border-left-color:#f9c74f;color:#f9c74f}
+    .nav-item .ico{font-size:1.1rem;width:22px}
+    .sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.12);font-size:.8rem;opacity:.6}
+    .main-content{padding:28px;overflow-y:auto}
+    .page{display:none}
+    .page.active{display:block}
+    /* Top bar */
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+    .topbar h1{font-size:1.5rem;font-weight:900;color:var(--dark)}
+    .topbar-actions{display:flex;gap:10px;align-items:center}
+    /* Cards */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    .stat-card{background:#fff;border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+    .stat-card .stat-num{font-size:2rem;font-weight:900;color:var(--blue)}
+    .stat-card .stat-lbl{font-size:.82rem;color:#888;margin-top:4px}
+    .stat-card .stat-sub{font-size:.8rem;color:var(--green);margin-top:6px}
+    /* Table */
+    .card{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
+    .card-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+    .card-header h3{font-size:1rem;font-weight:900}
+    .card-header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    table{width:100%;border-collapse:collapse;font-size:.88rem}
+    th{padding:11px 14px;text-align:left;color:#888;font-weight:700;font-size:.78rem;text-transform:uppercase;border-bottom:1px solid var(--border);background:#fafafa}
+    td{padding:11px 14px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+    tr:hover td{background:#fafbff}
+    tr:last-child td{border-bottom:none}
+    .badge{padding:3px 10px;border-radius:50px;font-size:.76rem;font-weight:700;white-space:nowrap}
+    .badge-new{background:#e3f2fd;color:#1565c0}
+    .badge-active{background:#e8f5e9;color:#2e7d32}
+    .badge-done{background:#f3e5f5;color:#6a1b9a}
+    .badge-debt{background:#ffebee;color:#c62828}
+    .badge-pending{background:#fff3e0;color:#e65100}
+    /* Inputs */
+    input[type=text],input[type=search],input[type=number],input[type=tel],input[type=email],select,textarea{padding:9px 13px;border:1px solid var(--border);border-radius:8px;font-size:.88rem;font-family:inherit;outline:none;background:#fff}
+    input:focus,select:focus,textarea:focus{border-color:var(--blue)}
+    .search-input{width:200px}
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;border:none;transition:.2s}
+    .btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#a80000}
+    .btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:#111070}
+    .btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#1b5e20}
+    .btn-outline{background:#fff;color:var(--dark);border:1px solid var(--border)}.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+    .btn-sm{padding:5px 11px;font-size:.78rem}
+    /* Form grid */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+    .form-group{display:flex;flex-direction:column;gap:6px}
+    .form-group label{font-size:.82rem;font-weight:700;color:#555}
+    .form-group input,.form-group select,.form-group textarea{width:100%}
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:20px}
+    .modal-overlay.open{display:flex}
+    .modal-card{background:#fff;border-radius:16px;padding:28px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+    .modal-card h3{font-weight:900;font-size:1.1rem;margin-bottom:18px;color:var(--blue)}
+    .modal-close-btn{position:absolute;top:14px;right:18px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#999}
+    /* Responsive */
+    @media(max-width:768px){.admin-layout{grid-template-columns:1fr}.sidebar{display:none}.stats-row{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginOverlay">
+  <div class="login-box">
+    <h2>SmartHub</h2>
+    <p>Админ панеліне кіру</p>
+    <input type="text" id="loginKey" placeholder="Кіру кілті / Ключ доступа" />
+    <button onclick="tryLogin()">Кіру</button>
+    <div class="login-error" id="loginError">Кілт қате / Неверный ключ</div>
+  </div>
+</div>
+
+<!-- ADMIN LAYOUT -->
+<div class="admin-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">Smart<span>Hub</span> Admin</div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" onclick="showPage('dashboard')"><span class="ico">📊</span> Дашборд</div>
+      <div class="nav-item" onclick="showPage('applications')"><span class="ico">📋</span> Өтінімдер / Заявки</div>
+      <div class="nav-item" onclick="showPage('students')"><span class="ico">👦</span> Оқушылар / Ученики</div>
+      <div class="nav-item" onclick="showPage('groups')"><span class="ico">👥</span> Топтар / Группы</div>
+      <div class="nav-item" onclick="showPage('branches')"><span class="ico">🏫</span> Филиалдар / Филиалы</div>
+      <div class="nav-item" onclick="showPage('trainers')"><span class="ico">🧑‍🏫</span> Тренерлер / Тренеры</div>
+      <div class="nav-item" onclick="showPage('payments')"><span class="ico">💰</span> Төлемдер / Оплаты</div>
+    </nav>
+    <div class="sidebar-footer">SmartHub © 2025</div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- DASHBOARD -->
+    <div id="page-dashboard" class="page active">
+      <div class="topbar"><h1>📊 Дашборд</h1><div class="topbar-actions"><a href="index.html" class="btn btn-outline">← Сайтқа оралу</a></div></div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-num" id="stat-apps">0</div><div class="stat-lbl">Жаңа өтінімдер / Новые заявки</div><div class="stat-sub">↑ Бүгін / Сегодня</div></div>
+        <div class="stat-card"><div class="stat-num">247</div><div class="stat-lbl">Оқушылар / Ученики</div><div class="stat-sub">↑ +12 осы айда</div></div>
+        <div class="stat-card"><div class="stat-num">6</div><div class="stat-lbl">Филиалдар / Филиалы</div><div class="stat-sub">Барлығы белсенді</div></div>
+        <div class="stat-card"><div class="stat-num">18</div><div class="stat-lbl">Топтар / Группы</div><div class="stat-sub">Белсенді / Активных</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Соңғы өтінімдер / Последние заявки</h3><button class="btn btn-blue" onclick="showPage('applications')">Барлығы →</button></div>
+        <table><thead><tr><th>Аты / Имя</th><th>Телефон</th><th>Жасы</th><th>Бағыт / Направление</th><th>Күй / Статус</th><th>Уақыт</th></tr></thead>
+        <tbody id="dash-recent-apps"><tr><td colspan="6" style="text-align:center;color:#999;padding:20px">Өтінімдер жоқ / Заявок нет</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <!-- APPLICATIONS -->
+    <div id="page-applications" class="page">
+      <div class="topbar"><h1>📋 Өтінімдер / Заявки</h1>
+        <div class="topbar-actions">
+          <input type="search" class="search-input" placeholder="🔍 Іздеу / Поиск..." oninput="filterApps(this.value)" />
+          <button class="btn btn-green" onclick="exportExcel()">📥 Excel</button>
+        </div>
+      </div>
+      <div class="card">
+        <table><thead><tr><th>#</th><th>Аты / Имя</th><th>Телефон</th><th>Жасы</th><th>Бағыт</th><th>Хабарлама</th><th>Күн / Дата</th><th>Күй / Статус</th><th>Әрекет</th></tr></thead>
+        <tbody id="apps-table-body"><tr><td colspan="9" style="text-align:center;color:#999;padding:20px">Жүктелуде... / Загрузка...</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <!-- STUDENTS -->
+    <div id="page-students" class="page">
+      <div class="topbar"><h1>👦 Оқушылар / Ученики</h1>
+        <div class="topbar-actions">
+          <input type="search" class="search-input" placeholder="🔍 Іздеу..." />
+          <button class="btn btn-blue" onclick="openModal('add-student')">+ Қосу / Добавить</button>
+          <button class="btn btn-green" onclick="exportExcel()">📥 Excel</button>
+        </div>
+      </div>
+      <div class="card">
+        <table><thead><tr><th>Аты-жөні / ФИО</th><th>Жасы</th><th>Топ / Группа</th><th>Тренер</th><th>Филиал</th><th>Қатысу / Посещ.</th><th>Төлем / Оплата</th><th>Әрекет</th></tr></thead>
+        <tbody>
+          <tr><td>Мамытов Арлан</td><td>10</td><td>Роботика — Master</td><td>Данияр С.</td><td>Skillset</td><td style="color:#2e7d32;font-weight:700">87%</td><td><span class="badge badge-active">Төленді</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+          <tr><td>Ахметова Диана</td><td>12</td><td>Дрондар — A тобы</td><td>Айдар М.</td><td>84 мектеп</td><td style="color:#2e7d32;font-weight:700">92%</td><td><span class="badge badge-active">Төленді</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+          <tr><td>Сейітов Тимур</td><td>9</td><td>Роботика — Junior</td><td>Гүлнар Б.</td><td>17 мектеп</td><td style="color:#e65100;font-weight:700">65%</td><td><span class="badge badge-debt">Қарыз / Долг</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+          <tr><td>Жаксыбекова Айша</td><td>14</td><td>Спорт РВТ — Expert</td><td>Данияр С.</td><td>97 мектеп</td><td style="color:#2e7d32;font-weight:700">95%</td><td><span class="badge badge-active">Төленді</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+          <tr><td>Нұрланов Бекзат</td><td>11</td><td>Дрон-футбол</td><td>Айдар М.</td><td>66 мектеп</td><td style="color:#2e7d32;font-weight:700">78%</td><td><span class="badge badge-pending">Күтуде / Ожидает</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- GROUPS -->
+    <div id="page-groups" class="page">
+      <div class="topbar"><h1>👥 Топтар / Группы</h1>
+        <div class="topbar-actions"><button class="btn btn-blue" onclick="openModal('add-group')">+ Жаңа топ / Новая группа</button></div>
+      </div>
+      <div class="card">
+        <table><thead><tr><th>Топ аты / Группа</th><th>Бағыт / Направление</th><th>Тренер</th><th>Оқушылар / Учеников</th><th>Кесте / Расписание</th><th>Филиал</th><th>Сабақ сәттері</th><th>Әрекет</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Роботика — Junior A</strong></td><td>🤖 Роботика</td><td>Гүлнар Б.</td><td>8 / 12</td><td>Дс, Ср 16:00</td><td>17 мектеп</td><td><button class="btn btn-outline btn-sm" onclick="openModal('group-photos')">📸 Фотолар</button></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+          <tr><td><strong>Роботика — Master B</strong></td><td>🤖 Роботика</td><td>Данияр С.</td><td>10 / 12</td><td>Дс, Жм 17:00</td><td>Skillset</td><td><button class="btn btn-outline btn-sm" onclick="openModal('group-photos')">📸 Фотолар</button></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+          <tr><td><strong>Дрондар — A тобы</strong></td><td>🚁 Дрондар</td><td>Айдар М.</td><td>6 / 8</td><td>Сс, Жм 18:00</td><td>84 мектеп</td><td><button class="btn btn-outline btn-sm" onclick="openModal('group-photos')">📸 Фотолар</button></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+          <tr><td><strong>Дрон-футбол</strong></td><td>⚽ Дрон-футбол</td><td>Айдар М.</td><td>8 / 10</td><td>Сш, Сн 15:00</td><td>66 мектеп</td><td><button class="btn btn-outline btn-sm" onclick="openModal('group-photos')">📸 Фотолар</button></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+          <tr><td><strong>Спорт РВТ — Expert</strong></td><td>🏆 Спорт РВТ</td><td>Данияр С.</td><td>5 / 8</td><td>Дс, Ср, Жм 17:30</td><td>97 мектеп</td><td><button class="btn btn-outline btn-sm" onclick="openModal('group-photos')">📸 Фотолар</button></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- BRANCHES -->
+    <div id="page-branches" class="page">
+      <div class="topbar"><h1>🏫 Филиалдар / Филиалы</h1>
+        <div class="topbar-actions"><button class="btn btn-blue" onclick="openModal('add-branch')">+ Қосу / Добавить</button></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+        <div class="card" style="overflow:visible">
+          <div style="padding:20px">
+            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
+            <h3 style="font-weight:900;margin-bottom:6px">Skillset</h3>
+            <p style="font-size:.85rem;color:#888;margin-bottom:12px">Skillset орталығы, Алматы</p>
+            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, ул. Абая 10</div><div>👤 Тренерлер: 3</div><div>🎓 Оқушылар: 48</div><div>📅 Топтар: 4</div></div>
+            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
+          </div>
+        </div>
+        <div class="card" style="overflow:visible">
+          <div style="padding:20px">
+            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
+            <h3 style="font-weight:900;margin-bottom:6px">84 мектеп</h3>
+            <p style="font-size:.85rem;color:#888;margin-bottom:12px">84-ші мектеп, Алматы</p>
+            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, мкр. Тастак</div><div>👤 Тренерлер: 2</div><div>🎓 Оқушылар: 36</div><div>📅 Топтар: 3</div></div>
+            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
+          </div>
+        </div>
+        <div class="card" style="overflow:visible">
+          <div style="padding:20px">
+            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
+            <h3 style="font-weight:900;margin-bottom:6px">17 мектеп</h3>
+            <p style="font-size:.85rem;color:#888;margin-bottom:12px">17-ші мектеп, Алматы</p>
+            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, мкр. Алатау</div><div>👤 Тренерлер: 2</div><div>🎓 Оқушылар: 42</div><div>📅 Топтар: 3</div></div>
+            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
+          </div>
+        </div>
+        <div class="card" style="overflow:visible">
+          <div style="padding:20px">
+            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
+            <h3 style="font-weight:900;margin-bottom:6px">97 мектеп</h3>
+            <p style="font-size:.85rem;color:#888;margin-bottom:12px">97-ші мектеп, Алматы</p>
+            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, мкр. Жетысу</div><div>👤 Тренерлер: 2</div><div>🎓 Оқушылар: 38</div><div>📅 Топтар: 3</div></div>
+            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
+          </div>
+        </div>
+        <div class="card" style="overflow:visible">
+          <div style="padding:20px">
+            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
+            <h3 style="font-weight:900;margin-bottom:6px">66 мектеп</h3>
+            <p style="font-size:.85rem;color:#888;margin-bottom:12px">66-шы мектеп, Алматы</p>
+            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, мкр. Айнабұлақ</div><div>👤 Тренерлер: 2</div><div>🎓 Оқушылар: 45</div><div>📅 Топтар: 3</div></div>
+            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
+          </div>
+        </div>
+        <div class="card" style="overflow:visible">
+          <div style="padding:20px">
+            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
+            <h3 style="font-weight:900;margin-bottom:6px">101 мектеп</h3>
+            <p style="font-size:.85rem;color:#888;margin-bottom:12px">101-ші мектеп, Алматы</p>
+            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, мкр. Шанырақ</div><div>👤 Тренерлер: 2</div><div>🎓 Оқушылар: 38</div><div>📅 Топтар: 3</div></div>
+            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRAINERS -->
+    <div id="page-trainers" class="page">
+      <div class="topbar"><h1>🧑‍🏫 Тренерлер / Тренеры</h1>
+        <div class="topbar-actions"><button class="btn btn-blue" onclick="openModal('add-trainer')">+ Қосу</button></div>
+      </div>
+      <div class="card">
+        <table><thead><tr><th>Аты-жөні / ФИО</th><th>Мамандандыру</th><th>Топтар</th><th>Филиал</th><th>Телефон</th><th>Əрекет</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Данияр Сейітов</strong></td><td>🤖 Роботика, Спорт РВТ</td><td>3</td><td>Skillset, 97 мектеп</td><td>+7 777 ...</td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+          <tr><td><strong>Айдар Мұратов</strong></td><td>🚁 Дрондар, ⚽ Дрон-футбол</td><td>2</td><td>84, 66 мектеп</td><td>+7 778 ...</td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+          <tr><td><strong>Гүлнар Бекова</strong></td><td>🤖 Роботика Junior</td><td>2</td><td>17, 101 мектеп</td><td>+7 701 ...</td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- PAYMENTS -->
+    <div id="page-payments" class="page">
+      <div class="topbar"><h1>💰 Төлемдер / Оплаты</h1>
+        <div class="topbar-actions">
+          <input type="search" class="search-input" placeholder="🔍 Іздеу..." />
+          <button class="btn btn-green" onclick="exportExcel()">📥 Excel</button>
+        </div>
+      </div>
+      <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card"><div class="stat-num" style="color:var(--green)">10.4M</div><div class="stat-lbl">Маусым 2025 — жалпы / Итого</div></div>
+        <div class="stat-card"><div class="stat-num" style="color:var(--red)">840K</div><div class="stat-lbl">Қарыз / Задолженность</div><div class="stat-sub" style="color:var(--red)">⚠ 8 оқушы</div></div>
+        <div class="stat-card"><div class="stat-num">247</div><div class="stat-lbl">Оқушылар / Учеников</div></div>
+      </div>
+      <div class="card">
+        <table><thead><tr><th>Оқушы / Ученик</th><th>Топ / Группа</th><th>Сумма</th><th>Маусым / Месяц</th><th>Күй / Статус</th><th>Күн / Дата</th><th>Əрекет</th></tr></thead>
+        <tbody>
+          <tr><td>Мамытов Арлан</td><td>Роботика — Master</td><td><strong>42 000 ₸</strong></td><td>Маусым 2025</td><td><span class="badge badge-active">Төленді</span></td><td>01.06.2025</td><td><button class="btn btn-outline btn-sm">📄</button></td></tr>
+          <tr><td>Ахметова Диана</td><td>Дрондар — A</td><td><strong>42 000 ₸</strong></td><td>Маусым 2025</td><td><span class="badge badge-active">Төленді</span></td><td>02.06.2025</td><td><button class="btn btn-outline btn-sm">📄</button></td></tr>
+          <tr><td>Сейітов Тимур</td><td>Роботика — Junior</td><td><strong>42 000 ₸</strong></td><td>Маусым 2025</td><td><span class="badge badge-debt">Қарыз / Долг</span></td><td>—</td><td><button class="btn btn-red btn-sm">Хабарлау</button></td></tr>
+          <tr><td>Жаксыбекова Айша</td><td>Спорт РВТ</td><td><strong>42 000 ₸</strong></td><td>Маусым 2025</td><td><span class="badge badge-active">Төленді</span></td><td>03.06.2025</td><td><button class="btn btn-outline btn-sm">📄</button></td></tr>
+          <tr><td>Нұрланов Бекзат</td><td>Дрон-футбол</td><td><strong>42 000 ₸</strong></td><td>Маусым 2025</td><td><span class="badge badge-pending">Күтуде</span></td><td>—</td><td><button class="btn btn-red btn-sm">Хабарлау</button></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL: Add Student -->
+<div class="modal-overlay" id="modal-add-student">
+  <div class="modal-card">
+    <button class="modal-close-btn" onclick="closeModal('add-student')">×</button>
+    <h3>+ Жаңа оқушы / Новый ученик</h3>
+    <div class="form-grid">
+      <div class="form-group"><label>Аты-жөні / ФИО</label><input type="text" placeholder="Мамытов Арлан" /></div>
+      <div class="form-group"><label>Жасы / Возраст</label><input type="number" placeholder="10" /></div>
+      <div class="form-group"><label>Топ / Группа</label>
+        <select><option>Роботика — Junior A</option><option>Роботика — Master B</option><option>Дрондар — A тобы</option><option>Дрон-футбол</option><option>Спорт РВТ</option></select>
+      </div>
+      <div class="form-group"><label>Ата-ана телефоны</label><input type="tel" placeholder="+7 777 ..." /></div>
+    </div>
+    <button class="btn btn-blue" style="width:100%">Сақтау / Сохранить</button>
+  </div>
+</div>
+
+<!-- MODAL: Add Group -->
+<div class="modal-overlay" id="modal-add-group">
+  <div class="modal-card">
+    <button class="modal-close-btn" onclick="closeModal('add-group')">×</button>
+    <h3>+ Жаңа топ / Новая группа</h3>
+    <div class="form-grid">
+      <div class="form-group"><label>Топ аты</label><input type="text" placeholder="Роботика — Junior A" /></div>
+      <div class="form-group"><label>Бағыт / Направление</label>
+        <select><option>🤖 Роботика</option><option>🚁 Дрондар</option><option>⚽ Дрон-футбол</option><option>🏆 Спорт РВТ</option></select>
+      </div>
+      <div class="form-group"><label>Тренер</label>
+        <select><option>Данияр Сейітов</option><option>Айдар Мұратов</option><option>Гүлнар Бекова</option></select>
+      </div>
+      <div class="form-group"><label>Филиал</label>
+        <select><option>Skillset</option><option>84 мектеп</option><option>17 мектеп</option><option>97 мектеп</option><option>66 мектеп</option><option>101 мектеп</option></select>
+      </div>
+      <div class="form-group" style="grid-column:1/-1"><label>Кесте / Расписание</label><input type="text" placeholder="Дс, Ср 17:00 – 18:30" /></div>
+    </div>
+    <button class="btn btn-blue" style="width:100%">Жасау / Создать</button>
+  </div>
+</div>
+
+<!-- MODAL: Group photos -->
+<div class="modal-overlay" id="modal-group-photos">
+  <div class="modal-card">
+    <button class="modal-close-btn" onclick="closeModal('group-photos')">×</button>
+    <h3>📸 Сабақ сәттері / Фото с занятий</h3>
+    <p style="color:#888;font-size:.88rem;margin-bottom:16px">Осы топтың сабақ сәттерін қосыңыз / Добавьте фото этой группы</p>
+    <div style="border:2px dashed #ddd;border-radius:12px;padding:32px;text-align:center;color:#aaa;margin-bottom:16px;cursor:pointer">
+      <div style="font-size:2rem;margin-bottom:8px">📁</div>
+      <div>Фото жүктеу / Загрузить фото</div>
+      <div style="font-size:.8rem;margin-top:4px">JPG, PNG — максимум 10 МБ</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      <img src="img_6434.png" style="width:100%;height:80px;object-fit:cover;border-radius:8px" />
+      <img src="img_6435.png" style="width:100%;height:80px;object-fit:cover;border-radius:8px" />
+      <div style="border:1px dashed #ddd;border-radius:8px;height:80px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:1.5rem;cursor:pointer">+</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Add Branch -->
+<div class="modal-overlay" id="modal-add-branch">
+  <div class="modal-card">
+    <button class="modal-close-btn" onclick="closeModal('add-branch')">×</button>
+    <h3>+ Жаңа филиал / Новый филиал</h3>
+    <div class="form-grid">
+      <div class="form-group"><label>Атауы / Название</label><input type="text" placeholder="102 мектеп" /></div>
+      <div class="form-group"><label>Мекенжай / Адрес</label><input type="text" placeholder="Алматы, ..." /></div>
+      <div class="form-group"><label>Тренер</label>
+        <select><option>Данияр Сейітов</option><option>Айдар Мұратов</option><option>Гүлнар Бекова</option></select>
+      </div>
+      <div class="form-group"><label>Телефон</label><input type="tel" /></div>
+    </div>
+    <button class="btn btn-blue" style="width:100%">Қосу / Добавить</button>
+  </div>
+</div>
+
+<!-- MODAL: Add Trainer -->
+<div class="modal-overlay" id="modal-add-trainer">
+  <div class="modal-card">
+    <button class="modal-close-btn" onclick="closeModal('add-trainer')">×</button>
+    <h3>+ Жаңа тренер / Новый тренер</h3>
+    <div class="form-grid">
+      <div class="form-group"><label>Аты-жөні / ФИО</label><input type="text" /></div>
+      <div class="form-group"><label>Телефон</label><input type="tel" /></div>
+      <div class="form-group" style="grid-column:1/-1"><label>Мамандандыру / Специализация</label>
+        <select><option>🤖 Роботика</option><option>🚁 Дрондар</option><option>⚽ Дрон-футбол</option><option>🏆 Спорт РВТ</option></select>
+      </div>
+    </div>
+    <button class="btn btn-blue" style="width:100%">Қосу / Добавить</button>
+  </div>
+</div>
+
+<script>
+const ADMIN_KEY = 'smarthub2025';
+
+// ── Login ─────────────────────────────────────────────────
+function tryLogin() {
+  const key = document.getElementById('loginKey').value.trim();
+  if (key === ADMIN_KEY) {
+    document.getElementById('loginOverlay').classList.add('hidden');
+    loadApps();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+document.getElementById('loginKey').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+
+// ── Navigation ────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ── Modals ────────────────────────────────────────────────
+function openModal(name) {
+  document.getElementById('modal-' + name).classList.add('open');
+}
+function closeModal(name) {
+  document.getElementById('modal-' + name).classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+});
+
+// ── Load applications ─────────────────────────────────────
+async function loadApps() {
+  try {
+    const res = await fetch('/api/submissions?key=' + ADMIN_KEY);
+    const rows = await res.json();
+    document.getElementById('stat-apps').textContent = rows.length;
+    renderAppsTable(rows);
+    renderDashRecent(rows.slice(0, 5));
+  } catch(e) {
+    document.getElementById('apps-table-body').innerHTML = '<tr><td colspan="9" style="text-align:center;color:#999;padding:20px">Сервер қолжетімсіз / Сервер недоступен</td></tr>';
+  }
+}
+
+function renderAppsTable(rows) {
+  const tbody = document.getElementById('apps-table-body');
+  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#999;padding:20px">Өтінімдер жоқ</td></tr>'; return; }
+  tbody.innerHTML = rows.map(r => `
+    <tr>
+      <td>${r.id}</td>
+      <td><strong>${r.name}</strong></td>
+      <td>${r.phone}</td>
+      <td>${r.age || '—'}</td>
+      <td>${directionLabel(r.direction || r.message)}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.message || '—'}</td>
+      <td>${r.created_at}</td>
+      <td><span class="badge badge-new">Жаңа / Новая</span></td>
+      <td><button class="btn btn-red btn-sm" onclick="deleteApp(${r.id})">🗑</button></td>
+    </tr>`).join('');
+}
+
+function renderDashRecent(rows) {
+  const tbody = document.getElementById('dash-recent-apps');
+  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#999;padding:20px">Өтінімдер жоқ</td></tr>'; return; }
+  tbody.innerHTML = rows.map(r => `
+    <tr>
+      <td><strong>${r.name}</strong></td>
+      <td>${r.phone}</td>
+      <td>${r.age || '—'}</td>
+      <td>${directionLabel(r.direction || '')}</td>
+      <td><span class="badge badge-new">Жаңа</span></td>
+      <td>${r.created_at}</td>
+    </tr>`).join('');
+}
+
+function directionLabel(d) {
+  if (!d) return '—';
+  const map = { дроны:'🚁 Дрондар', робототехника:'🤖 Роботика', лагеря:'🏕️ Лагерь' };
+  return map[d] || d;
+}
+
+async function deleteApp(id) {
+  if (!confirm('Жою? / Удалить?')) return;
+  await fetch('/api/submissions/' + id + '?key=' + ADMIN_KEY, { method: 'DELETE' });
+  loadApps();
+}
+
+function filterApps(q) {
+  document.querySelectorAll('#apps-table-body tr').forEach(tr => {
+    tr.style.display = tr.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+
+// ── Excel export ──────────────────────────────────────────
+function exportExcel() {
+  window.open('/api/export?key=' + ADMIN_KEY);
+}
+</script>
+</body>
+</html>
