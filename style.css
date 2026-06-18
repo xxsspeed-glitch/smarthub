@@ -1686,3 +1686,77 @@ footer span {
         flex-direction: column;
     }
 }
+
+/* ─── DARK MODE: BRANCH SECTION ──────────────────────── */
+body.dark .branch-section {
+    background: #1a1a1a !important;
+    --branch-border: #3a3a3a;
+    --branch-bg: #2a2a2a;
+}
+body.dark .branch-btn {
+    color: #e8e8e8;
+    border-color: #3a3a3a;
+    background: #2a2a2a;
+}
+body.dark .branch-btn:hover {
+    border-color: #CC0000;
+    color: #CC0000;
+}
+body.dark .branch-btn.active {
+    background: #CC0000;
+    color: #fff;
+}
+body.dark #branch-map {
+    filter: invert(0.9) hue-rotate(180deg);
+}
+
+/* ─── DARK MODE: CONTACTS SECTION ────────────────────── */
+body.dark #contacts {
+    background: var(--footer-bg, #111);
+}
+body.dark .locations h3 {
+    color: #e8e8e8;
+}
+body.dark .location-item h4 {
+    color: #e8e8e8;
+}
+body.dark .location-item a {
+    color: #ff6b6b;
+}
+body.dark .contact-form select {
+    background: var(--input-bg, #2a2a2a);
+    color: #e8e8e8;
+    border-color: #444;
+}
+
+/* ─── DARK MODE: MISSION PHOTO ───────────────────────── */
+body.dark .mission-with-photo img {
+    opacity: 0.9;
+}
+
+/* ─── MISSION LAYOUT FIX ─────────────────────────────── */
+.mission-with-photo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin: 24px 0;
+}
+.mission-with-photo img {
+    width: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+    height: 280px;
+}
+.mission-text {
+    text-align: left !important;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.8;
+    color: var(--dark);
+    margin: 0;
+    max-width: none;
+}
+@media(max-width:700px){
+    .mission-with-photo { grid-template-columns: 1fr; }
+}
