@@ -35,7 +35,7 @@
         @media(max-width:700px){ .mission-with-photo{grid-template-columns:1fr;} .header-nav-btns{display:none;} }
         /* Группы фото */
         .groups-photo-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-top:20px; }
-        .groups-photo-grid img { width:100%; height:180px; object-fit:cover; border-radius:12px; cursor:pointer; transition:.2s; }
+        .groups-photo-grid img { width:100%; height:280px; object-fit:cover; object-position:center top; border-radius:12px; cursor:pointer; transition:.2s; }
         .groups-photo-grid img:hover { transform:scale(1.03); }
         /* Личный кабинет */
         .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9000; align-items:center; justify-content:center; padding:16px; }
@@ -79,27 +79,13 @@
 
     <!-- ═══ HEADER ══════════════════════════════════════════ -->
     <header>
-        <a href="#home" class="logo" style="gap:0">
-            <picture>
-                <img src="logo-black.PNG" alt="SmartHub" 
-                     style="height:52px;width:auto;object-fit:contain;display:block;" 
-                     class="logo-img-light"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-                <span style="display:none;align-items:center;gap:8px;font-family:Inter,sans-serif;font-weight:900;font-size:1.4rem;color:#1a1a1a;">
-                    <svg viewBox="0 0 110 120" height="44" xmlns="http://www.w3.org/2000/svg"><path d="M14,108 Q4,108 4,98 L4,22 Q4,12 14,12 L88,54 Q98,60 88,66 Z" fill="none" stroke="#CC0000" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    SmartHub
-                </span>
-            </picture>
-            <picture class="logo-dark-wrap" style="display:none;">
-                <img src="logo-white.PNG" alt="SmartHub" 
-                     style="height:52px;width:auto;object-fit:contain;display:block;" 
-                     class="logo-img-dark"
-                     onerror="this.style.display='none'" />
-            </picture>
+        <a href="#home" class="logo" style="gap:0;text-decoration:none">
+            <img src="logo-black.PNG" alt="SmartHub" id="logo-light" style="height:52px;width:auto;object-fit:contain;display:block;" />
+            <img src="logo-white.PNG" alt="SmartHub" id="logo-dark" style="height:52px;width:auto;object-fit:contain;display:none;" />
         </a>
         <style>
-        body.dark .logo-dark-wrap{display:block!important}
-        body.dark picture:first-child{display:none!important}
+        body.dark #logo-light{display:none!important}
+        body.dark #logo-dark{display:block!important}
         </style>
 
         <div class="header-right">
@@ -142,9 +128,36 @@
             body.dark .lang-btn{color:#aaa}
             .lang-btn.active{background:#CC0000;color:#fff;box-shadow:0 2px 8px rgba(204,0,0,.3)}
             .lang-btn:hover:not(.active){background:rgba(204,0,0,.08);color:#CC0000}
-            .logo-img-light,.logo-img-dark{transition:opacity .3s}
-            body.dark .logo-img-light{display:none!important}
-            body.dark .logo-img-dark{display:block!important}
+            body.dark #logo-light{display:none!important}
+            body.dark #logo-dark{display:block!important}
+            /* Nav beautiful styling */
+            #mainNav a {
+                position: relative;
+                padding: 6px 4px;
+                font-weight: 600;
+                font-size: .9rem;
+                color: #555;
+                text-decoration: none;
+                transition: color .25s;
+            }
+            #mainNav a::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: #CC0000;
+                border-radius: 2px;
+                transform: scaleX(0);
+                transition: transform .25s;
+            }
+            #mainNav a:hover { color: #CC0000; }
+            #mainNav a:hover::after { transform: scaleX(1); }
+            #mainNav a.active { color: #CC0000; font-weight: 700; }
+            #mainNav a.active::after { transform: scaleX(1); }
+            body.dark #mainNav a { color: #aaa; }
+            body.dark #mainNav a:hover, body.dark #mainNav a.active { color: #fff; }
             </style>
 
             <div class="burger" aria-label="Меню" role="button" tabindex="0">
@@ -346,25 +359,7 @@
             </div>
 
             <!-- Фото поездок -->
-            <h3 class="section-title" style="margin-top:40px;" data-kaz="Іссапарлардан фотолар" data-ru="Фото из поездок" data-en="Trip photos">Іссапарлардан фотолар</h3>
-            <div class="country-photo-grid">
-                <div class="country-photo-card">
-                    <img src="trip1.png" alt="Түркияға іссапар" />
-                    <span class="country-badge">🇹🇷 Түркия</span>
-                    <div class="country-photo-info">
-                        <h4 data-kaz="Түркия, Анталья" data-ru="Турция, Анталья" data-en="Turkey, Antalya">Түркия, Анталья</h4>
-                        <p data-kaz="Fibonacci International Robot Olympiad. Қазақ туын да алып бардық — мақтанышпен!" data-ru="Fibonacci International Robot Olympiad. Казахстанский флаг гордо реял на соревнованиях!" data-en="Fibonacci International Robot Olympiad. The Kazakh flag flew proudly at the competition!">Fibonacci International Robot Olympiad. Қазақ туын да алып бардық — мақтанышпен!</p>
-                    </div>
-                </div>
-                <div class="country-photo-card">
-                    <img src="trip2.png" alt="Limra Hotel командасы" />
-                    <span class="country-badge">🏅 Жарыс</span>
-                    <div class="country-photo-info">
-                        <h4 data-kaz="Халықаралық жарыс" data-ru="Международные соревнования" data-en="International competition">Халықаралық жарыс</h4>
-                        <p data-kaz="Limra Hotel & Resorts — біздің командамыз жарыс алдында. 40 елден 200-ден астам қатысушы." data-ru="Limra Hotel & Resorts — наша команда перед соревнованиями. Более 200 участников из 40 стран." data-en="Limra Hotel & Resorts — our team before the competition. Over 200 participants from 40 countries.">Limra Hotel & Resorts — біздің командамыз жарыс алдында. 40 елден 200-ден астам қатысушы.</p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </section>
 
@@ -621,9 +616,9 @@
     <!-- ═══ ФИЛИАЛДАР КАРТАСЫ ══════════════════════════════ -->
     <section id="branches" class="gear-bg" style="background:#f8f5f0;">
         <div class="section-inner">
-            <h2 class="section-title" style="text-align:center;" data-kaz="Астанадағы филиалдарымыз" data-ru="Наши филиалы в Астане" data-en="Our branches in Astana">Астанадағы филиалдарымыз</h2>
+            <h2 class="section-title" style="text-align:center;font-family:Inter,sans-serif!important;" data-kaz="Астанадағы филиалдарымыз" data-ru="Наши филиалы в Астане" data-en="Our branches in Astana">Астанадағы филиалдарымыз</h2>
             <p style="text-align:center;color:#888;margin-bottom:2rem;font-size:.95rem;" data-kaz="Картадан көру үшін филиалды басыңыз." data-ru="Нажмите на филиал, чтобы увидеть на карте." data-en="Click a branch to see it on the map.">Картадан көру үшін филиалды басыңыз.</p>
-            <div style="display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:start;">
+            <div style="display:grid;grid-template-columns:260px 1fr;gap:20px;align-items:stretch;">
                 <div id="branch-list" style="display:flex;flex-direction:column;gap:10px;">
                     <button class="branch-btn active" onclick="selectBranch(this,'skillset')" data-name="Skillset" data-kaz="Skillset" data-ru="Skillset" data-en="Skillset">🏫 Skillset</button>
                     <button class="branch-btn" onclick="selectBranch(this,'s84')" data-name="№84 мектеп" data-kaz="№84 мектеп" data-ru="Школа №84" data-en="School №84">🏫 <span data-kaz="№84 мектеп" data-ru="Школа №84" data-en="School №84">№84 мектеп</span></button>
@@ -633,7 +628,7 @@
                     <button class="branch-btn" onclick="selectBranch(this,'s101')" data-name="№101 мектеп" data-kaz="№101 мектеп" data-ru="Школа №101" data-en="School №101">🏫 <span data-kaz="№101 мектеп" data-ru="Школа №101" data-en="School №101">№101 мектеп</span></button>
                 </div>
                 <div style="border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1);">
-                    <iframe id="branch-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2505.0!2d71.4306!3d51.1801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585a87bc2ef43%3A0x8a0e5a1e1e1e1e1e!2sSkillset%20Astana!5e0!3m2!1sru!2skz!4v1718000000000!5m2!1sru!2skz" width="100%" height="400" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe id="branch-map" style="border-radius:0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2507.4!2d71.4598491!3d51.1350469!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424583f6902cbc41%3A0x6415c8c8653866d0!2sSkillset!5e0!3m2!1sru!2skz!4v1718800000001!5m2!1sru!2skz" width="100%" height="400" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
