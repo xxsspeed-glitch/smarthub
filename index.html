@@ -9,7 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <style>
-        /* WhatsApp / Instagram кнопки */
+        /* Section title font fix for Kazakh letters */
+        .section-title { font-family: 'Inter', sans-serif !important; }
         .social-btns { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
         .btn-wa { display:inline-flex; align-items:center; gap:8px; background:#25D366; color:#fff; padding:11px 20px; border-radius:50px; font-weight:700; font-size:.95rem; text-decoration:none; transition:.2s; }
         .btn-wa:hover { background:#1ebe5d; transform:translateY(-2px); }
@@ -79,15 +80,8 @@
     <!-- ═══ HEADER ══════════════════════════════════════════ -->
     <header>
         <a href="#home" class="logo">
-            <div class="logo-text-group">
-                <span class="logo-brand">SmartHub</span>
-                <span class="logo-tagline">Robotics &amp; Drone Academy</span>
-            </div>
-            <svg class="logo-icon-svg" viewBox="0 0 110 120" xmlns="http://www.w3.org/2000/svg">
-      <path d="M14,108 Q4,108 4,98 L4,22 Q4,12 14,12 L88,54 Q98,60 88,66 Z"
-            fill="none" stroke="#CC0000" stroke-width="12"
-            stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+            <img src="logo-black.PNG" alt="SmartHub" style="height:48px;width:auto;object-fit:contain;" class="logo-img-light" />
+            <img src="logo-white.PNG" alt="SmartHub" style="height:48px;width:auto;object-fit:contain;display:none;" class="logo-img-dark" />
         </a>
 
         <div class="header-right">
@@ -122,6 +116,17 @@
                 <button class="lang-btn" data-lang="ru">РУС</button>
                 <button class="lang-btn" data-lang="en">ENG</button>
             </div>
+            <style>
+            .lang-switcher{display:flex;background:rgba(0,0,0,0.06);border-radius:50px;padding:3px;gap:2px}
+            body.dark .lang-switcher{background:rgba(255,255,255,0.08)}
+            .lang-btn{border:none;background:transparent;padding:6px 13px;border-radius:50px;font-size:.78rem;font-weight:700;cursor:pointer;color:#666;font-family:'Inter',sans-serif;transition:.2s;letter-spacing:.02em}
+            body.dark .lang-btn{color:#aaa}
+            .lang-btn.active{background:#CC0000;color:#fff;box-shadow:0 2px 8px rgba(204,0,0,.3)}
+            .lang-btn:hover:not(.active){background:rgba(204,0,0,.08);color:#CC0000}
+            .logo-img-light,.logo-img-dark{transition:opacity .3s}
+            body.dark .logo-img-light{display:none!important}
+            body.dark .logo-img-dark{display:block!important}
+            </style>
 
             <div class="burger" aria-label="Меню" role="button" tabindex="0">
                 <span></span><span></span><span></span>
@@ -341,14 +346,6 @@
                         <p data-kaz="Limra Hotel & Resorts — біздің командамыз жарыс алдында. 40 елден 200-ден астам қатысушы." data-ru="Limra Hotel & Resorts — наша команда перед соревнованиями. Более 200 участников из 40 стран." data-en="Limra Hotel & Resorts — our team before the competition. Over 200 participants from 40 countries.">Limra Hotel & Resorts — біздің командамыз жарыс алдында. 40 елден 200-ден астам қатысушы.</p>
                     </div>
                 </div>
-                <div class="country-photo-card">
-                    <img src="trip3.png" alt="Командамыз әуежайда" />
-                    <span class="country-badge">✈️ Іссапар</span>
-                    <div class="country-photo-info">
-                        <h4 data-kaz="Оралу — мақтанышпен!" data-ru="Возвращение — с гордостью!" data-en="Return — with pride!">Оралу — мақтанышпен!</h4>
-                        <p data-kaz="SmartHub командасы халықаралық жарыстан оралды. Skillset және AZ Group серіктестерімен бірге." data-ru="Команда SmartHub вернулась с международных соревнований вместе с партнёрами Skillset и AZ Group." data-en="SmartHub team returned from international competitions with partners Skillset and AZ Group.">SmartHub командасы халықаралық жарыстан оралды. Skillset және AZ Group серіктестерімен бірге.</p>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -469,13 +466,13 @@
                 <div class="track-card flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <h3 data-kaz="🏆 Спорттық РВТ" data-ru="🏆 Спортивная РВТ" data-en="🏆 Sports Robotics">🏆 Спорттық РВТ</h3>
+                            <h3 data-kaz="🏆 Спорттық RBT" data-ru="🏆 Спортивная RBT" data-en="🏆 Sports RBT">🏆 Спорттық RBT</h3>
                             <p class="track-desc-front" data-kaz="RBT — бұл роботика жарыстарында өз күшін сынағысы келетін оқушыларға арналған бағыт." data-ru="RBT — это направление для учеников, которые хотят выйти за рамки обычных занятий и попробовать свои силы в соревнованиях по робототехнике." data-en="RBT is a direction for students who want to go beyond regular classes and try their hand at robotics competitions.">RBT — бұл роботика жарыстарында өз күшін сынағысы келетін оқушыларға арналған бағыт.</p>
                             <button class="flip-button" type="button" data-kaz="Толығырақ" data-ru="Подробнее" data-en="More">Толығырақ</button>
                             <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите, чтобы увидеть подробности." data-en="Hover or tap to see details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
                         </div>
                         <div class="flip-card-back">
-                            <h3 data-kaz="Спорттық роботика (RBT)" data-ru="Спортивная робототехника (RBT)" data-en="Sports Robotics (RBT)">Спорттық роботика (RBT)</h3>
+                            <h3 data-kaz="RBT" data-ru="RBT" data-en="RBT">RBT</h3>
                             <p data-kaz="RBT — қалалық, республикалық және халықаралық турнирлерге командаларды дайындауға бағытталған жаттығулар. Қатысушылар роботтарды жинап программалауды ғана емес, шектеулі уақыт жағдайында тиімді инженерлік шешімдер табуды үйренеді." data-ru="RBT направлен на подготовку команд к городским, республиканским и международным турнирам. Участники учатся не только собирать роботов, но и находить инженерные решения." data-en="RBT is aimed at preparing teams for city, national and international tournaments. Participants learn not only to build robots but to find engineering solutions.">RBT — қалалық, республикалық және халықаралық турнирлерге командаларды дайындауға бағытталған жаттығулар.</p>
                             <p data-kaz="Жаттығулар кезінде оқушылар:" data-ru="Во время тренировок ученики:" data-en="During training students:">Жаттығулар кезінде оқушылар:</p>
                             <ul>
@@ -562,15 +559,15 @@
                 <div class="gallery-grid">
                     <figure class="gallery-item">
                         <img src="ach1.jpg" alt="FIRST Lego League — Champion's Award" loading="lazy" />
-                        <figcaption>FIRST Lego League — Champion's Award, Astana 2025</figcaption>
+                        <figcaption data-kaz="FIRST Lego League — Champion's Award, Астана 2025" data-ru="FIRST Lego League — Champion's Award, Астана 2025" data-en="FIRST Lego League — Champion's Award, Astana 2025">FIRST Lego League — Champion's Award, Астана 2025</figcaption>
                     </figure>
                     <figure class="gallery-item">
                         <img src="ach2.jpg" alt="EurAsia Championship" loading="lazy" />
-                        <figcaption>Fibonacci EurAsia — 2 место, Autonomous Car Racing</figcaption>
+                        <figcaption data-kaz="Fibonacci EurAsia — 2-орын, Autonomous Car Racing" data-ru="Fibonacci EurAsia — 2 место, Autonomous Car Racing" data-en="Fibonacci EurAsia — 2nd place, Autonomous Car Racing">Fibonacci EurAsia — 2-орын, Autonomous Car Racing</figcaption>
                     </figure>
                     <figure class="gallery-item">
                         <img src="ach3.jpeg" alt="Fibonacci International Robot Olympiad" loading="lazy" />
-                        <figcaption>Fibonacci International Robot Olympiad — 2 места, Анталья</figcaption>
+                        <figcaption data-kaz="Fibonacci International Robot Olympiad — 2 жүлделі орын, Анталья" data-ru="Fibonacci International Robot Olympiad — 2 места, Анталья" data-en="Fibonacci International Robot Olympiad — 2 prizes, Antalya">Fibonacci International Robot Olympiad — 2 жүлделі орын, Анталья</figcaption>
                     </figure>
                     <figure class="gallery-item">
                         <img src="hero-bg.jpeg" alt="WRO 2026" loading="lazy" />
@@ -578,11 +575,11 @@
                     </figure>
                     <figure class="gallery-item">
                         <img src="ach6.jpg" alt="Robotek Grand Tournament Astana" loading="lazy" />
-                        <figcaption>Robotek Grand Tournament Astana — призёры</figcaption>
+                        <figcaption data-kaz="Robotek Grand Tournament Astana — жүлдегерлер" data-ru="Robotek Grand Tournament Astana — призёры" data-en="Robotek Grand Tournament Astana — prize winners">Robotek Grand Tournament Astana — жүлдегерлер</figcaption>
                     </figure>
                     <figure class="gallery-item">
                         <img src="ach5.jpg" alt="Robotek Grand Tournament кубок" loading="lazy" />
-                        <figcaption>Robotek Grand Tournament — кубок</figcaption>
+                        <figcaption data-kaz="Robotek Grand Tournament — кубок" data-ru="Robotek Grand Tournament — кубок" data-en="Robotek Grand Tournament — trophy">Robotek Grand Tournament — кубок</figcaption>
                     </figure>
                 </div>
             </div>
@@ -621,17 +618,9 @@
                     <div class="location-item">
                         <div class="location-icon">📍</div>
                         <div>
-                            <h4>Алматы</h4>
-                            <p>ул. Абая 10, БЦ «Атлас», офис 305</p>
-                            <p>+7 (727) 000-00-01</p>
-                        </div>
-                    </div>
-                    <div class="location-item">
-                        <div class="location-icon">📍</div>
-                        <div>
-                            <h4>Астана</h4>
-                            <p>пр. Республики 21, ТРЦ «Мега», 2 этаж</p>
-                            <p>+7 (717) 000-00-02</p>
+                            <h4 data-kaz="Астана — Skillset" data-ru="Астана — Skillset" data-en="Astana — Skillset">Астана — Skillset</h4>
+                            <p><a href="https://2gis.kz/astana/search/Skillset" target="_blank" style="color:var(--red);font-weight:600;" data-kaz="Skillset мектебі — картада ашу" data-ru="Школа Skillset — открыть на карте" data-en="Skillset school — open on map">Skillset мектебі — картада ашу</a></p>
+                            <p>+7 700 155 70 18</p>
                         </div>
                     </div>
                     <div class="location-item">
@@ -644,7 +633,7 @@
 
                     <!-- WhatsApp и Instagram кнопки -->
                     <div class="social-btns">
-                        <a href="https://wa.me/77001234567" target="_blank" class="btn-wa">
+                        <a href="https://wa.me/77001557018" target="_blank" class="btn-wa">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                             WhatsApp
                         </a>
@@ -681,7 +670,7 @@
     <footer>
         <p>© 2025 <span>SmartHub</span> — Robotics &amp; Drone Academy. Қазақстан.</p>
         <div class="social-btns" style="justify-content:center;margin-top:12px;">
-            <a href="https://wa.me/77001234567" target="_blank" class="btn-wa" style="font-size:.85rem;padding:8px 16px;">WhatsApp</a>
+            <a href="https://wa.me/77001557018" target="_blank" class="btn-wa" style="font-size:.85rem;padding:8px 16px;">WhatsApp</a>
             <a href="https://instagram.com/smarthub.kz" target="_blank" class="btn-ig" style="font-size:.85rem;padding:8px 16px;">Instagram</a>
         </div>
     </footer>
@@ -792,6 +781,11 @@
 
     function applyLang(lang) {
         document.querySelectorAll('[data-kaz]').forEach(el => {
+            const txt = el.dataset[lang];
+            if (txt) el.textContent = txt;
+        });
+        // figcaptions need innerHTML update too for elements that might have links
+        document.querySelectorAll('figcaption[data-kaz]').forEach(el => {
             const txt = el.dataset[lang];
             if (txt) el.textContent = txt;
         });
