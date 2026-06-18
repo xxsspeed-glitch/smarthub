@@ -35,7 +35,7 @@
         @media(max-width:700px){ .mission-with-photo{grid-template-columns:1fr;} .header-nav-btns{display:none;} }
         /* Группы фото */
         .groups-photo-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-top:20px; }
-        .groups-photo-grid img { width:100%; height:280px; object-fit:cover; object-position:center top; border-radius:12px; cursor:pointer; transition:.2s; }
+        .groups-photo-grid img { width:100%; height:320px; object-fit:contain; object-position:center; border-radius:12px; cursor:pointer; transition:.2s; background:#f5f5f5; }
         .groups-photo-grid img:hover { transform:scale(1.03); }
         /* Личный кабинет */
         .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9000; align-items:center; justify-content:center; padding:16px; }
@@ -639,13 +639,13 @@
         @media(max-width:700px){#branch-list{flex-direction:row;flex-wrap:wrap;} #branch-list .branch-btn{flex:1;min-width:120px;justify-content:center;font-size:.82rem;padding:10px 12px;} div[style*="grid-template-columns:280px"]{grid-template-columns:1fr;}}
         </style>
         <script>
-        const branchMaps = {
-            skillset: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.4306!3d51.1801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x42458587bc2ef43%3A0x8a0e5a1e1e1e1e1e!2sSkillset!5e0!3m2!1sru!2skz!4v1718000000001!5m2!1sru!2skz',
-            s84: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.3950!3d51.1650!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585b0a2b2b2b2%3A0xb2b2b2b2b2b2b2b2!2z0KHQoNCo0K0g4oSWODQ!5e0!3m2!1sru!2skz!4v1718000000002!5m2!1sru!2skz',
-            s17: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.4100!3d51.1500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585c0c3c3c3c3%3A0xc3c3c3c3c3c3c3c3!2z0KHQoNCo0K0g4oSWMTc!5e0!3m2!1sru!2skz!4v1718000000003!5m2!1sru!2skz',
-            s97: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.4500!3d51.1700!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585d0d4d4d4d4%3A0xd4d4d4d4d4d4d4d4!2z0KHQoNCo0K0g4oSWOTc!5e0!3m2!1sru!2skz!4v1718000000004!5m2!1sru!2skz',
-            s66: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.3800!3d51.1850!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585e0e5e5e5e5%3A0xe5e5e5e5e5e5e5e5!2z0KHQoNCo0K0g4oSWNjY!5e0!3m2!1sru!2skz!4v1718000000005!5m2!1sru!2skz',
-            s101: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2504.8!2d71.4200!3d51.1400!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424585f0f6f6f6f6%3A0xf6f6f6f6f6f6f6f6!2z0KHQoNCo0K0g4oSWMTAx!5e0!3m2!1sru!2skz!4v1718000000006!5m2!1sru!2skz'
+                const branchMaps = {
+            skillset: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2836!2d71.462424!3d51.1350436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424583f6902cbc41%3A0x6415c8c8653866d0!2sSkillset!5e0!3m2!1sru!2skz!4v1718800000001',
+            s84: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2836!2d71.4145438!3d51.0994921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4245844c7d6aed4f%3A0x40c82200cb27aa31!2z0KjQutC-0LvQsC3Qu9C40YbQtdC5IDg0!5e0!3m2!1sru!2skz!4v1718800000002',
+            s17: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2836!2d71.4156055!3d51.1425606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424586bdc3405ea3%3A0x56710babeea355c2!2z4oSWMTcgZ2ltbmF6aWEtbWVrdGVixLE!5e0!3m2!1sru!2skz!4v1718800000003',
+            s97: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2836!2d71.4037534!3d51.114444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x42458500186d4e4d%3A0xf393df3660bad5c5!2z0KjQutC-0LvQsC3Qs9C40LzQvdCw0LfQuNGPIDk3!5e0!3m2!1sru!2skz!4v1718800000004',
+            s66: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2836!2d71.4347366!3d51.131578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424586a7bfe6aadf%3A0xadb2357819660c0d!2z0KjQutC-0LvQsC3Qu9C40YbQtdC5IDY2!5e0!3m2!1sru!2skz!4v1718800000005',
+            s101: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2836!2d71.3952795!3d51.1304989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x42458700095d509d%3A0x30f165573116e7bc!2z0KHRgNC10LTQvdGP0Y8g0YjQutC-0LvQsCDihJYgMTAx!5e0!3m2!1sru!2skz!4v1718800000006'
         };
         function selectBranch(btn, key) {
             document.querySelectorAll('.branch-btn').forEach(b => b.classList.remove('active'));

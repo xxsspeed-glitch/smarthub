@@ -9,6 +9,8 @@
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{--red:#CC0000;--blue:#1A1A8C;--dark:#1a1a1a;--bg:#f4f4f6;--white:#fff;--shadow:0 2px 12px rgba(0,0,0,.10);--border:#e2e2e2;--green:#2e7d32;--orange:#e65100}
     body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--dark);min-height:100vh}
+
+    /* LOGIN */
     #loginOverlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:999}
     #loginOverlay.hidden{display:none}
     .login-box{background:#fff;border-radius:16px;padding:40px 36px;width:340px;box-shadow:0 8px 40px rgba(0,0,0,.22);text-align:center}
@@ -19,68 +21,77 @@
     .login-box button{width:100%;padding:12px;background:var(--red);color:#fff;border:none;border-radius:8px;font-weight:900;font-size:1rem;cursor:pointer}
     .login-box button:hover{background:#a80000}
     .login-error{color:var(--red);font-size:.85rem;margin-top:8px;display:none}
-    /* Layout */
-    .admin-layout{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
-    .sidebar{background:var(--blue);color:#fff;padding:0;display:flex;flex-direction:column}
-    .sidebar-logo{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,.12);font-weight:900;font-size:1.1rem}
+
+    /* LAYOUT */
+    .admin-layout{display:grid;grid-template-columns:200px 1fr;min-height:100vh}
+    .sidebar{background:var(--blue);color:#fff;display:flex;flex-direction:column}
+    .sidebar-logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.12);font-weight:900;font-size:1rem}
     .sidebar-logo span{color:#f9c74f}
-    .sidebar-nav{flex:1;padding:12px 0}
-    .nav-item{display:flex;align-items:center;gap:10px;padding:13px 20px;cursor:pointer;font-size:.93rem;font-weight:600;transition:.2s;border-left:3px solid transparent}
+    .sidebar-nav{flex:1;padding:10px 0}
+    .nav-item{display:flex;align-items:center;gap:8px;padding:12px 16px;cursor:pointer;font-size:.88rem;font-weight:600;transition:.2s;border-left:3px solid transparent}
     .nav-item:hover{background:rgba(255,255,255,.1)}
     .nav-item.active{background:rgba(255,255,255,.15);border-left-color:#f9c74f;color:#f9c74f}
-    .nav-item .ico{font-size:1.1rem;width:22px}
-    .sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.12);font-size:.8rem;opacity:.6}
-    .main-content{padding:28px;overflow-y:auto}
+    .nav-item .ico{font-size:1rem;width:20px}
+    .sidebar-footer{padding:14px 16px;border-top:1px solid rgba(255,255,255,.12);font-size:.75rem;opacity:.5}
+    .main-content{padding:24px;overflow-y:auto}
     .page{display:none}
     .page.active{display:block}
-    /* Top bar */
-    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-    .topbar h1{font-size:1.5rem;font-weight:900;color:var(--dark)}
-    .topbar-actions{display:flex;gap:10px;align-items:center}
-    /* Cards */
-    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-    .stat-card{background:#fff;border-radius:14px;padding:20px;box-shadow:var(--shadow)}
-    .stat-card .stat-num{font-size:2rem;font-weight:900;color:var(--blue)}
-    .stat-card .stat-lbl{font-size:.82rem;color:#888;margin-top:4px}
-    .stat-card .stat-sub{font-size:.8rem;color:var(--green);margin-top:6px}
-    /* Table */
-    .card{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
-    .card-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
-    .card-header h3{font-size:1rem;font-weight:900}
-    .card-header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    table{width:100%;border-collapse:collapse;font-size:.88rem}
-    th{padding:11px 14px;text-align:left;color:#888;font-weight:700;font-size:.78rem;text-transform:uppercase;border-bottom:1px solid var(--border);background:#fafafa}
-    td{padding:11px 14px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+
+    /* TOPBAR */
+    .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+    .topbar h1{font-size:1.4rem;font-weight:900;color:var(--dark)}
+    .topbar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+    /* STATS */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+    .stat-card{background:#fff;border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+    .stat-card .stat-num{font-size:1.8rem;font-weight:900;color:var(--blue)}
+    .stat-card .stat-lbl{font-size:.78rem;color:#888;margin-top:3px}
+    .stat-card .stat-sub{font-size:.76rem;color:var(--green);margin-top:5px}
+
+    /* TABLE */
+    .card{background:#fff;border-radius:12px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:18px}
+    .card-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
+    .card-header h3{font-size:.95rem;font-weight:900}
+    table{width:100%;border-collapse:collapse;font-size:.83rem}
+    th{padding:9px 12px;text-align:left;color:#888;font-weight:700;font-size:.74rem;text-transform:uppercase;border-bottom:1px solid var(--border);background:#fafafa;white-space:nowrap}
+    td{padding:9px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
     tr:hover td{background:#fafbff}
     tr:last-child td{border-bottom:none}
-    .badge{padding:3px 10px;border-radius:50px;font-size:.76rem;font-weight:700;white-space:nowrap}
+    .badge{padding:3px 9px;border-radius:50px;font-size:.72rem;font-weight:700;white-space:nowrap}
     .badge-new{background:#e3f2fd;color:#1565c0}
     .badge-active{background:#e8f5e9;color:#2e7d32}
     .badge-done{background:#f3e5f5;color:#6a1b9a}
     .badge-debt{background:#ffebee;color:#c62828}
     .badge-pending{background:#fff3e0;color:#e65100}
-    /* Inputs */
-    input[type=text],input[type=search],input[type=number],input[type=tel],input[type=email],select,textarea{padding:9px 13px;border:1px solid var(--border);border-radius:8px;font-size:.88rem;font-family:inherit;outline:none;background:#fff}
+
+    /* INPUTS */
+    input[type=text],input[type=search],input[type=number],input[type=tel],input[type=email],select,textarea{padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:.85rem;font-family:inherit;outline:none;background:#fff;width:100%}
     input:focus,select:focus,textarea:focus{border-color:var(--blue)}
-    .search-input{width:200px}
-    /* Buttons */
-    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;border:none;transition:.2s}
+    .search-input{width:190px}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 14px;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:.2s;font-family:inherit}
     .btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#a80000}
     .btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{background:#111070}
     .btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#1b5e20}
     .btn-outline{background:#fff;color:var(--dark);border:1px solid var(--border)}.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
-    .btn-sm{padding:5px 11px;font-size:.78rem}
-    /* Form grid */
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-    .form-group{display:flex;flex-direction:column;gap:6px}
-    .form-group label{font-size:.82rem;font-weight:700;color:#555}
-    .form-group input,.form-group select,.form-group textarea{width:100%}
-    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:20px}
+    .btn-sm{padding:5px 10px;font-size:.75rem}
+
+    /* MODAL */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;align-items:center;justify-content:center;padding:20px}
     .modal-overlay.open{display:flex}
-    .modal-card{background:#fff;border-radius:16px;padding:28px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
-    .modal-card h3{font-weight:900;font-size:1.1rem;margin-bottom:18px;color:var(--blue)}
-    .modal-close-btn{position:absolute;top:14px;right:18px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#999}
-    /* Responsive */
+    .modal-card{background:#fff;border-radius:16px;padding:26px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+    .modal-card h3{font-weight:900;font-size:1.05rem;margin-bottom:16px;color:var(--blue)}
+    .modal-close-btn{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#999}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+    .form-group{display:flex;flex-direction:column;gap:5px}
+    .form-group label{font-size:.78rem;font-weight:700;color:#555}
+    .form-full{grid-column:1/-1}
+
+    /* EMPTY STATE */
+    .empty-state{text-align:center;padding:40px;color:#aaa;font-size:.9rem}
+
     @media(max-width:768px){.admin-layout{grid-template-columns:1fr}.sidebar{display:none}.stats-row{grid-template-columns:1fr 1fr}}
   </style>
 </head>
@@ -91,25 +102,24 @@
   <div class="login-box">
     <h2>SmartHub</h2>
     <p>Админ панеліне кіру</p>
-    <input type="text" id="loginKey" placeholder="Кіру кілті / Ключ доступа" />
+    <input type="password" id="loginKey" placeholder="Кіру кілті / Ключ доступа" />
     <button onclick="tryLogin()">Кіру</button>
     <div class="login-error" id="loginError">Кілт қате / Неверный ключ</div>
   </div>
 </div>
 
-<!-- ADMIN LAYOUT -->
 <div class="admin-layout">
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">Smart<span>Hub</span> Admin</div>
     <nav class="sidebar-nav">
-      <div class="nav-item active" onclick="showPage('dashboard')"><span class="ico">📊</span> Дашборд</div>
-      <div class="nav-item" onclick="showPage('applications')"><span class="ico">📋</span> Өтінімдер / Заявки</div>
-      <div class="nav-item" onclick="showPage('students')"><span class="ico">👦</span> Оқушылар / Ученики</div>
-      <div class="nav-item" onclick="showPage('groups')"><span class="ico">👥</span> Топтар / Группы</div>
-      <div class="nav-item" onclick="showPage('branches')"><span class="ico">🏫</span> Филиалдар / Филиалы</div>
-      <div class="nav-item" onclick="showPage('trainers')"><span class="ico">🧑‍🏫</span> Тренерлер / Тренеры</div>
-      <div class="nav-item" onclick="showPage('payments')"><span class="ico">💰</span> Төлемдер / Оплаты</div>
+      <div class="nav-item active" data-page="dashboard"><span class="ico">📊</span> Дашборд</div>
+      <div class="nav-item" data-page="applications"><span class="ico">📋</span> Өтінімдер / Заявки</div>
+      <div class="nav-item" data-page="students"><span class="ico">👦</span> Оқушылар / Ученики</div>
+      <div class="nav-item" data-page="groups"><span class="ico">👥</span> Топтар / Группы</div>
+      <div class="nav-item" data-page="branches"><span class="ico">🏫</span> Филиалдар / Филиалы</div>
+      <div class="nav-item" data-page="trainers"><span class="ico">🧑‍🏫</span> Тренерлер / Тренеры</div>
+      <div class="nav-item" data-page="payments"><span class="ico">💰</span> Төлемдер / Оплаты</div>
     </nav>
     <div class="sidebar-footer">SmartHub © 2025</div>
   </aside>
@@ -119,17 +129,17 @@
 
     <!-- DASHBOARD -->
     <div id="page-dashboard" class="page active">
-      <div class="topbar"><h1>📊 Дашборд</h1><div class="topbar-actions"><a href="index.html" class="btn btn-outline">← Сайтқа оралу</a></div></div>
+      <div class="topbar"><h1>📊 Дашборд</h1><a href="index.html" class="btn btn-outline">← Сайт</a></div>
       <div class="stats-row">
-        <div class="stat-card"><div class="stat-num" id="stat-apps">0</div><div class="stat-lbl">Жаңа өтінімдер / Новые заявки</div><div class="stat-sub">↑ Бүгін / Сегодня</div></div>
-        <div class="stat-card"><div class="stat-num">247</div><div class="stat-lbl">Оқушылар / Ученики</div><div class="stat-sub">↑ +12 осы айда</div></div>
-        <div class="stat-card"><div class="stat-num">6</div><div class="stat-lbl">Филиалдар / Филиалы</div><div class="stat-sub">Барлығы белсенді</div></div>
-        <div class="stat-card"><div class="stat-num">18</div><div class="stat-lbl">Топтар / Группы</div><div class="stat-sub">Белсенді / Активных</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-apps">0</div><div class="stat-lbl">Жаңа өтінімдер</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-students">0</div><div class="stat-lbl">Оқушылар</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-groups">0</div><div class="stat-lbl">Топтар</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-trainers">0</div><div class="stat-lbl">Тренерлер</div></div>
       </div>
       <div class="card">
-        <div class="card-header"><h3>Соңғы өтінімдер / Последние заявки</h3><button class="btn btn-blue" onclick="showPage('applications')">Барлығы →</button></div>
-        <table><thead><tr><th>Аты / Имя</th><th>Телефон</th><th>Жасы</th><th>Бағыт / Направление</th><th>Күй / Статус</th><th>Уақыт</th></tr></thead>
-        <tbody id="dash-recent-apps"><tr><td colspan="6" style="text-align:center;color:#999;padding:20px">Өтінімдер жоқ / Заявок нет</td></tr></tbody></table>
+        <div class="card-header"><h3>Соңғы өтінімдер</h3><button class="btn btn-blue btn-sm" onclick="showPage('applications')">Барлығы →</button></div>
+        <table><thead><tr><th>Аты</th><th>Телефон</th><th>Жасы</th><th>Бағыт</th><th>Күні</th></tr></thead>
+        <tbody id="dash-apps"></tbody></table>
       </div>
     </div>
 
@@ -137,13 +147,13 @@
     <div id="page-applications" class="page">
       <div class="topbar"><h1>📋 Өтінімдер / Заявки</h1>
         <div class="topbar-actions">
-          <input type="search" class="search-input" placeholder="🔍 Іздеу / Поиск..." oninput="filterApps(this.value)" />
+          <input type="search" class="search-input" placeholder="🔍 Іздеу..." oninput="filterTable('apps-tbody',this.value)" />
           <button class="btn btn-green" onclick="exportExcel()">📥 Excel</button>
         </div>
       </div>
       <div class="card">
-        <table><thead><tr><th>#</th><th>Аты / Имя</th><th>Телефон</th><th>Жасы</th><th>Бағыт</th><th>Хабарлама</th><th>Күн / Дата</th><th>Күй / Статус</th><th>Әрекет</th></tr></thead>
-        <tbody id="apps-table-body"><tr><td colspan="9" style="text-align:center;color:#999;padding:20px">Жүктелуде... / Загрузка...</td></tr></tbody></table>
+        <table><thead><tr><th>#</th><th>Аты / Имя</th><th>Телефон</th><th>Жасы</th><th>Бағыт</th><th>Хабарлама</th><th>Күні</th><th>Жою</th></tr></thead>
+        <tbody id="apps-tbody"></tbody></table>
       </div>
     </div>
 
@@ -151,115 +161,44 @@
     <div id="page-students" class="page">
       <div class="topbar"><h1>👦 Оқушылар / Ученики</h1>
         <div class="topbar-actions">
-          <input type="search" class="search-input" placeholder="🔍 Іздеу..." />
+          <input type="search" class="search-input" placeholder="🔍 Іздеу..." oninput="filterTable('students-tbody',this.value)" />
           <button class="btn btn-blue" onclick="openModal('add-student')">+ Қосу / Добавить</button>
-          <button class="btn btn-green" onclick="exportExcel()">📥 Excel</button>
+          <button class="btn btn-green" onclick="exportStudentsExcel()">📥 Excel</button>
         </div>
       </div>
       <div class="card">
-        <table><thead><tr><th>Аты-жөні / ФИО</th><th>Жасы</th><th>Топ / Группа</th><th>Тренер</th><th>Филиал</th><th>Қатысу / Посещ.</th><th>Төлем / Оплата</th><th>Әрекет</th></tr></thead>
-        <tbody>
-          <tr><td>Мамытов Арлан</td><td>10</td><td>Роботика — Master</td><td>Данияр С.</td><td>Skillset</td><td style="color:#2e7d32;font-weight:700">87%</td><td><span class="badge badge-active">Төленді</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-          <tr><td>Ахметова Диана</td><td>12</td><td>Дрондар — A тобы</td><td>Айдар М.</td><td>84 мектеп</td><td style="color:#2e7d32;font-weight:700">92%</td><td><span class="badge badge-active">Төленді</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-          <tr><td>Сейітов Тимур</td><td>9</td><td>Роботика — Junior</td><td>Гүлнар Б.</td><td>17 мектеп</td><td style="color:#e65100;font-weight:700">65%</td><td><span class="badge badge-debt">Қарыз / Долг</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-          <tr><td>Жаксыбекова Айша</td><td>14</td><td>Спорт РВТ — Expert</td><td>Данияр С.</td><td>97 мектеп</td><td style="color:#2e7d32;font-weight:700">95%</td><td><span class="badge badge-active">Төленді</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-          <tr><td>Нұрланов Бекзат</td><td>11</td><td>Дрон-футбол</td><td>Айдар М.</td><td>66 мектеп</td><td style="color:#2e7d32;font-weight:700">78%</td><td><span class="badge badge-pending">Күтуде / Ожидает</span></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-        </tbody></table>
+        <table><thead><tr><th>АТЫ-ЖӨНІ / ФИО</th><th>ЖАСЫ</th><th>ТОП / ГРУППА</th><th>ТРЕНЕР</th><th>ФИЛИАЛ</th><th>ҚАТЫСУ / ПОСЕЩ.</th><th>ТӨЛЕМ / ОПЛАТА</th><th>ӘРЕКЕТ</th></tr></thead>
+        <tbody id="students-tbody"></tbody></table>
       </div>
     </div>
 
     <!-- GROUPS -->
     <div id="page-groups" class="page">
       <div class="topbar"><h1>👥 Топтар / Группы</h1>
-        <div class="topbar-actions"><button class="btn btn-blue" onclick="openModal('add-group')">+ Жаңа топ / Новая группа</button></div>
+        <button class="btn btn-blue" onclick="openModal('add-group')">+ Жаңа топ / Новая группа</button>
       </div>
       <div class="card">
-        <table><thead><tr><th>Топ аты / Группа</th><th>Бағыт / Направление</th><th>Тренер</th><th>Оқушылар / Учеников</th><th>Кесте / Расписание</th><th>Филиал</th><th>Сабақ сәттері</th><th>Әрекет</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Роботика — Junior A</strong></td><td>🤖 Роботика</td><td>Гүлнар Б.</td><td>8 / 12</td><td>Дс, Ср 16:00</td><td>17 мектеп</td><td><button class="btn btn-outline btn-sm" onclick="openModal('group-photos')">📸 Фотолар</button></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-          <tr><td><strong>Роботика — Master B</strong></td><td>🤖 Роботика</td><td>Данияр С.</td><td>10 / 12</td><td>Дс, Жм 17:00</td><td>Skillset</td><td><button class="btn btn-outline btn-sm" onclick="openModal('group-photos')">📸 Фотолар</button></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-          <tr><td><strong>Дрондар — A тобы</strong></td><td>🚁 Дрондар</td><td>Айдар М.</td><td>6 / 8</td><td>Сс, Жм 18:00</td><td>84 мектеп</td><td><button class="btn btn-outline btn-sm" onclick="openModal('group-photos')">📸 Фотолар</button></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-          <tr><td><strong>Дрон-футбол</strong></td><td>⚽ Дрон-футбол</td><td>Айдар М.</td><td>8 / 10</td><td>Сш, Сн 15:00</td><td>66 мектеп</td><td><button class="btn btn-outline btn-sm" onclick="openModal('group-photos')">📸 Фотолар</button></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-          <tr><td><strong>Спорт РВТ — Expert</strong></td><td>🏆 Спорт РВТ</td><td>Данияр С.</td><td>5 / 8</td><td>Дс, Ср, Жм 17:30</td><td>97 мектеп</td><td><button class="btn btn-outline btn-sm" onclick="openModal('group-photos')">📸 Фотолар</button></td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-        </tbody></table>
+        <table><thead><tr><th>ТОП АТЫ / ГРУППА</th><th>БАҒЫТ / НАПРАВЛЕНИЕ</th><th>ТРЕНЕР</th><th>ОҚУШЫЛАР / УЧЕНИКОВ</th><th>КЕСТЕ / РАСПИСАНИЕ</th><th>ФИЛИАЛ</th><th>САБАҚ СӘТТЕРІ</th><th>ӘРЕКЕТ</th></tr></thead>
+        <tbody id="groups-tbody"></tbody></table>
       </div>
     </div>
 
     <!-- BRANCHES -->
     <div id="page-branches" class="page">
       <div class="topbar"><h1>🏫 Филиалдар / Филиалы</h1>
-        <div class="topbar-actions"><button class="btn btn-blue" onclick="openModal('add-branch')">+ Қосу / Добавить</button></div>
+        <button class="btn btn-blue" onclick="openModal('add-branch')">+ Қосу / Добавить</button>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
-        <div class="card" style="overflow:visible">
-          <div style="padding:20px">
-            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
-            <h3 style="font-weight:900;margin-bottom:6px">Skillset</h3>
-            <p style="font-size:.85rem;color:#888;margin-bottom:12px">Skillset орталығы, Алматы</p>
-            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, ул. Абая 10</div><div>👤 Тренерлер: 3</div><div>🎓 Оқушылар: 48</div><div>📅 Топтар: 4</div></div>
-            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
-          </div>
-        </div>
-        <div class="card" style="overflow:visible">
-          <div style="padding:20px">
-            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
-            <h3 style="font-weight:900;margin-bottom:6px">84 мектеп</h3>
-            <p style="font-size:.85rem;color:#888;margin-bottom:12px">84-ші мектеп, Алматы</p>
-            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, мкр. Тастак</div><div>👤 Тренерлер: 2</div><div>🎓 Оқушылар: 36</div><div>📅 Топтар: 3</div></div>
-            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
-          </div>
-        </div>
-        <div class="card" style="overflow:visible">
-          <div style="padding:20px">
-            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
-            <h3 style="font-weight:900;margin-bottom:6px">17 мектеп</h3>
-            <p style="font-size:.85rem;color:#888;margin-bottom:12px">17-ші мектеп, Алматы</p>
-            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, мкр. Алатау</div><div>👤 Тренерлер: 2</div><div>🎓 Оқушылар: 42</div><div>📅 Топтар: 3</div></div>
-            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
-          </div>
-        </div>
-        <div class="card" style="overflow:visible">
-          <div style="padding:20px">
-            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
-            <h3 style="font-weight:900;margin-bottom:6px">97 мектеп</h3>
-            <p style="font-size:.85rem;color:#888;margin-bottom:12px">97-ші мектеп, Алматы</p>
-            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, мкр. Жетысу</div><div>👤 Тренерлер: 2</div><div>🎓 Оқушылар: 38</div><div>📅 Топтар: 3</div></div>
-            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
-          </div>
-        </div>
-        <div class="card" style="overflow:visible">
-          <div style="padding:20px">
-            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
-            <h3 style="font-weight:900;margin-bottom:6px">66 мектеп</h3>
-            <p style="font-size:.85rem;color:#888;margin-bottom:12px">66-шы мектеп, Алматы</p>
-            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, мкр. Айнабұлақ</div><div>👤 Тренерлер: 2</div><div>🎓 Оқушылар: 45</div><div>📅 Топтар: 3</div></div>
-            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
-          </div>
-        </div>
-        <div class="card" style="overflow:visible">
-          <div style="padding:20px">
-            <div style="font-size:1.5rem;margin-bottom:8px">🏫</div>
-            <h3 style="font-weight:900;margin-bottom:6px">101 мектеп</h3>
-            <p style="font-size:.85rem;color:#888;margin-bottom:12px">101-ші мектеп, Алматы</p>
-            <div style="font-size:.88rem;line-height:1.8"><div>📍 Алматы, мкр. Шанырақ</div><div>👤 Тренерлер: 2</div><div>🎓 Оқушылар: 38</div><div>📅 Топтар: 3</div></div>
-            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline btn-sm">✏️ Өзгерту</button><button class="btn btn-red btn-sm">🗑</button></div>
-          </div>
-        </div>
-      </div>
+      <div id="branches-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px"></div>
     </div>
 
     <!-- TRAINERS -->
     <div id="page-trainers" class="page">
       <div class="topbar"><h1>🧑‍🏫 Тренерлер / Тренеры</h1>
-        <div class="topbar-actions"><button class="btn btn-blue" onclick="openModal('add-trainer')">+ Қосу</button></div>
+        <button class="btn btn-blue" onclick="openModal('add-trainer')">+ Қосу / Добавить</button>
       </div>
       <div class="card">
-        <table><thead><tr><th>Аты-жөні / ФИО</th><th>Мамандандыру</th><th>Топтар</th><th>Филиал</th><th>Телефон</th><th>Əрекет</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Данияр Сейітов</strong></td><td>🤖 Роботика, Спорт РВТ</td><td>3</td><td>Skillset, 97 мектеп</td><td>+7 777 ...</td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-          <tr><td><strong>Айдар Мұратов</strong></td><td>🚁 Дрондар, ⚽ Дрон-футбол</td><td>2</td><td>84, 66 мектеп</td><td>+7 778 ...</td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-          <tr><td><strong>Гүлнар Бекова</strong></td><td>🤖 Роботика Junior</td><td>2</td><td>17, 101 мектеп</td><td>+7 701 ...</td><td><button class="btn btn-outline btn-sm">✏️</button></td></tr>
-        </tbody></table>
+        <table><thead><tr><th>АТЫ-ЖӨНІ / ФИО</th><th>МАМАНДАНДЫРУ</th><th>ТОПТАР</th><th>ТЕЛЕФОН</th><th>ӘРЕКЕТ</th></tr></thead>
+        <tbody id="trainers-tbody"></tbody></table>
       </div>
     </div>
 
@@ -267,220 +206,548 @@
     <div id="page-payments" class="page">
       <div class="topbar"><h1>💰 Төлемдер / Оплаты</h1>
         <div class="topbar-actions">
-          <input type="search" class="search-input" placeholder="🔍 Іздеу..." />
-          <button class="btn btn-green" onclick="exportExcel()">📥 Excel</button>
+          <input type="search" class="search-input" placeholder="🔍 Іздеу..." oninput="filterTable('payments-tbody',this.value)" />
+          <button class="btn btn-green" onclick="exportPaymentsExcel()">📥 Excel</button>
         </div>
       </div>
       <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat-card"><div class="stat-num" style="color:var(--green)">10.4M</div><div class="stat-lbl">Маусым 2025 — жалпы / Итого</div></div>
-        <div class="stat-card"><div class="stat-num" style="color:var(--red)">840K</div><div class="stat-lbl">Қарыз / Задолженность</div><div class="stat-sub" style="color:var(--red)">⚠ 8 оқушы</div></div>
-        <div class="stat-card"><div class="stat-num">247</div><div class="stat-lbl">Оқушылар / Учеников</div></div>
+        <div class="stat-card"><div class="stat-num" style="color:var(--green)" id="pay-total">0 ₸</div><div class="stat-lbl">Жалпы / Итого</div></div>
+        <div class="stat-card"><div class="stat-num" style="color:var(--red)" id="pay-debt">0</div><div class="stat-lbl">Қарыз / Долг</div></div>
+        <div class="stat-card"><div class="stat-num" id="pay-paid">0</div><div class="stat-lbl">Төленді / Оплачено</div></div>
       </div>
       <div class="card">
-        <table><thead><tr><th>Оқушы / Ученик</th><th>Топ / Группа</th><th>Сумма</th><th>Маусым / Месяц</th><th>Күй / Статус</th><th>Күн / Дата</th><th>Əрекет</th></tr></thead>
-        <tbody>
-          <tr><td>Мамытов Арлан</td><td>Роботика — Master</td><td><strong>42 000 ₸</strong></td><td>Маусым 2025</td><td><span class="badge badge-active">Төленді</span></td><td>01.06.2025</td><td><button class="btn btn-outline btn-sm">📄</button></td></tr>
-          <tr><td>Ахметова Диана</td><td>Дрондар — A</td><td><strong>42 000 ₸</strong></td><td>Маусым 2025</td><td><span class="badge badge-active">Төленді</span></td><td>02.06.2025</td><td><button class="btn btn-outline btn-sm">📄</button></td></tr>
-          <tr><td>Сейітов Тимур</td><td>Роботика — Junior</td><td><strong>42 000 ₸</strong></td><td>Маусым 2025</td><td><span class="badge badge-debt">Қарыз / Долг</span></td><td>—</td><td><button class="btn btn-red btn-sm">Хабарлау</button></td></tr>
-          <tr><td>Жаксыбекова Айша</td><td>Спорт РВТ</td><td><strong>42 000 ₸</strong></td><td>Маусым 2025</td><td><span class="badge badge-active">Төленді</span></td><td>03.06.2025</td><td><button class="btn btn-outline btn-sm">📄</button></td></tr>
-          <tr><td>Нұрланов Бекзат</td><td>Дрон-футбол</td><td><strong>42 000 ₸</strong></td><td>Маусым 2025</td><td><span class="badge badge-pending">Күтуде</span></td><td>—</td><td><button class="btn btn-red btn-sm">Хабарлау</button></td></tr>
-        </tbody></table>
+        <table><thead><tr><th>ОҚУШЫ / УЧЕНИК</th><th>ТОП</th><th>СУММА</th><th>АЙ / МЕСЯЦ</th><th>КҮЙ / СТАТУС</th><th>КҮН / ДАТА</th><th>ӨЗГЕРТУ</th></tr></thead>
+        <tbody id="payments-tbody"></tbody></table>
       </div>
     </div>
 
   </main>
 </div>
 
-<!-- MODAL: Add Student -->
+<!-- MODALS -->
 <div class="modal-overlay" id="modal-add-student">
   <div class="modal-card">
     <button class="modal-close-btn" onclick="closeModal('add-student')">×</button>
     <h3>+ Жаңа оқушы / Новый ученик</h3>
     <div class="form-grid">
-      <div class="form-group"><label>Аты-жөні / ФИО</label><input type="text" placeholder="Мамытов Арлан" /></div>
-      <div class="form-group"><label>Жасы / Возраст</label><input type="number" placeholder="10" /></div>
+      <div class="form-group form-full"><label>Аты-жөні / ФИО</label><input type="text" id="st-name" placeholder="Мамытов Арлан" /></div>
+      <div class="form-group"><label>Жасы / Возраст</label><input type="number" id="st-age" placeholder="10" /></div>
+      <div class="form-group"><label>Ата-ана телефоны</label><input type="tel" id="st-phone" placeholder="+7 777 ..." /></div>
       <div class="form-group"><label>Топ / Группа</label>
-        <select><option>Роботика — Junior A</option><option>Роботика — Master B</option><option>Дрондар — A тобы</option><option>Дрон-футбол</option><option>Спорт РВТ</option></select>
+        <select id="st-group"></select>
       </div>
-      <div class="form-group"><label>Ата-ана телефоны</label><input type="tel" placeholder="+7 777 ..." /></div>
+      <div class="form-group"><label>Тренер</label>
+        <select id="st-trainer"></select>
+      </div>
+      <div class="form-group"><label>Филиал</label>
+        <select id="st-branch"></select>
+      </div>
+      <div class="form-group"><label>Қатысу % / Посещ.</label><input type="number" id="st-attend" placeholder="90" min="0" max="100" /></div>
+      <div class="form-group"><label>Төлем / Оплата</label>
+        <select id="st-payment">
+          <option value="paid">✅ Төленді</option>
+          <option value="debt">❌ Қарыз / Долг</option>
+          <option value="pending">⏳ Күтуде / Ожидает</option>
+        </select>
+      </div>
     </div>
-    <button class="btn btn-blue" style="width:100%">Сақтау / Сохранить</button>
+    <button class="btn btn-blue" style="width:100%" onclick="saveStudent()">Сақтау / Сохранить</button>
   </div>
 </div>
 
-<!-- MODAL: Add Group -->
 <div class="modal-overlay" id="modal-add-group">
   <div class="modal-card">
     <button class="modal-close-btn" onclick="closeModal('add-group')">×</button>
     <h3>+ Жаңа топ / Новая группа</h3>
     <div class="form-grid">
-      <div class="form-group"><label>Топ аты</label><input type="text" placeholder="Роботика — Junior A" /></div>
+      <div class="form-group form-full"><label>Топ аты / Название</label><input type="text" id="gr-name" placeholder="Роботика — Junior A" /></div>
       <div class="form-group"><label>Бағыт / Направление</label>
-        <select><option>🤖 Роботика</option><option>🚁 Дрондар</option><option>⚽ Дрон-футбол</option><option>🏆 Спорт РВТ</option></select>
+        <select id="gr-dir">
+          <option value="🤖 Роботика">🤖 Роботика</option>
+          <option value="🚁 Дрондар">🚁 Дрондар</option>
+          <option value="⚽ Дрон-футбол">⚽ Дрон-футбол</option>
+          <option value="🏆 Спорт RBT">🏆 Спорт RBT</option>
+        </select>
       </div>
-      <div class="form-group"><label>Тренер</label>
-        <select><option>Данияр Сейітов</option><option>Айдар Мұратов</option><option>Гүлнар Бекова</option></select>
-      </div>
-      <div class="form-group"><label>Филиал</label>
-        <select><option>Skillset</option><option>84 мектеп</option><option>17 мектеп</option><option>97 мектеп</option><option>66 мектеп</option><option>101 мектеп</option></select>
-      </div>
-      <div class="form-group" style="grid-column:1/-1"><label>Кесте / Расписание</label><input type="text" placeholder="Дс, Ср 17:00 – 18:30" /></div>
+      <div class="form-group"><label>Тренер</label><select id="gr-trainer"></select></div>
+      <div class="form-group"><label>Филиал</label><select id="gr-branch"></select></div>
+      <div class="form-group form-full"><label>Кесте / Расписание</label><input type="text" id="gr-schedule" placeholder="Дс, Ср 17:00 – 18:30" /></div>
     </div>
-    <button class="btn btn-blue" style="width:100%">Жасау / Создать</button>
+    <button class="btn btn-blue" style="width:100%" onclick="saveGroup()">Жасау / Создать</button>
   </div>
 </div>
 
-<!-- MODAL: Group photos -->
-<div class="modal-overlay" id="modal-group-photos">
-  <div class="modal-card">
-    <button class="modal-close-btn" onclick="closeModal('group-photos')">×</button>
-    <h3>📸 Сабақ сәттері / Фото с занятий</h3>
-    <p style="color:#888;font-size:.88rem;margin-bottom:16px">Осы топтың сабақ сәттерін қосыңыз / Добавьте фото этой группы</p>
-    <div style="border:2px dashed #ddd;border-radius:12px;padding:32px;text-align:center;color:#aaa;margin-bottom:16px;cursor:pointer">
-      <div style="font-size:2rem;margin-bottom:8px">📁</div>
-      <div>Фото жүктеу / Загрузить фото</div>
-      <div style="font-size:.8rem;margin-top:4px">JPG, PNG — максимум 10 МБ</div>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-      <img src="img_6434.png" style="width:100%;height:80px;object-fit:cover;border-radius:8px" />
-      <img src="img_6435.png" style="width:100%;height:80px;object-fit:cover;border-radius:8px" />
-      <div style="border:1px dashed #ddd;border-radius:8px;height:80px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:1.5rem;cursor:pointer">+</div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: Add Branch -->
 <div class="modal-overlay" id="modal-add-branch">
   <div class="modal-card">
     <button class="modal-close-btn" onclick="closeModal('add-branch')">×</button>
     <h3>+ Жаңа филиал / Новый филиал</h3>
     <div class="form-grid">
-      <div class="form-group"><label>Атауы / Название</label><input type="text" placeholder="102 мектеп" /></div>
-      <div class="form-group"><label>Мекенжай / Адрес</label><input type="text" placeholder="Алматы, ..." /></div>
-      <div class="form-group"><label>Тренер</label>
-        <select><option>Данияр Сейітов</option><option>Айдар Мұратов</option><option>Гүлнар Бекова</option></select>
-      </div>
-      <div class="form-group"><label>Телефон</label><input type="tel" /></div>
+      <div class="form-group form-full"><label>Атауы / Название</label><input type="text" id="br-name" placeholder="102 мектеп" /></div>
+      <div class="form-group form-full"><label>Мекенжай / Адрес</label><input type="text" id="br-addr" placeholder="Алматы, ..." /></div>
+      <div class="form-group"><label>Телефон</label><input type="tel" id="br-phone" placeholder="+7 ..." /></div>
     </div>
-    <button class="btn btn-blue" style="width:100%">Қосу / Добавить</button>
+    <button class="btn btn-blue" style="width:100%" onclick="saveBranch()">Қосу / Добавить</button>
   </div>
 </div>
 
-<!-- MODAL: Add Trainer -->
 <div class="modal-overlay" id="modal-add-trainer">
   <div class="modal-card">
     <button class="modal-close-btn" onclick="closeModal('add-trainer')">×</button>
     <h3>+ Жаңа тренер / Новый тренер</h3>
     <div class="form-grid">
-      <div class="form-group"><label>Аты-жөні / ФИО</label><input type="text" /></div>
-      <div class="form-group"><label>Телефон</label><input type="tel" /></div>
-      <div class="form-group" style="grid-column:1/-1"><label>Мамандандыру / Специализация</label>
-        <select><option>🤖 Роботика</option><option>🚁 Дрондар</option><option>⚽ Дрон-футбол</option><option>🏆 Спорт РВТ</option></select>
+      <div class="form-group form-full"><label>Аты-жөні / ФИО</label><input type="text" id="tr-name" placeholder="Данияр Сейітов" /></div>
+      <div class="form-group"><label>Телефон</label><input type="tel" id="tr-phone" placeholder="+7 777 ..." /></div>
+      <div class="form-group"><label>Мамандандыру / Специализация</label>
+        <select id="tr-spec">
+          <option>🤖 Роботика</option>
+          <option>🚁 Дрондар</option>
+          <option>⚽ Дрон-футбол</option>
+          <option>🏆 Спорт RBT</option>
+        </select>
       </div>
     </div>
-    <button class="btn btn-blue" style="width:100%">Қосу / Добавить</button>
+    <button class="btn btn-blue" style="width:100%" onclick="saveTrainer()">Қосу / Добавить</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-edit-student">
+  <div class="modal-card">
+    <button class="modal-close-btn" onclick="closeModal('edit-student')">×</button>
+    <h3>✏️ Өзгерту / Редактировать</h3>
+    <input type="hidden" id="edit-st-idx" />
+    <div class="form-grid">
+      <div class="form-group form-full"><label>Аты-жөні / ФИО</label><input type="text" id="edit-st-name" /></div>
+      <div class="form-group"><label>Жасы</label><input type="number" id="edit-st-age" /></div>
+      <div class="form-group"><label>Телефон</label><input type="tel" id="edit-st-phone" /></div>
+      <div class="form-group"><label>Топ</label><select id="edit-st-group"></select></div>
+      <div class="form-group"><label>Тренер</label><select id="edit-st-trainer"></select></div>
+      <div class="form-group"><label>Филиал</label><select id="edit-st-branch"></select></div>
+      <div class="form-group"><label>Қатысу %</label><input type="number" id="edit-st-attend" min="0" max="100" /></div>
+      <div class="form-group"><label>Төлем</label>
+        <select id="edit-st-payment">
+          <option value="paid">✅ Төленді</option>
+          <option value="debt">❌ Қарыз</option>
+          <option value="pending">⏳ Күтуде</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-blue" style="width:100%" onclick="updateStudent()">Сақтау</button>
   </div>
 </div>
 
 <script>
 const ADMIN_KEY = 'smarthub2025';
+const MONTH = new Date().toLocaleDateString('ru-RU',{month:'long',year:'numeric'});
+
+// ── DB helpers ────────────────────────────────────────────
+function db(key, def=[]) { try { return JSON.parse(localStorage.getItem('sh_'+key)||'null') ?? def; } catch { return def; } }
+function dbSet(key, val) { localStorage.setItem('sh_'+key, JSON.stringify(val)); }
+
+// ── Seed default data ─────────────────────────────────────
+function seedDefaults() {
+  if (!localStorage.getItem('sh_seeded')) {
+    dbSet('branches', [
+      {id:1,name:'Skillset',addr:'Астана, ул. Павлова',phone:'+7 700 155 70 18'},
+      {id:2,name:'84 мектеп',addr:'Астана, Школа-лицей 84',phone:''},
+      {id:3,name:'17 мектеп',addr:'Астана, №17 гимназия',phone:''},
+      {id:4,name:'97 мектеп',addr:'Астана, Школа-гимназия 97',phone:''},
+      {id:5,name:'66 мектеп',addr:'Астана, Лицей 66',phone:''},
+      {id:6,name:'101 мектеп',addr:'Астана, Средняя школа 101',phone:''},
+    ]);
+    dbSet('trainers', [
+      {id:1,name:'Данияр Сейітов',phone:'+7 777 000 0001',spec:'🤖 Роботика'},
+      {id:2,name:'Айдар Мұратов',phone:'+7 777 000 0002',spec:'🚁 Дрондар'},
+      {id:3,name:'Гүлнар Бекова',phone:'+7 777 000 0003',spec:'🤖 Роботика'},
+    ]);
+    dbSet('groups', [
+      {id:1,name:'Роботика — Junior A',dir:'🤖 Роботика',trainer:'Гүлнар Бекова',branch:'17 мектеп',schedule:'Дс, Ср 16:00'},
+      {id:2,name:'Роботика — Master B',dir:'🤖 Роботика',trainer:'Данияр Сейітов',branch:'Skillset',schedule:'Дс, Жм 17:00'},
+      {id:3,name:'Дрондар — A тобы',dir:'🚁 Дрондар',trainer:'Айдар Мұратов',branch:'84 мектеп',schedule:'Сс, Жм 18:00'},
+      {id:4,name:'Дрон-футбол',dir:'⚽ Дрон-футбол',trainer:'Айдар Мұратов',branch:'66 мектеп',schedule:'Сш, Сн 15:00'},
+      {id:5,name:'Спорт RBT — Expert',dir:'🏆 Спорт RBT',trainer:'Данияр Сейітов',branch:'97 мектеп',schedule:'Дс, Ср, Жм 17:30'},
+    ]);
+    dbSet('students', [
+      {id:1,name:'Мамытов Арлан',age:10,phone:'+7 777 001',group:'Роботика — Master B',trainer:'Данияр Сейітов',branch:'Skillset',attend:87,payment:'paid'},
+      {id:2,name:'Ахметова Диана',age:12,phone:'+7 777 002',group:'Дрондар — A тобы',trainer:'Айдар Мұратов',branch:'84 мектеп',attend:92,payment:'paid'},
+      {id:3,name:'Сейітов Тимур',age:9,phone:'+7 777 003',group:'Роботика — Junior A',trainer:'Гүлнар Бекова',branch:'17 мектеп',attend:65,payment:'debt'},
+    ]);
+    localStorage.setItem('sh_seeded','1');
+  }
+}
 
 // ── Login ─────────────────────────────────────────────────
 function tryLogin() {
-  const key = document.getElementById('loginKey').value.trim();
-  if (key === ADMIN_KEY) {
+  if (document.getElementById('loginKey').value.trim() === ADMIN_KEY) {
     document.getElementById('loginOverlay').classList.add('hidden');
-    loadApps();
+    seedDefaults();
+    renderAll();
   } else {
     document.getElementById('loginError').style.display = 'block';
   }
 }
-document.getElementById('loginKey').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+document.getElementById('loginKey').addEventListener('keydown', e => { if(e.key==='Enter') tryLogin(); });
 
 // ── Navigation ────────────────────────────────────────────
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById('page-'+item.dataset.page).classList.add('active');
+  });
+});
 function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  event.currentTarget.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelector('[data-page="'+name+'"]').classList.add('active');
+  document.getElementById('page-'+name).classList.add('active');
 }
 
 // ── Modals ────────────────────────────────────────────────
 function openModal(name) {
-  document.getElementById('modal-' + name).classList.add('open');
+  if (name==='add-student'||name==='add-group') populateSelects();
+  document.getElementById('modal-'+name).classList.add('open');
 }
-function closeModal(name) {
-  document.getElementById('modal-' + name).classList.remove('open');
-}
-document.querySelectorAll('.modal-overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+function closeModal(name) { document.getElementById('modal-'+name).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(o=>{
+  o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); });
 });
 
-// ── Load applications ─────────────────────────────────────
+// ── Populate selects ──────────────────────────────────────
+function populateSelects() {
+  const groups   = db('groups');
+  const trainers = db('trainers');
+  const branches = db('branches');
+  ['st-group','edit-st-group','gr-'].forEach(pfx=>{});
+
+  // Student selects
+  ['st-group','edit-st-group'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.innerHTML = groups.map(g=>`<option>${g.name}</option>`).join('');
+  });
+  ['st-trainer','edit-st-trainer','gr-trainer'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.innerHTML = trainers.map(t=>`<option>${t.name}</option>`).join('');
+  });
+  ['st-branch','edit-st-branch','gr-branch'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.innerHTML = branches.map(b=>`<option>${b.name}</option>`).join('');
+  });
+}
+
+// ── STUDENTS ──────────────────────────────────────────────
+function renderStudents() {
+  const list = db('students');
+  const tbody = document.getElementById('students-tbody');
+  if(!list.length){tbody.innerHTML='<tr><td colspan="8" class="empty-state">Оқушылар жоқ / Нет учеников</td></tr>';return;}
+  const payLabel = {paid:'<span class="badge badge-active">Төленді</span>',debt:'<span class="badge badge-debt">Қарыз / Долг</span>',pending:'<span class="badge badge-pending">Күтуде / Ожидает</span>'};
+  tbody.innerHTML = list.map((s,i)=>`
+    <tr>
+      <td><strong>${s.name}</strong></td>
+      <td>${s.age}</td>
+      <td>${s.group||'—'}</td>
+      <td>${s.trainer||'—'}</td>
+      <td>${s.branch||'—'}</td>
+      <td style="color:${s.attend>=80?'#2e7d32':'#e65100'};font-weight:700">${s.attend||0}%</td>
+      <td>${payLabel[s.payment]||''}</td>
+      <td style="display:flex;gap:5px">
+        <button class="btn btn-outline btn-sm" onclick="editStudent(${i})">✏️</button>
+        <button class="btn btn-red btn-sm" onclick="deleteItem('students',${i})">🗑</button>
+      </td>
+    </tr>`).join('');
+  document.getElementById('stat-students').textContent = list.length;
+}
+
+function saveStudent() {
+  const list = db('students');
+  const newId = Date.now();
+  list.push({
+    id:newId,
+    name: document.getElementById('st-name').value.trim(),
+    age:  document.getElementById('st-age').value,
+    phone:document.getElementById('st-phone').value.trim(),
+    group:document.getElementById('st-group').value,
+    trainer:document.getElementById('st-trainer').value,
+    branch:document.getElementById('st-branch').value,
+    attend:document.getElementById('st-attend').value||90,
+    payment:document.getElementById('st-payment').value,
+    createdAt: new Date().toLocaleDateString('ru-RU')
+  });
+  dbSet('students',list);
+  closeModal('add-student');
+  renderStudents(); renderPayments(); updateStats();
+  ['st-name','st-age','st-phone','st-attend'].forEach(id=>document.getElementById(id).value='');
+}
+
+function editStudent(idx) {
+  populateSelects();
+  const s = db('students')[idx];
+  document.getElementById('edit-st-idx').value = idx;
+  document.getElementById('edit-st-name').value = s.name;
+  document.getElementById('edit-st-age').value  = s.age;
+  document.getElementById('edit-st-phone').value= s.phone;
+  document.getElementById('edit-st-attend').value= s.attend;
+  document.getElementById('edit-st-payment').value= s.payment;
+  setTimeout(()=>{
+    document.getElementById('edit-st-group').value  = s.group;
+    document.getElementById('edit-st-trainer').value= s.trainer;
+    document.getElementById('edit-st-branch').value = s.branch;
+  }, 50);
+  openModal('edit-student');
+}
+
+function updateStudent() {
+  const idx = parseInt(document.getElementById('edit-st-idx').value);
+  const list = db('students');
+  list[idx] = {
+    ...list[idx],
+    name:   document.getElementById('edit-st-name').value.trim(),
+    age:    document.getElementById('edit-st-age').value,
+    phone:  document.getElementById('edit-st-phone').value.trim(),
+    group:  document.getElementById('edit-st-group').value,
+    trainer:document.getElementById('edit-st-trainer').value,
+    branch: document.getElementById('edit-st-branch').value,
+    attend: document.getElementById('edit-st-attend').value,
+    payment:document.getElementById('edit-st-payment').value,
+  };
+  dbSet('students',list);
+  closeModal('edit-student');
+  renderStudents(); renderPayments(); updateStats();
+}
+
+// ── GROUPS ────────────────────────────────────────────────
+function renderGroups() {
+  const list = db('groups');
+  const tbody = document.getElementById('groups-tbody');
+  if(!list.length){tbody.innerHTML='<tr><td colspan="8" class="empty-state">Топтар жоқ / Нет групп</td></tr>';return;}
+  const students = db('students');
+  tbody.innerHTML = list.map((g,i)=>{
+    const cnt = students.filter(s=>s.group===g.name).length;
+    return `<tr>
+      <td><strong>${g.name}</strong></td>
+      <td>${g.dir}</td>
+      <td>${g.trainer}</td>
+      <td>${cnt}</td>
+      <td>${g.schedule}</td>
+      <td>${g.branch}</td>
+      <td><button class="btn btn-outline btn-sm">📸 Фотолар</button></td>
+      <td style="display:flex;gap:5px"><button class="btn btn-red btn-sm" onclick="deleteItem('groups',${i})">🗑</button></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('stat-groups').textContent = list.length;
+}
+
+function saveGroup() {
+  const list = db('groups');
+  list.push({
+    id:Date.now(),
+    name:    document.getElementById('gr-name').value.trim(),
+    dir:     document.getElementById('gr-dir').value,
+    trainer: document.getElementById('gr-trainer').value,
+    branch:  document.getElementById('gr-branch').value,
+    schedule:document.getElementById('gr-schedule').value.trim(),
+  });
+  dbSet('groups',list);
+  closeModal('add-group');
+  ['gr-name','gr-schedule'].forEach(id=>document.getElementById(id).value='');
+  renderGroups(); updateStats();
+}
+
+// ── BRANCHES ──────────────────────────────────────────────
+function renderBranches() {
+  const list = db('branches');
+  const students = db('students');
+  const grid = document.getElementById('branches-grid');
+  grid.innerHTML = list.map((b,i)=>{
+    const cnt = students.filter(s=>s.branch===b.name).length;
+    return `<div class="card" style="overflow:visible">
+      <div style="padding:16px">
+        <div style="font-size:1.3rem;margin-bottom:6px">🏫</div>
+        <h3 style="font-weight:900;font-size:1rem;margin-bottom:4px">${b.name}</h3>
+        <p style="font-size:.8rem;color:#888;margin-bottom:10px">${b.addr}</p>
+        <div style="font-size:.82rem;line-height:1.8">
+          ${b.phone?`<div>📞 ${b.phone}</div>`:''}
+          <div>🎓 Оқушылар: ${cnt}</div>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:12px">
+          <button class="btn btn-red btn-sm" onclick="deleteItem('branches',${i})">🗑</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveBranch() {
+  const list = db('branches');
+  list.push({id:Date.now(),name:document.getElementById('br-name').value.trim(),addr:document.getElementById('br-addr').value.trim(),phone:document.getElementById('br-phone').value.trim()});
+  dbSet('branches',list);
+  closeModal('add-branch');
+  ['br-name','br-addr','br-phone'].forEach(id=>document.getElementById(id).value='');
+  renderBranches();
+}
+
+// ── TRAINERS ──────────────────────────────────────────────
+function renderTrainers() {
+  const list = db('trainers');
+  const groups = db('groups');
+  const tbody = document.getElementById('trainers-tbody');
+  if(!list.length){tbody.innerHTML='<tr><td colspan="5" class="empty-state">Тренерлер жоқ</td></tr>';return;}
+  tbody.innerHTML = list.map((t,i)=>{
+    const gcnt = groups.filter(g=>g.trainer===t.name).length;
+    return `<tr>
+      <td><strong>${t.name}</strong></td>
+      <td>${t.spec}</td>
+      <td>${gcnt}</td>
+      <td>${t.phone}</td>
+      <td><button class="btn btn-red btn-sm" onclick="deleteItem('trainers',${i})">🗑</button></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('stat-trainers').textContent = list.length;
+}
+
+function saveTrainer() {
+  const list = db('trainers');
+  list.push({id:Date.now(),name:document.getElementById('tr-name').value.trim(),phone:document.getElementById('tr-phone').value.trim(),spec:document.getElementById('tr-spec').value});
+  dbSet('trainers',list);
+  closeModal('add-trainer');
+  ['tr-name','tr-phone'].forEach(id=>document.getElementById(id).value='');
+  renderTrainers(); updateStats();
+}
+
+// ── PAYMENTS ──────────────────────────────────────────────
+function renderPayments() {
+  const students = db('students');
+  const tbody = document.getElementById('payments-tbody');
+  const PRICE = 42000;
+  const payLabel = {paid:`<span class="badge badge-active">Төленді</span>`,debt:`<span class="badge badge-debt">Қарыз / Долг</span>`,pending:`<span class="badge badge-pending">Күтуде</span>`};
+  if(!students.length){tbody.innerHTML='<tr><td colspan="7" class="empty-state">Жоқ / Нет данных</td></tr>';}
+  else tbody.innerHTML = students.map((s,i)=>`
+    <tr>
+      <td><strong>${s.name}</strong></td>
+      <td>${s.group||'—'}</td>
+      <td><strong>${PRICE.toLocaleString()} ₸</strong></td>
+      <td>${MONTH}</td>
+      <td>${payLabel[s.payment]||''}</td>
+      <td>${s.createdAt||'—'}</td>
+      <td>
+        <select onchange="changePayment(${i},this.value)" style="font-size:.75rem;padding:4px 6px">
+          <option value="paid" ${s.payment==='paid'?'selected':''}>✅ Төленді</option>
+          <option value="debt" ${s.payment==='debt'?'selected':''}>❌ Қарыз</option>
+          <option value="pending" ${s.payment==='pending'?'selected':''}>⏳ Күтуде</option>
+        </select>
+      </td>
+    </tr>`).join('');
+  const paid = students.filter(s=>s.payment==='paid').length;
+  const debt = students.filter(s=>s.payment==='debt').length;
+  document.getElementById('pay-total').textContent = (paid*PRICE).toLocaleString()+' ₸';
+  document.getElementById('pay-debt').textContent = debt;
+  document.getElementById('pay-paid').textContent = paid;
+}
+
+function changePayment(idx, val) {
+  const list = db('students');
+  list[idx].payment = val;
+  dbSet('students',list);
+  renderStudents(); renderPayments();
+}
+
+// ── APPLICATIONS ──────────────────────────────────────────
 async function loadApps() {
   try {
-    const res = await fetch('/api/submissions?key=' + ADMIN_KEY);
+    const res = await fetch('/api/submissions?key='+ADMIN_KEY);
     const rows = await res.json();
     document.getElementById('stat-apps').textContent = rows.length;
-    renderAppsTable(rows);
-    renderDashRecent(rows.slice(0, 5));
+    const tbody = document.getElementById('apps-tbody');
+    const dashTbody = document.getElementById('dash-apps');
+    if(!rows.length){
+      tbody.innerHTML='<tr><td colspan="8" class="empty-state">Өтінімдер жоқ / Нет заявок</td></tr>';
+      dashTbody.innerHTML='<tr><td colspan="5" class="empty-state">Жоқ / Нет</td></tr>';
+      return;
+    }
+    const dirMap={дроны:'🚁 Дрондар',робототехника:'🤖 Роботика',лагеря:'🏕️ Лагерь'};
+    tbody.innerHTML = rows.map(r=>`
+      <tr>
+        <td>${r.id}</td>
+        <td><strong>${r.name}</strong></td>
+        <td>${r.phone}</td>
+        <td>${r.age||'—'}</td>
+        <td>${dirMap[r.direction]||r.direction||'—'}</td>
+        <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.message||'—'}</td>
+        <td style="white-space:nowrap">${r.created_at}</td>
+        <td><button class="btn btn-red btn-sm" onclick="deleteApp(${r.id})">🗑</button></td>
+      </tr>`).join('');
+    dashTbody.innerHTML = rows.slice(0,5).map(r=>`
+      <tr><td><strong>${r.name}</strong></td><td>${r.phone}</td><td>${r.age||'—'}</td><td>${dirMap[r.direction]||'—'}</td><td style="white-space:nowrap">${r.created_at}</td></tr>`).join('');
   } catch(e) {
-    document.getElementById('apps-table-body').innerHTML = '<tr><td colspan="9" style="text-align:center;color:#999;padding:20px">Сервер қолжетімсіз / Сервер недоступен</td></tr>';
+    document.getElementById('apps-tbody').innerHTML='<tr><td colspan="8" class="empty-state">Сервер қолжетімсіз</td></tr>';
   }
 }
 
-function renderAppsTable(rows) {
-  const tbody = document.getElementById('apps-table-body');
-  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#999;padding:20px">Өтінімдер жоқ</td></tr>'; return; }
-  tbody.innerHTML = rows.map(r => `
-    <tr>
-      <td>${r.id}</td>
-      <td><strong>${r.name}</strong></td>
-      <td>${r.phone}</td>
-      <td>${r.age || '—'}</td>
-      <td>${directionLabel(r.direction || r.message)}</td>
-      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.message || '—'}</td>
-      <td>${r.created_at}</td>
-      <td><span class="badge badge-new">Жаңа / Новая</span></td>
-      <td><button class="btn btn-red btn-sm" onclick="deleteApp(${r.id})">🗑</button></td>
-    </tr>`).join('');
-}
-
-function renderDashRecent(rows) {
-  const tbody = document.getElementById('dash-recent-apps');
-  if (!rows.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#999;padding:20px">Өтінімдер жоқ</td></tr>'; return; }
-  tbody.innerHTML = rows.map(r => `
-    <tr>
-      <td><strong>${r.name}</strong></td>
-      <td>${r.phone}</td>
-      <td>${r.age || '—'}</td>
-      <td>${directionLabel(r.direction || '')}</td>
-      <td><span class="badge badge-new">Жаңа</span></td>
-      <td>${r.created_at}</td>
-    </tr>`).join('');
-}
-
-function directionLabel(d) {
-  if (!d) return '—';
-  const map = { дроны:'🚁 Дрондар', робототехника:'🤖 Роботика', лагеря:'🏕️ Лагерь' };
-  return map[d] || d;
-}
-
 async function deleteApp(id) {
-  if (!confirm('Жою? / Удалить?')) return;
-  await fetch('/api/submissions/' + id + '?key=' + ADMIN_KEY, { method: 'DELETE' });
+  if(!confirm('Жою? / Удалить?')) return;
+  await fetch('/api/submissions/'+id+'?key='+ADMIN_KEY,{method:'DELETE'});
   loadApps();
 }
 
-function filterApps(q) {
-  document.querySelectorAll('#apps-table-body tr').forEach(tr => {
+// ── DELETE ────────────────────────────────────────────────
+function deleteItem(store, idx) {
+  if(!confirm('Жою? / Удалить?')) return;
+  const list = db(store);
+  list.splice(idx,1);
+  dbSet(store,list);
+  renderAll();
+}
+
+// ── FILTER ────────────────────────────────────────────────
+function filterTable(tbodyId, q) {
+  document.querySelectorAll('#'+tbodyId+' tr').forEach(tr=>{
     tr.style.display = tr.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
   });
 }
 
-// ── Excel export ──────────────────────────────────────────
-function exportExcel() {
-  window.open('/api/export?key=' + ADMIN_KEY);
+// ── STATS ─────────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('stat-students').textContent = db('students').length;
+  document.getElementById('stat-groups').textContent   = db('groups').length;
+  document.getElementById('stat-trainers').textContent = db('trainers').length;
+}
+
+// ── EXCEL EXPORT ──────────────────────────────────────────
+function exportExcel() { window.open('/api/export?key='+ADMIN_KEY); }
+
+function exportStudentsExcel() {
+  const list = db('students');
+  let csv = 'АТЫ-ЖӨНІ,ЖАСЫ,ТОП,ТРЕНЕР,ФИЛИАЛ,ҚАТЫСУ,ТӨЛЕМ\n';
+  list.forEach(s=>{ csv+=`"${s.name}",${s.age},"${s.group}","${s.trainer}","${s.branch}",${s.attend}%,${s.payment}\n`; });
+  downloadCSV(csv,'oqyshylar.csv');
+}
+
+function exportPaymentsExcel() {
+  const list = db('students');
+  let csv = 'АТЫ-ЖӨНІ,ТОП,СУММА,АЙ,КҮЙ\n';
+  list.forEach(s=>{ csv+=`"${s.name}","${s.group}",42000,${MONTH},${s.payment}\n`; });
+  downloadCSV(csv,'tolemder.csv');
+}
+
+function downloadCSV(csv, name) {
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download = name;
+  a.click();
+}
+
+// ── RENDER ALL ────────────────────────────────────────────
+function renderAll() {
+  renderStudents();
+  renderGroups();
+  renderBranches();
+  renderTrainers();
+  renderPayments();
+  loadApps();
+  updateStats();
 }
 </script>
 </body>
