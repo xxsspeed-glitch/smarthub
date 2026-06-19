@@ -106,6 +106,20 @@
         #level-lightbox .lb-btn { background:rgba(255,255,255,.15); border:none; color:#fff; font-size:1.5rem; width:44px; height:44px; border-radius:50%; cursor:pointer; transition:.2s; }
         #level-lightbox .lb-btn:hover { background:rgba(255,255,255,.3); }
         #level-lightbox .lb-counter { color:rgba(255,255,255,.6); font-size:.9rem; margin-top:8px; }
+
+        /* ─── LEVEL PHOTO SECTIONS ───────────────────────── */
+        .level-photo-sections { margin-top:24px; display:flex; flex-direction:column; gap:20px; }
+        .lps-block { background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+        .lps-label { padding:12px 16px; font-weight:700; font-size:.9rem; color:#CC0000; border-bottom:1px solid #f0f0f0; background:#fafafa; }
+        .lps-carousel { position:relative; overflow:hidden; height:280px; }
+        .lps-track { display:flex; height:100%; transition:transform .4s ease; }
+        .lps-track img { flex:0 0 100%; width:100%; height:100%; object-fit:cover; object-position:center 15%; }
+        .lps-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.4); color:#fff; border:none; font-size:1.6rem; width:38px; height:38px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.2s; z-index:2; }
+        .lps-btn:hover { background:rgba(204,0,0,.7); }
+        .lps-prev { left:10px; }
+        .lps-next { right:10px; }
+        body.dark .lps-block { background:#222; }
+        body.dark .lps-label { background:#1a1a1a; color:#ff6b6b; border-color:#333; }
     </style>
 </head>
 <body>
@@ -402,19 +416,12 @@
             <div class="curriculum-grid">
                 <!-- Робототехника -->
                 <div class="track-card">
-                    <h3 data-kaz="🤖 Роботика" data-ru="🤖 Робототехника" data-en="🤖 Robotics">🤖 Роботика</h3>
+                    <h3 data-kaz="🤖 Робототехника" data-ru="🤖 Робототехника" data-en="🤖 Robotics">🤖 Робототехника</h3>
                     <div class="level-grid">
                         <div class="level-card flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
-                                    <div class="level-photo-slot has-photo" data-level="junior" onclick="openLevelGallery('junior')">
-                                        <div class="level-carousel" id="carousel-junior">
-                                            <img src="junior1.jpg" alt="junior фото 1" /><img src="junior2.jpg" alt="junior фото 2" /><img src="junior3.jpg" alt="junior фото 3" /><img src="junior4.jpg" alt="junior фото 4" />
-                                        </div>
-                                        <div class="carousel-dots" id="dots-junior">
-                                            <span class="cdot active" onclick="event.stopPropagation();setSlide('junior',0)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('junior',1)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('junior',2)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('junior',3)"></span>
-                                        </div>
-                                    </div>
+                                    <div class="level-icon">🟣</div>
                                     <div class="level-name">Junior</div>
                                     <div class="level-age" data-kaz="1–2 сынып" data-ru="1–2 класс" data-en="Grade 1–2">1–2 сынып</div>
                                 </div>
@@ -427,14 +434,7 @@
                         <div class="level-card flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
-                                    <div class="level-photo-slot has-photo" data-level="middle" onclick="openLevelGallery('middle')">
-                                        <div class="level-carousel" id="carousel-middle">
-                                            <img src="middle1.jpg" alt="middle фото 1" /><img src="middle2.jpg" alt="middle фото 2" /><img src="middle3.jpg" alt="middle фото 3" /><img src="middle4.jpg" alt="middle фото 4" />
-                                        </div>
-                                        <div class="carousel-dots" id="dots-middle">
-                                            <span class="cdot active" onclick="event.stopPropagation();setSlide('middle',0)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('middle',1)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('middle',2)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('middle',3)"></span>
-                                        </div>
-                                    </div>
+                                    <div class="level-icon">🟢</div>
                                     <div class="level-name">Middle</div>
                                     <div class="level-age" data-kaz="3–4 сынып" data-ru="3–4 класс" data-en="Grade 3–4">3–4 сынып</div>
                                 </div>
@@ -447,14 +447,7 @@
                         <div class="level-card flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
-                                    <div class="level-photo-slot has-photo" data-level="master" onclick="openLevelGallery('master')">
-                                        <div class="level-carousel" id="carousel-master">
-                                            <img src="master1.jpg" alt="master фото 1" /><img src="master2.jpg" alt="master фото 2" /><img src="master3.jpg" alt="master фото 3" /><img src="master4.jpg" alt="master фото 4" />
-                                        </div>
-                                        <div class="carousel-dots" id="dots-master">
-                                            <span class="cdot active" onclick="event.stopPropagation();setSlide('master',0)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('master',1)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('master',2)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('master',3)"></span>
-                                        </div>
-                                    </div>
+                                    <div class="level-icon">🟡</div>
                                     <div class="level-name">Master</div>
                                     <div class="level-age" data-kaz="5–7 сынып" data-ru="5–7 класс" data-en="Grade 5–7">5–7 сынып</div>
                                 </div>
@@ -467,14 +460,7 @@
                         <div class="level-card flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
-                                    <div class="level-photo-slot has-photo" data-level="expert" onclick="openLevelGallery('expert')">
-                                        <div class="level-carousel" id="carousel-expert">
-                                            <img src="expert1.jpg" alt="expert фото 1" /><img src="expert2.jpg" alt="expert фото 2" /><img src="expert3.jpg" alt="expert фото 3" /><img src="expert4.jpg" alt="expert фото 4" />
-                                        </div>
-                                        <div class="carousel-dots" id="dots-expert">
-                                            <span class="cdot active" onclick="event.stopPropagation();setSlide('expert',0)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('expert',1)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('expert',2)"></span><span class="cdot" onclick="event.stopPropagation();setSlide('expert',3)"></span>
-                                        </div>
-                                    </div>
+                                    <div class="level-icon">🔴</div>
                                     <div class="level-name">Expert</div>
                                     <div class="level-age" data-kaz="8–10 сынып" data-ru="8–10 класс" data-en="Grade 8–10">8–10 сынып</div>
                                 </div>
@@ -485,6 +471,67 @@
                             </div>
                         </div>
                     </div>
+
+                <!-- ─── ФОТО ПО УРОВНЯМ ──────────────────────── -->
+                <div class="level-photo-sections">
+
+                    <div class="lps-block">
+                        <div class="lps-label">🟣 Junior — 1–2 сынып</div>
+                        <div class="lps-carousel" id="lps-junior">
+                            <div class="lps-track">
+                                <img src="junior1.jpg" alt="Junior 1" />
+                                <img src="junior2.jpg" alt="Junior 2" />
+                                <img src="junior3.jpg" alt="Junior 3" />
+                                <img src="junior4.jpg" alt="Junior 4" />
+                            </div>
+                            <button class="lps-btn lps-prev" onclick="lpsNav('junior',-1)">‹</button>
+                            <button class="lps-btn lps-next" onclick="lpsNav('junior',1)">›</button>
+                        </div>
+                    </div>
+
+                    <div class="lps-block">
+                        <div class="lps-label">🟢 Middle — 3–4 сынып</div>
+                        <div class="lps-carousel" id="lps-middle">
+                            <div class="lps-track">
+                                <img src="middle1.jpg" alt="Middle 1" />
+                                <img src="middle2.jpg" alt="Middle 2" />
+                                <img src="middle3.jpg" alt="Middle 3" />
+                                <img src="middle4.jpg" alt="Middle 4" />
+                            </div>
+                            <button class="lps-btn lps-prev" onclick="lpsNav('middle',-1)">‹</button>
+                            <button class="lps-btn lps-next" onclick="lpsNav('middle',1)">›</button>
+                        </div>
+                    </div>
+
+                    <div class="lps-block">
+                        <div class="lps-label">🟡 Master — 5–7 сынып</div>
+                        <div class="lps-carousel" id="lps-master">
+                            <div class="lps-track">
+                                <img src="master1.jpg" alt="Master 1" />
+                                <img src="master2.jpg" alt="Master 2" />
+                                <img src="master3.jpg" alt="Master 3" />
+                                <img src="master4.jpg" alt="Master 4" />
+                            </div>
+                            <button class="lps-btn lps-prev" onclick="lpsNav('master',-1)">‹</button>
+                            <button class="lps-btn lps-next" onclick="lpsNav('master',1)">›</button>
+                        </div>
+                    </div>
+
+                    <div class="lps-block">
+                        <div class="lps-label">🔴 Expert — 8–10 сынып</div>
+                        <div class="lps-carousel" id="lps-expert">
+                            <div class="lps-track">
+                                <img src="expert1.jpg" alt="Expert 1" />
+                                <img src="expert2.jpg" alt="Expert 2" />
+                                <img src="expert3.jpg" alt="Expert 3" />
+                                <img src="expert4.jpg" alt="Expert 4" />
+                            </div>
+                            <button class="lps-btn lps-prev" onclick="lpsNav('expert',-1)">‹</button>
+                            <button class="lps-btn lps-next" onclick="lpsNav('expert',1)">›</button>
+                        </div>
+                    </div>
+
+                </div>
                 </div>
 
                 <!-- Направления -->
@@ -1135,6 +1182,18 @@
         if (e.key==='ArrowLeft') lbPrev();
         if (e.key==='Escape') closeLightbox();
     });
+
+
+    // ── Level Photo Sections navigation ──────────────────
+    const lpsIdx = { junior:0, middle:0, master:0, expert:0 };
+    function lpsNav(level, dir) {
+        const carousel = document.getElementById('lps-' + level);
+        if (!carousel) return;
+        const track = carousel.querySelector('.lps-track');
+        const imgs = track.querySelectorAll('img');
+        lpsIdx[level] = (lpsIdx[level] + dir + imgs.length) % imgs.length;
+        track.style.transform = `translateX(-${lpsIdx[level] * 100}%)`;
+    }
 
     </script>
 </body>
