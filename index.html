@@ -120,6 +120,44 @@
         .lps-next { right:10px; }
         body.dark .lps-block { background:#222; }
         body.dark .lps-label { background:#1a1a1a; color:#ff6b6b; border-color:#333; }
+
+        /* ═══ ROBO LAYOUT: слева карточки, справа фото ════ */
+        .robo-layout { display:grid; grid-template-columns:320px 1fr; gap:28px; margin-bottom:40px; align-items:start; }
+        .track-heading { font-size:1.1rem; font-weight:900; color:var(--red); margin-bottom:16px; }
+        .robo-level-card { display:flex; align-items:center; gap:14px; background:#fff; border-radius:12px; padding:14px 16px; margin-bottom:10px; box-shadow:0 2px 10px rgba(0,0,0,.06); transition:.2s; }
+        .robo-level-card:hover { transform:translateX(4px); box-shadow:0 4px 16px rgba(0,0,0,.1); }
+        .rlc-dot { width:14px; height:14px; border-radius:50%; flex-shrink:0; }
+        .rlc-name { font-weight:900; font-size:1rem; color:var(--red); }
+        .rlc-grade { font-size:.82rem; color:#888; margin:2px 0; }
+        .rlc-desc { font-size:.82rem; color:#555; }
+        body.dark .robo-level-card { background:#222; }
+        body.dark .rlc-desc { color:#aaa; }
+        /* Photo slider */
+        .robo-photos { display:flex; flex-direction:column; gap:16px; }
+        .rp-item { border-radius:12px; overflow:hidden; background:#fff; box-shadow:0 2px 12px rgba(0,0,0,.07); }
+        .rp-label { padding:10px 14px; font-size:.85rem; font-weight:700; color:var(--red); background:#fafafa; border-bottom:1px solid #f0f0f0; }
+        .rp-slider { position:relative; height:200px; overflow:hidden; }
+        .rp-track { display:flex; height:100%; transition:transform .4s ease; }
+        .rp-track img { flex:0 0 100%; width:100%; height:100%; object-fit:cover; object-position:center 15%; }
+        .rp-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.4); color:#fff; border:none; font-size:1.4rem; width:34px; height:34px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2; transition:.2s; }
+        .rp-btn:hover { background:rgba(204,0,0,.7); }
+        .rp-prev { left:8px; }
+        .rp-next { right:8px; }
+        body.dark .rp-item { background:#222; }
+        body.dark .rp-label { background:#1a1a1a; border-color:#333; }
+        /* 3 columns directions */
+        .directions-3col { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:32px; }
+        .dir3-card { border-radius:16px; overflow:hidden; }
+        .dir3-card .flip-card-front, .dir3-card .flip-card-back { padding:24px; border-radius:16px; background:#fff; box-shadow:0 2px 14px rgba(0,0,0,.07); min-height:220px; display:flex; flex-direction:column; align-items:flex-start; gap:10px; }
+        .dir3-icon { font-size:2rem; margin-bottom:4px; }
+        .dir3-card h3 { font-size:1.05rem; font-weight:900; color:var(--red); }
+        .dir3-card p { font-size:.88rem; color:#555; line-height:1.6; flex:1; }
+        .dir3-card .flip-card-back { background:var(--red); }
+        .dir3-card .flip-card-back h3, .dir3-card .flip-card-back p { color:#fff; }
+        body.dark .dir3-card .flip-card-front { background:#222; }
+        body.dark .dir3-card p { color:#aaa; }
+        @media(max-width:900px){ .robo-layout{grid-template-columns:1fr;} .directions-3col{grid-template-columns:1fr;} }
+        @media(max-width:600px){ .directions-3col{grid-template-columns:1fr;} }
     </style>
 </head>
 <body>
@@ -413,196 +451,157 @@
         <div class="section-inner">
             <h2 class="section-title" data-kaz="Оқу бағдарламасы" data-ru="Учебная Программа" data-en="Curriculum">Оқу бағдарламасы</h2>
 
-            <div class="curriculum-grid">
-                <!-- Робототехника -->
-                <div class="track-card">
-                    <h3 data-kaz="🤖 Робототехника" data-ru="🤖 Робототехника" data-en="🤖 Robotics">🤖 Робототехника</h3>
-                    <div class="level-grid">
-                        <div class="level-card flip-card">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front">
-                                    <div class="level-icon">🟣</div>
-                                    <div class="level-name">Junior</div>
-                                    <div class="level-age" data-kaz="1–2 сынып" data-ru="1–2 класс" data-en="Grade 1–2">1–2 сынып</div>
-                                </div>
-                                <div class="flip-card-back">
-                                    <h4>Junior</h4>
-                                    <p data-kaz="Жасы: 5 жастан 2-сыныпқа дейін. Балалар LEGO Education WeDo 2.0 конструкторлары арқылы роботика әлемімен танысады. Логика, қиял мен есеп шешу дағдылары дамиды." data-ru="Возраст: от 5 лет до 2 класса. Дети знакомятся с миром робототехники через конструкторы LEGO Education WeDo 2.0. Развиваются логика, воображение и навыки решения задач." data-en="Age: from 5 years to grade 2. Children explore the world of robotics through LEGO Education WeDo 2.0. Logic, imagination and problem-solving skills develop.">Жасы: 5 жастан 2-сыныпқа дейін. Балалар LEGO Education WeDo 2.0 конструкторлары арқылы роботика әлемімен танысады.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="level-card flip-card">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front">
-                                    <div class="level-icon">🟢</div>
-                                    <div class="level-name">Middle</div>
-                                    <div class="level-age" data-kaz="3–4 сынып" data-ru="3–4 класс" data-en="Grade 3–4">3–4 сынып</div>
-                                </div>
-                                <div class="flip-card-back">
-                                    <h4>Middle</h4>
-                                    <p data-kaz="Жасы: 3–4 сынып. LEGO Education SPIKE Prime платформасымен жұмыс. Күрделі механизмдер, программалау және автономды роботтар жасау." data-ru="Возраст: 3–4 классы. Работа с платформой LEGO Education SPIKE Prime. Сложные механизмы, программирование и создание автономных роботов." data-en="Age: grades 3–4. Working with LEGO Education SPIKE Prime platform. Complex mechanisms, programming and autonomous robots.">Жасы: 3–4 сынып. LEGO Education SPIKE Prime платформасымен жұмыс. Күрделі механизмдер, программалау және автономды роботтар жасау.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="level-card flip-card">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front">
-                                    <div class="level-icon">🟡</div>
-                                    <div class="level-name">Master</div>
-                                    <div class="level-age" data-kaz="5–7 сынып" data-ru="5–7 класс" data-en="Grade 5–7">5–7 сынып</div>
-                                </div>
-                                <div class="flip-card-back">
-                                    <h4>Master</h4>
-                                    <p data-kaz="Жасы: 5–7 сынып. SPIKE Prime платформасында тереңдетілген оқыту. Күрделі жобалар, жарыстарға қатысу және нақты инженерлік есептерді шешу." data-ru="Возраст: 5–7 классы. Углублённое изучение с SPIKE Prime. Сложные проекты, участие в соревнованиях и решение реальных инженерных задач." data-en="Age: grades 5–7. Advanced study with SPIKE Prime. Complex projects, competitions and real engineering challenges.">Жасы: 5–7 сынып. SPIKE Prime платформасында тереңдетілген оқыту. Күрделі жобалар, жарыстарға қатысу.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="level-card flip-card">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front">
-                                    <div class="level-icon">🔴</div>
-                                    <div class="level-name">Expert</div>
-                                    <div class="level-age" data-kaz="8–10 сынып" data-ru="8–10 класс" data-en="Grade 8–10">8–10 сынып</div>
-                                </div>
-                                <div class="flip-card-back">
-                                    <h4>Expert</h4>
-                                    <p data-kaz="Жасы: 8–10 сынып. Arduino микроконтроллерлерімен жұмыс, электроника, датчиктер және IoT технологиялары. Өз жобаларын жасайды." data-ru="Возраст: 8–10 классы. Работа с Arduino, электроника, датчики и IoT. Создают собственные проекты." data-en="Age: grades 8–10. Arduino, electronics, sensors and IoT. Creating own projects.">Жасы: 8–10 сынып. Arduino микроконтроллерлерімен жұмыс, электроника, датчиктер және IoT технологиялары.</p>
-                                </div>
-                            </div>
+            <!-- ═══ РОБОТОТЕХНИКА: слева карточки, справа фото ═══ -->
+            <div class="robo-layout">
+                <!-- ЛЕВАЯ: карточки уровней -->
+                <div class="robo-levels">
+                    <h3 class="track-heading">🤖 <span data-kaz="Робототехника" data-ru="Робототехника" data-en="Robotics">Робототехника</span></h3>
+
+                    <div class="robo-level-card">
+                        <div class="rlc-dot" style="background:#8B5CF6"></div>
+                        <div class="rlc-info">
+                            <div class="rlc-name">Junior</div>
+                            <div class="rlc-grade" data-kaz="1–2 сынып" data-ru="1–2 класс" data-en="Grade 1–2">1–2 сынып</div>
+                            <div class="rlc-desc" data-kaz="LEGO WeDo 2.0 — алғашқы роботтар" data-ru="LEGO WeDo 2.0 — первые роботы" data-en="LEGO WeDo 2.0 — first robots">LEGO WeDo 2.0 — алғашқы роботтар</div>
                         </div>
                     </div>
 
-                <!-- ─── ФОТО ПО УРОВНЯМ ──────────────────────── -->
-                <div class="level-photo-sections">
+                    <div class="robo-level-card">
+                        <div class="rlc-dot" style="background:#10B981"></div>
+                        <div class="rlc-info">
+                            <div class="rlc-name">Middle</div>
+                            <div class="rlc-grade" data-kaz="3–4 сынып" data-ru="3–4 класс" data-en="Grade 3–4">3–4 сынып</div>
+                            <div class="rlc-desc" data-kaz="LEGO SPIKE Prime — автономды роботтар" data-ru="LEGO SPIKE Prime — автономные роботы" data-en="LEGO SPIKE Prime — autonomous robots">LEGO SPIKE Prime — автономды роботтар</div>
+                        </div>
+                    </div>
 
-                    <div class="lps-block">
-                        <div class="lps-label">🟣 Junior — 1–2 сынып</div>
-                        <div class="lps-carousel" id="lps-junior">
-                            <div class="lps-track">
+                    <div class="robo-level-card">
+                        <div class="rlc-dot" style="background:#F59E0B"></div>
+                        <div class="rlc-info">
+                            <div class="rlc-name">Master</div>
+                            <div class="rlc-grade" data-kaz="5–7 сынып" data-ru="5–7 класс" data-en="Grade 5–7">5–7 сынып</div>
+                            <div class="rlc-desc" data-kaz="SPIKE Prime — жарыстарға дайындық" data-ru="SPIKE Prime — подготовка к соревнованиям" data-en="SPIKE Prime — competition prep">SPIKE Prime — жарыстарға дайындық</div>
+                        </div>
+                    </div>
+
+                    <div class="robo-level-card">
+                        <div class="rlc-dot" style="background:#EF4444"></div>
+                        <div class="rlc-info">
+                            <div class="rlc-name">Expert</div>
+                            <div class="rlc-grade" data-kaz="8–10 сынып" data-ru="8–10 класс" data-en="Grade 8–10">8–10 сынып</div>
+                            <div class="rlc-desc" data-kaz="Arduino, IoT, халықаралық жарыстар" data-ru="Arduino, IoT, международные соревнования" data-en="Arduino, IoT, international competitions">Arduino, IoT, халықаралық жарыстар</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ПРАВАЯ: фото по уровням -->
+                <div class="robo-photos">
+                    <div class="rp-item">
+                        <div class="rp-label">🟣 Junior — 1–2 сынып</div>
+                        <div class="rp-slider" id="rp-junior">
+                            <div class="rp-track">
                                 <img src="junior1.jpg" alt="Junior 1" />
                                 <img src="junior2.jpg" alt="Junior 2" />
                                 <img src="junior3.jpg" alt="Junior 3" />
                                 <img src="junior4.jpg" alt="Junior 4" />
                             </div>
-                            <button class="lps-btn lps-prev" onclick="lpsNav('junior',-1)">‹</button>
-                            <button class="lps-btn lps-next" onclick="lpsNav('junior',1)">›</button>
+                            <button class="rp-btn rp-prev" onclick="rpNav('junior',-1)">‹</button>
+                            <button class="rp-btn rp-next" onclick="rpNav('junior',1)">›</button>
                         </div>
                     </div>
-
-                    <div class="lps-block">
-                        <div class="lps-label">🟢 Middle — 3–4 сынып</div>
-                        <div class="lps-carousel" id="lps-middle">
-                            <div class="lps-track">
+                    <div class="rp-item">
+                        <div class="rp-label">🟢 Middle — 3–4 сынып</div>
+                        <div class="rp-slider" id="rp-middle">
+                            <div class="rp-track">
                                 <img src="middle1.jpg" alt="Middle 1" />
                                 <img src="middle2.jpg" alt="Middle 2" />
                                 <img src="middle3.jpg" alt="Middle 3" />
                                 <img src="middle4.jpg" alt="Middle 4" />
                             </div>
-                            <button class="lps-btn lps-prev" onclick="lpsNav('middle',-1)">‹</button>
-                            <button class="lps-btn lps-next" onclick="lpsNav('middle',1)">›</button>
+                            <button class="rp-btn rp-prev" onclick="rpNav('middle',-1)">‹</button>
+                            <button class="rp-btn rp-next" onclick="rpNav('middle',1)">›</button>
                         </div>
                     </div>
-
-                    <div class="lps-block">
-                        <div class="lps-label">🟡 Master — 5–7 сынып</div>
-                        <div class="lps-carousel" id="lps-master">
-                            <div class="lps-track">
+                    <div class="rp-item">
+                        <div class="rp-label">🟡 Master — 5–7 сынып</div>
+                        <div class="rp-slider" id="rp-master">
+                            <div class="rp-track">
                                 <img src="master1.jpg" alt="Master 1" />
                                 <img src="master2.jpg" alt="Master 2" />
                                 <img src="master3.jpg" alt="Master 3" />
                                 <img src="master4.jpg" alt="Master 4" />
                             </div>
-                            <button class="lps-btn lps-prev" onclick="lpsNav('master',-1)">‹</button>
-                            <button class="lps-btn lps-next" onclick="lpsNav('master',1)">›</button>
+                            <button class="rp-btn rp-prev" onclick="rpNav('master',-1)">‹</button>
+                            <button class="rp-btn rp-next" onclick="rpNav('master',1)">›</button>
                         </div>
                     </div>
-
-                    <div class="lps-block">
-                        <div class="lps-label">🔴 Expert — 8–10 сынып</div>
-                        <div class="lps-carousel" id="lps-expert">
-                            <div class="lps-track">
+                    <div class="rp-item">
+                        <div class="rp-label">🔴 Expert — 8–10 сынып</div>
+                        <div class="rp-slider" id="rp-expert">
+                            <div class="rp-track">
                                 <img src="expert1.jpg" alt="Expert 1" />
                                 <img src="expert2.jpg" alt="Expert 2" />
                                 <img src="expert3.jpg" alt="Expert 3" />
                                 <img src="expert4.jpg" alt="Expert 4" />
                             </div>
-                            <button class="lps-btn lps-prev" onclick="lpsNav('expert',-1)">‹</button>
-                            <button class="lps-btn lps-next" onclick="lpsNav('expert',1)">›</button>
+                            <button class="rp-btn rp-prev" onclick="rpNav('expert',-1)">‹</button>
+                            <button class="rp-btn rp-next" onclick="rpNav('expert',1)">›</button>
                         </div>
                     </div>
-
                 </div>
-                </div>
+            </div>
 
-                <!-- Направления -->
-                <div class="directions-column">
-                <div class="track-card flip-card">
+            <!-- ═══ ОСТАЛЬНЫЕ НАПРАВЛЕНИЯ: 3 колонки ═══ -->
+            <div class="directions-3col">
+
+                <div class="dir3-card flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <h3 data-kaz="🚁 Дрондар" data-ru="🚁 Дроны" data-en="🚁 Drones">🚁 Дрондар</h3>
-                            <p class="track-desc-front" data-kaz="SmartHub-тегі дрон бағыты — практикалық жаттығулар, пилоттау және дрон-футбол жарыстарына қатысуға дайындық." data-ru="Направление дронов в SmartHub — практические тренировки, пилотирование и подготовка к участию в соревнованиях по дрон-футболу." data-en="The drone direction at SmartHub — practical training, piloting and preparation for drone football competitions.">SmartHub-тегі дрон бағыты — практикалық жаттығулар, пилоттау және дрон-футбол жарыстарына қатысуға дайындық.</p>
+                            <div class="dir3-icon">🚁</div>
+                            <h3 data-kaz="Дрондар" data-ru="Дроны" data-en="Drones">Дрондар</h3>
+                            <p data-kaz="Практикалық жаттығулар, пилоттау және дрон-футбол жарыстарына дайындық." data-ru="Практические тренировки, пилотирование и подготовка к соревнованиям по дрон-футболу." data-en="Practical training, piloting and drone football competition prep.">Практикалық жаттығулар, пилоттау және дрон-футбол жарыстарына дайындық.</p>
                             <button class="flip-button" type="button" data-kaz="Толығырақ" data-ru="Подробнее" data-en="More">Толығырақ</button>
-                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите, чтобы увидеть подробности." data-en="Hover or tap to see details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
+                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите." data-en="Hover or tap for details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
                         </div>
                         <div class="flip-card-back">
                             <h3 data-kaz="«Дрондарды басқару» бағыты" data-ru="Направление «Управление дронами»" data-en="Drone Control Direction">«Дрондарды басқару» бағыты</h3>
-                            <p data-kaz="SmartHub-тегі дрон бағыты — оқушылар пилоттау дағдыларын меңгеретін және дрон-футбол жарыстарына қатысуға дайындалатын практикалық жаттығулар жүйесі." data-ru="Направление дронов в SmartHub — система практических тренировок, где ученики осваивают навыки пилотирования и готовятся к участию в соревнованиях по дрон-футболу." data-en="The drone direction at SmartHub is a system of practical training where students master piloting skills and prepare for drone football competitions.">SmartHub-тегі дрон бағыты — оқушылар пилоттау дағдыларын меңгеретін және дрон-футбол жарыстарына қатысуға дайындалатын практикалық жаттығулар жүйесі.</p>
-                            <p data-kaz="Оқыту іріктеу кезеңінен басталады, ол алғашқы үш айда жүреді. Осы уақытта балалар дрондардың құрылысымен танысады, қауіпсіздік ережелерін үйренеді және ұшатын аппараттарды басқарудың негізгі дағдыларын алады." data-ru="Обучение начинается с отборочного этапа, который длится первые три месяца. За это время дети знакомятся с устройством дронов, изучают правила безопасности и получают базовые навыки управления." data-en="Training begins with a selection stage lasting the first three months. Children learn about drone structure, safety rules and get basic piloting skills.">Оқыту іріктеу кезеңінен басталады — алғашқы үш ай. Осы уақытта балалар дрондардың құрылысымен танысады, қауіпсіздік ережелерін үйренеді.</p>
-                            <p data-kaz="Жаттығулар кезінде оқушылар:" data-ru="Во время тренировок ученики:" data-en="During training students:">Жаттығулар кезінде оқушылар:</p>
-                            <ul>
-                                <li data-kaz="дрондарды пилоттаудың негіздерін үйренеді;" data-ru="изучают основы пилотирования дронов;" data-en="learn the basics of drone piloting;">дрондарды пилоттаудың негіздерін үйренеді;</li>
-                                <li data-kaz="реакция жылдамдығы мен қозғалыс координациясын дамытады;" data-ru="развивают скорость реакции и координацию движений;" data-en="develop reaction speed and coordination;">реакция жылдамдығы мен қозғалыс координациясын дамытады;</li>
-                                <li data-kaz="зейін шоғырлануын жақсартады;" data-ru="улучшают концентрацию внимания;" data-en="improve concentration;">зейін шоғырлануын жақсартады;</li>
-                                <li data-kaz="командалық өзара әрекетті меңгереді;" data-ru="осваивают командное взаимодействие;" data-en="master team interaction;">командалық өзара әрекетті меңгереді;</li>
-                                <li data-kaz="дрон-футбол жарыстарына дайындалады." data-ru="готовятся к участию в соревнованиях по дрон-футболу." data-en="prepare for drone football competitions.">дрон-футбол жарыстарына дайындалады.</li>
-                            </ul>
+                            <p data-kaz="Оқушылар пилоттау дағдыларын меңгереді, қауіпсіздік ережелерін үйренеді және дрон-футбол жарыстарына дайындалады." data-ru="Ученики осваивают навыки пилотирования, изучают правила безопасности и готовятся к соревнованиям по дрон-футболу." data-en="Students master piloting skills, learn safety rules and prepare for drone football competitions.">Оқушылар пилоттау дағдыларын меңгереді, қауіпсіздік ережелерін үйренеді және дрон-футбол жарыстарына дайындалады.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="track-card flip-card">
+                <div class="dir3-card flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <h3 data-kaz="⚽ Дрон-футбол" data-ru="⚽ Дрон-футбол" data-en="⚽ Drone Football">⚽ Дрон-футбол</h3>
-                            <p class="track-desc-front" data-kaz="Стратегияны, реакция жылдамдығын және командалық жұмысты дамытатын заманауи технологиялық спорт." data-ru="Современный технологический спорт, развивающий стратегию, скорость реакции и командную работу." data-en="Modern tech sport developing strategy, reaction speed and teamwork.">Стратегияны, реакция жылдамдығын және командалық жұмысты дамытатын заманауи технологиялық спорт.</p>
+                            <div class="dir3-icon">⚽</div>
+                            <h3 data-kaz="Дрон-футбол" data-ru="Дрон-футбол" data-en="Drone Football">Дрон-футбол</h3>
+                            <p data-kaz="Стратегияны, реакция жылдамдығын және командалық жұмысты дамытатын заманауи технологиялық спорт." data-ru="Современный технологический спорт, развивающий стратегию, скорость реакции и командную работу." data-en="Modern tech sport developing strategy, reaction speed and teamwork.">Стратегияны, реакция жылдамдығын және командалық жұмысты дамытатын заманауи технологиялық спорт.</p>
                             <button class="flip-button" type="button" data-kaz="Толығырақ" data-ru="Подробнее" data-en="More">Толығырақ</button>
-                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите, чтобы увидеть подробности." data-en="Hover or tap to see details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
+                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите." data-en="Hover or tap for details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
                         </div>
                         <div class="flip-card-back">
                             <h3 data-kaz="Дрон-футбол" data-ru="Дрон-футбол" data-en="Drone Football">Дрон-футбол</h3>
-                            <p data-kaz="Дрон-футбол — команда арнайы дрондарды басқаратын және ауа кеңістігінде ойын тапсырмаларын орындайтын заманауи технологиялық спорт түрі. Бұл формат технологияларды, спортты, стратегиялық ойлауды және командалық жұмысты біріктіреді." data-ru="Дрон-футбол — современный технологический вид спорта, в котором команды управляют специальными дронами и выполняют игровые задачи в воздушном пространстве." data-en="Drone football is a modern tech sport where teams control special drones and complete game tasks in the airspace.">Дрон-футбол — команда арнайы дрондарды басқаратын және ауа кеңістігінде ойын тапсырмаларын орындайтын заманауи технологиялық спорт түрі.</p>
-                            <p data-kaz="Оқушы алатын нәрсе:" data-ru="Что получает ученик:" data-en="What the student gets:">Оқушы алатын нәрсе:</p>
-                            <ul>
-                                <li data-kaz="дрон басқарудың сенімді дағдылары;" data-ru="уверенные навыки управления дроном;" data-en="confident drone control skills;">дрон басқарудың сенімді дағдылары;</li>
-                                <li data-kaz="зейін, реакция және кеңістіктік ойлаудың дамуы;" data-ru="развитие внимания, реакции и пространственного мышления;" data-en="development of attention, reaction and spatial thinking;">зейін, реакция және кеңістіктік ойлаудың дамуы;</li>
-                                <li data-kaz="командалық жұмыс тәжірибесі;" data-ru="опыт командной работы;" data-en="teamwork experience;">командалық жұмыс тәжірибесі;</li>
-                                <li data-kaz="спорт және технологиялық жарыстарға қатысу." data-ru="участие в спортивных и технологических соревнованиях." data-en="participation in sports and tech competitions.">спорт және технологиялық жарыстарға қатысу.</li>
-                            </ul>
+                            <p data-kaz="Команда арнайы дрондарды басқаратын ойын. Технологиялар, спорт және командалық жұмыс бірігеді." data-ru="Игра, в которой команды управляют специальными дронами. Технологии, спорт и командная работа в одном." data-en="A game where teams control special drones. Technology, sport and teamwork combined.">Команда арнайы дрондарды басқаратын ойын. Технологиялар, спорт және командалық жұмыс бірігеді.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="track-card flip-card">
+                <div class="dir3-card flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <h3 data-kaz="🏆 Спорттық RBT" data-ru="🏆 Спортивная RBT" data-en="🏆 Sports RBT">🏆 Спорттық RBT</h3>
-                            <p class="track-desc-front" data-kaz="RBT — бұл роботика жарыстарында өз күшін сынағысы келетін оқушыларға арналған бағыт." data-ru="RBT — это направление для учеников, которые хотят выйти за рамки обычных занятий и попробовать свои силы в соревнованиях по робототехнике." data-en="RBT is a direction for students who want to go beyond regular classes and try their hand at robotics competitions.">RBT — бұл роботика жарыстарында өз күшін сынағысы келетін оқушыларға арналған бағыт.</p>
+                            <div class="dir3-icon">🏆</div>
+                            <h3 data-kaz="Спорттық RBT" data-ru="Спортивная RBT" data-en="Sports RBT">Спорттық RBT</h3>
+                            <p data-kaz="Роботика жарыстарында өз күшін сынағысы келетін оқушыларға арналған бағыт." data-ru="Направление для учеников, которые хотят попробовать свои силы в соревнованиях по робототехнике." data-en="Direction for students who want to compete in robotics tournaments.">Роботика жарыстарында өз күшін сынағысы келетін оқушыларға арналған бағыт.</p>
                             <button class="flip-button" type="button" data-kaz="Толығырақ" data-ru="Подробнее" data-en="More">Толығырақ</button>
-                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите, чтобы увидеть подробности." data-en="Hover or tap to see details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
+                            <p class="flip-hint" data-kaz="Толығырақ көру үшін курсорды апарыңыз немесе басыңыз." data-ru="Наведите курсор или нажмите." data-en="Hover or tap for details.">Толығырақ көру үшін курсорды апарыңыз немесе басыңыз.</p>
                         </div>
                         <div class="flip-card-back">
-                            <h3 data-kaz="RBT" data-ru="RBT" data-en="RBT">RBT</h3>
-                            <p data-kaz="RBT — қалалық, республикалық және халықаралық турнирлерге командаларды дайындауға бағытталған жаттығулар. Қатысушылар роботтарды жинап программалауды ғана емес, шектеулі уақыт жағдайында тиімді инженерлік шешімдер табуды үйренеді." data-ru="RBT направлен на подготовку команд к городским, республиканским и международным турнирам. Участники учатся не только собирать роботов, но и находить инженерные решения." data-en="RBT is aimed at preparing teams for city, national and international tournaments. Participants learn not only to build robots but to find engineering solutions.">RBT — қалалық, республикалық және халықаралық турнирлерге командаларды дайындауға бағытталған жаттығулар.</p>
-                            <p data-kaz="Жаттығулар кезінде оқушылар:" data-ru="Во время тренировок ученики:" data-en="During training students:">Жаттығулар кезінде оқушылар:</p>
-                            <ul>
-                                <li data-kaz="роботтардың конструкцияларын жобалайды;" data-ru="проектируют и совершенствуют конструкции роботов;" data-en="design and improve robot structures;">роботтардың конструкцияларын жобалайды;</li>
-                                <li data-kaz="программалау дағдыларын дамытады;" data-ru="развивают навыки программирования и автоматизации;" data-en="develop programming and automation skills;">программалау дағдыларын дамытады;</li>
-                                <li data-kaz="жарыстарға дайындалады." data-ru="готовятся к выступлениям на соревнованиях." data-en="prepare for competitions.">жарыстарға дайындалады.</li>
-                            </ul>
+                            <h3>RBT</h3>
+                            <p data-kaz="Қалалық, республикалық және халықаралық турнирлерге командаларды дайындау. Жобалау, программалау және жарыстарда жеңіске жету." data-ru="Подготовка команд к городским, республиканским и международным турнирам. Проектирование, программирование и победы." data-en="Preparing teams for city, national and international tournaments. Design, programming and winning.">Қалалық, республикалық және халықаралық турнирлерге командаларды дайындау. Жобалау, программалау және жарыстарда жеңіске жету.</p>
                         </div>
                     </div>
                 </div>
-                </div>
+
             </div>
 
             <div class="pricing-box">
@@ -1193,6 +1192,18 @@
         const imgs = track.querySelectorAll('img');
         lpsIdx[level] = (lpsIdx[level] + dir + imgs.length) % imgs.length;
         track.style.transform = `translateX(-${lpsIdx[level] * 100}%)`;
+    }
+
+
+    // ── Robo photo sliders ────────────────────────────────
+    const rpIdx = { junior:0, middle:0, master:0, expert:0 };
+    function rpNav(level, dir) {
+        const slider = document.getElementById('rp-' + level);
+        if (!slider) return;
+        const track = slider.querySelector('.rp-track');
+        const imgs = track.querySelectorAll('img');
+        rpIdx[level] = (rpIdx[level] + dir + imgs.length) % imgs.length;
+        track.style.transform = `translateX(-${rpIdx[level] * 100}%)`;
     }
 
     </script>
