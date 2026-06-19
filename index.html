@@ -38,7 +38,7 @@
         /* Личный кабинет */
         .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9000; align-items:center; justify-content:center; padding:16px; }
         .modal-overlay.open { display:flex; }
-        .modal-box { background:#fff; border-radius:20px; padding:32px; max-width:480px; width:100%; max-height:90vh; overflow-y:auto; position:relative; }
+        .modal-box { background:#fff; border-radius:20px; padding:32px; max-width:700px; width:100%; max-height:92vh; overflow-y:auto; position:relative; }
         .dark .modal-box { background:#1a1a2e; color:#eee; }
         .modal-box h2 { font-size:1.4rem; font-weight:900; color:var(--red); margin-bottom:20px; }
         .modal-close { position:absolute; top:16px; right:20px; background:none; border:none; font-size:1.6rem; cursor:pointer; color:#999; }
@@ -71,6 +71,23 @@
         .event-item p { margin:0; color:#888; font-size:.85rem; }
         .schedule-item { display:flex; gap:14px; align-items:center; padding:10px 0; border-bottom:1px solid #eee; }
         .schedule-day { font-weight:900; color:var(--red); min-width:90px; }
+
+        /* Event clickable */
+        .event-clickable { cursor:pointer; transition:.15s; }
+        .event-clickable:hover { background:#fff0f0; border-color:#CC0000; }
+        #modal-parent .modal-box { position:relative; }
+        /* Level photo slot */
+        .level-photo-slot { width:100%; height:120px; border-radius:10px; overflow:hidden; background:#f5f0f0; margin-bottom:10px; display:flex; align-items:center; justify-content:center; border:2px dashed #e0d0d0; cursor:pointer; position:relative; transition:.2s; }
+        .level-photo-slot:hover { border-color:#CC0000; background:#fff5f5; }
+        .level-photo-slot img { width:100%; height:100%; object-fit:cover; }
+        .level-photo-inner { display:flex; flex-direction:column; align-items:center; gap:4px; }
+        .level-photo-inner .level-icon { font-size:2rem; }
+        .level-photo-inner::after { content:"📷 Фото қосу"; font-size:.7rem; color:#CC0000; font-weight:600; }
+        .level-photo-slot.has-photo::after { display:none; }
+        .level-photo-upload { display:none; }
+        /* Dark mode event detail */
+        body.dark #event-detail-overlay { background:#1a1a2e; }
+        body.dark .event-detail-overlay { background:#1a1a2e; }
     </style>
 </head>
 <body>
@@ -372,7 +389,9 @@
                         <div class="level-card flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
-                                    <div class="level-icon">🟣</div>
+                                    <div class="level-photo-slot" data-level="junior">
+                                        <div class="level-photo-inner"><span class="level-icon">🟣</span></div>
+                                    </div>
                                     <div class="level-name">Junior</div>
                                     <div class="level-age" data-kaz="1–4 класс" data-ru="1–4 класс" data-en="Grade 1–4">1–4 класс</div>
                                 </div>
@@ -385,7 +404,9 @@
                         <div class="level-card flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
-                                    <div class="level-icon">🟢</div>
+                                    <div class="level-photo-slot" data-level="middle">
+                                        <div class="level-photo-inner"><span class="level-icon">🟢</span></div>
+                                    </div>
                                     <div class="level-name">Middle</div>
                                     <div class="level-age" data-kaz="5–7 класс" data-ru="5–7 класс" data-en="Grade 5–7">5–7 класс</div>
                                 </div>
@@ -398,7 +419,9 @@
                         <div class="level-card flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
-                                    <div class="level-icon">🟡</div>
+                                    <div class="level-photo-slot" data-level="master">
+                                        <div class="level-photo-inner"><span class="level-icon">🟡</span></div>
+                                    </div>
                                     <div class="level-name">Master</div>
                                     <div class="level-age" data-kaz="8–9 класс" data-ru="8–9 класс" data-en="Grade 8–9">8–9 класс</div>
                                 </div>
@@ -411,7 +434,9 @@
                         <div class="level-card flip-card">
                             <div class="flip-card-inner">
                                 <div class="flip-card-front">
-                                    <div class="level-icon">🔴</div>
+                                    <div class="level-photo-slot" data-level="expert">
+                                        <div class="level-photo-inner"><span class="level-icon">🔴</span></div>
+                                    </div>
                                     <div class="level-name">Expert</div>
                                     <div class="level-age" data-kaz="10–11 класс" data-ru="10–11 класс" data-en="Grade 10–11">10–11 класс</div>
                                 </div>
@@ -785,17 +810,39 @@
                     </div>
                     <!-- События -->
                     <div id="cab-events" class="cab-panel">
-                        <div class="event-item">
-                            <h5>🏕️ <span data-kaz="Жазғы лагерь 2025" data-ru="Летний лагерь 2025" data-en="Summer camp 2025">Жазғы лагерь 2025</span></h5>
-                            <p data-kaz="10–20 шілде · Тіркелу ашық" data-ru="10–20 июля · Регистрация открыта" data-en="July 10–20 · Registration open">10–20 шілде · Тіркелу ашық</p>
+                        <p style="font-size:.82rem;color:#999;margin-bottom:12px;" data-kaz="Толығырақ білу үшін басыңыз" data-ru="Нажмите для подробностей" data-en="Tap for details">Толығырақ білу үшін басыңыз</p>
+                        <div class="event-item event-clickable" onclick="showEventDetail('camp')">
+                            <div style="display:flex;align-items:center;justify-content:space-between;">
+                                <div>
+                                    <h5 style="margin-bottom:4px">🏕️ <span data-kaz="Жазғы лагерь 2025" data-ru="Летний лагерь 2025" data-en="Summer camp 2025">Жазғы лагерь 2025</span></h5>
+                                    <p data-kaz="10–20 шілде · Тіркелу ашық" data-ru="10–20 июля · Регистрация открыта" data-en="July 10–20 · Registration open">10–20 шілде · Тіркелу ашық</p>
+                                </div>
+                                <span style="color:#CC0000;font-size:1.2rem">›</span>
+                            </div>
                         </div>
-                        <div class="event-item">
-                            <h5>🤖 <span data-kaz="Robotek Grand Tournament 2025" data-ru="Robotek Grand Tournament 2025" data-en="Robotek Grand Tournament 2025">Robotek Grand Tournament 2025</span></h5>
-                            <p data-kaz="Қыркүйек 2025 · Астана" data-ru="Сентябрь 2025 · Астана" data-en="September 2025 · Astana">Қыркүйек 2025 · Астана</p>
+                        <div class="event-item event-clickable" onclick="showEventDetail('robotek')">
+                            <div style="display:flex;align-items:center;justify-content:space-between;">
+                                <div>
+                                    <h5 style="margin-bottom:4px">🤖 <span data-kaz="Robotek Grand Tournament 2025" data-ru="Robotek Grand Tournament 2025" data-en="Robotek Grand Tournament 2025">Robotek Grand Tournament 2025</span></h5>
+                                    <p data-kaz="Қыркүйек 2025 · Астана" data-ru="Сентябрь 2025 · Астана" data-en="September 2025 · Astana">Қыркүйек 2025 · Астана</p>
+                                </div>
+                                <span style="color:#CC0000;font-size:1.2rem">›</span>
+                            </div>
                         </div>
-                        <div class="event-item">
-                            <h5>🌍 <span data-kaz="WRO Республикалық кезең" data-ru="WRO Республиканский этап" data-en="WRO National Stage">WRO Республикалық кезең</span></h5>
-                            <p data-kaz="Қазан 2025 · Алматы" data-ru="Октябрь 2025 · Алматы" data-en="October 2025 · Almaty">Қазан 2025 · Алматы</p>
+                        <div class="event-item event-clickable" onclick="showEventDetail('wro')">
+                            <div style="display:flex;align-items:center;justify-content:space-between;">
+                                <div>
+                                    <h5 style="margin-bottom:4px">🌍 <span data-kaz="WRO Республикалық кезең" data-ru="WRO Республиканский этап" data-en="WRO National Stage">WRO Республикалық кезең</span></h5>
+                                    <p data-kaz="Қазан 2025 · Алматы" data-ru="Октябрь 2025 · Алматы" data-en="October 2025 · Almaty">Қазан 2025 · Алматы</p>
+                                </div>
+                                <span style="color:#CC0000;font-size:1.2rem">›</span>
+                            </div>
+                        </div>
+
+                        <!-- EVENT DETAIL OVERLAY -->
+                        <div id="event-detail-overlay" style="display:none;position:absolute;inset:0;background:#fff;border-radius:20px;padding:24px;overflow-y:auto;z-index:10;">
+                            <button onclick="hideEventDetail()" style="background:none;border:none;color:#CC0000;font-size:.9rem;font-weight:700;cursor:pointer;margin-bottom:16px;display:flex;align-items:center;gap:4px;">‹ <span data-kaz="Артқа" data-ru="Назад" data-en="Back">Артқа</span></button>
+                            <div id="event-detail-content"></div>
                         </div>
                     </div>
                     <button onclick="doLogout()" style="margin-top:16px;background:none;border:1px solid #ddd;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:.9rem;color:#999;" data-kaz="Шығу" data-ru="Выйти" data-en="Logout">Шығу</button>
@@ -889,6 +936,94 @@
     if (localStorage.getItem('sh_parent_logged')) {
         showCabinet(localStorage.getItem('sh_parent_name') || 'Пайдаланушы');
     }
+
+    // ── Event details ─────────────────────────────────────
+    const eventData = {
+        camp: {
+            icon: '🏕️',
+            title: 'Жазғы лагерь 2025',
+            titleRu: 'Летний лагерь 2025',
+            date: '10–20 шілде 2025 | 10–20 июля 2025',
+            place: 'Астана',
+            status: '✅ Тіркелу ашық / Регистрация открыта',
+            statusColor: '#2e7d32',
+            desc: `SmartHub жазғы лагері — роботика, дрондар және бағдарламалау бойынша қарқынды 10 күндік оқу. Күн сайын тәжірибелік сабақтар, командалық жобалар және ішкі жарыстар өткізіледі. Жасы: 7–17 жас.`,
+            descRu: `Летний лагерь SmartHub — интенсивное 10-дневное обучение по робототехнике, дронам и программированию. Каждый день: практические занятия, командные проекты и внутренние соревнования. Возраст: 7–17 лет.`,
+            details: ['Ұзақтығы: 10 күн / Продолжительность: 10 дней', 'Баға: 80 000 ₸ / Стоимость: 80 000 ₸', 'Орын саны шектеулі / Мест ограниченное количество'],
+            link: '#contacts'
+        },
+        robotek: {
+            icon: '🤖',
+            title: 'Robotek Grand Tournament 2025',
+            titleRu: 'Robotek Grand Tournament 2025',
+            date: 'Қыркүйек 2025 | Сентябрь 2025',
+            place: 'Астана',
+            status: '🔜 Жуырда / Скоро',
+            statusColor: '#e65100',
+            desc: `Robotek Grand Tournament — Қазақстанның ең ірі робототехника жарысы. SmartHub командалары «Жеткізуші», «Line Following» және «Суmo» санаттарында қатысады. Өткен жылы 1-орын алдық!`,
+            descRu: `Robotek Grand Tournament — крупнейший турнир по робототехнике Казахстана. Команды SmartHub участвуют в категориях «Доставщик», «Line Following» и «Сумо». В прошлом году заняли 1 место!`,
+            details: ['Санаттар: Доставщик, Line Following, Sumo', 'Деңгей: Қалалық + Республикалық / Городской + Республиканский', 'Дайындық: тамыз-қыркүйек / Подготовка: август–сентябрь'],
+            link: '#achievements'
+        },
+        wro: {
+            icon: '🌍',
+            title: 'WRO Республикалық кезең',
+            titleRu: 'WRO Республиканский этап',
+            date: 'Қазан 2025 | Октябрь 2025',
+            place: 'Алматы',
+            status: '🔜 Дайындық жүруде / Готовимся',
+            statusColor: '#1A1A8C',
+            desc: `World Robot Olympiad (WRO) — дүниежүзілік робототехника олимпиадасының Қазақстан кезеңі. Жеңімпаздар халықаралық финалға шығады. SmartHub өткен жылы 2-орын алды!`,
+            descRu: `World Robot Olympiad (WRO) — казахстанский этап мировой олимпиады по робототехнике. Победители выходят в международный финал. SmartHub занял 2 место в прошлом году!`,
+            details: ['Санаттар: RoboMission, Future Engineers', 'Жеңімпаздар халықаралық финалға барады / Победители едут на мировой финал', 'Жасы: 10–17 / Возраст: 10–17'],
+            link: '#achievements'
+        }
+    };
+
+    function showEventDetail(key) {
+        const ev = eventData[key];
+        const lang = localStorage.getItem('sh_lang') || 'kaz';
+        const isKaz = lang === 'kaz';
+        const html = `
+            <div style="font-size:2rem;margin-bottom:8px">${ev.icon}</div>
+            <h3 style="font-size:1.15rem;font-weight:900;color:#CC0000;margin-bottom:4px">${isKaz ? ev.title : ev.titleRu}</h3>
+            <div style="font-size:.85rem;color:#888;margin-bottom:16px">📅 ${ev.date} &nbsp;|&nbsp; 📍 ${ev.place}</div>
+            <div style="display:inline-block;padding:4px 12px;border-radius:50px;background:#f5f5f5;font-size:.82rem;font-weight:700;color:${ev.statusColor};margin-bottom:16px">${ev.status}</div>
+            <p style="font-size:.9rem;line-height:1.7;color:#444;margin-bottom:16px">${isKaz ? ev.desc : ev.descRu}</p>
+            <div style="background:#f8f8f8;border-radius:10px;padding:14px;margin-bottom:16px">
+                ${ev.details.map(d => `<div style="font-size:.83rem;color:#555;padding:4px 0;border-bottom:1px solid #eee">• ${d}</div>`).join('')}
+            </div>
+            <a href="${ev.link}" onclick="closeModal('parent')" style="display:block;text-align:center;padding:12px;background:#CC0000;color:#fff;border-radius:10px;font-weight:700;font-size:.9rem;text-decoration:none;" data-kaz="Толығырақ" data-ru="Подробнее" data-en="Learn more">Толығырақ</a>
+        `;
+        document.getElementById('event-detail-content').innerHTML = html;
+        document.getElementById('event-detail-overlay').style.display = 'block';
+    }
+
+    function hideEventDetail() {
+        document.getElementById('event-detail-overlay').style.display = 'none';
+    }
+
+    // ── Level photo upload ─────────────────────────────────
+    document.querySelectorAll('.level-photo-slot').forEach(slot => {
+        slot.addEventListener('click', function(e) {
+            if (e.target.tagName === 'IMG') return;
+            const inp = document.createElement('input');
+            inp.type = 'file';
+            inp.accept = 'image/*';
+            inp.onchange = function() {
+                const file = inp.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    slot.innerHTML = `<img src="${ev.target.result}" alt="Фото" />`;
+                    slot.classList.add('has-photo');
+                };
+                reader.readAsDataURL(file);
+            };
+            inp.click();
+        });
+    });
+
     </script>
 </body>
 </html>
